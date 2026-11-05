@@ -864,14 +864,14 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
       b.dataset.aid=i;b.textContent=a.l;w.appendChild(b);});
     log.appendChild(w);log.scrollTop=log.scrollHeight;return w;}
   // Choix de la voix la plus naturelle disponible sur l'appareil
-  const RATE=1.18;let chosen=null;
+  const RATE=1.18;let chosen=null;var cur=null;
   const score=v=>{const n=v.name;let s=0;if(/natural|online|neural/i.test(n))s+=50;if(/premium|enhanced|amélior/i.test(n))s+=40;if(/google/i.test(n))s+=30;if(/denise|vivienne|eloise|henri|remy|audrey|am[eé]lie|thomas|marie|aur[eé]lie/i.test(n))s+=10;if(/fr-FR/i.test(v.lang))s+=5;if(v.localService===false)s+=3;return s;};
   function frVoices(){try{return speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang)).sort((a,b)=>score(b)-score(a));}catch(_){return[];}}
   function pickVoice(){if(chosen)return chosen;return frVoices()[0]||null;}
   function fillVoices(){const sel=$('bot-vsel');if(!sel)return;const vs=frVoices();if(!vs.length){sel.hidden=true;return;}sel.hidden=false;const cur=sel.value;sel.innerHTML=vs.map((v,i)=>'<option value="'+i+'">'+v.name.replace(/Microsoft |Google |\(.*?\)| - .*$|Online/g,'').trim()+(score(v)>=40?' ★':'')+'</option>').join('');if(cur&&cur<vs.length)sel.value=cur;chosen=vs[+sel.value]||vs[0];}
   try{speechSynthesis.onvoiceschanged=fillVoices;}catch(_){}
   setTimeout(fillVoices,50);
-  function say(t,cb){if(!speak||!window.speechSynthesis){if(cb)setTimeout(cb,500);return;}try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/3cc\.shop/gi,'trois cé cé point shoppe').replace(/3\s?CC\s+Shop/gi,'trois cé cé, shoppe').replace(/3\s?CC/gi,'trois cé cé').replace(/\bShop\b/gi,'shoppe').replace(/[•→]/g,' ').replace(/€ HT/g,'euros hors taxe').replace(/€/g,'euros'));u.lang='fr-FR';const v=pickVoice();if(v)u.voice=v;u.rate=RATE;u.pitch=1;
+  function say(t,cb){if(!speak||!window.speechSynthesis){if(cb)setTimeout(cb,500);return;}try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/3cc\.shop/gi,'trois cé cé point shoppe').replace(/3\s?CC\s+Shop/gi,'trois cé cé, shoppe').replace(/3\s?CC/gi,'trois cé cé').replace(/\bShop\b/gi,'shoppe').replace(/[•→]/g,' ').replace(/€ HT/g,'euros hors taxe').replace(/€/g,'euros'));u.lang='fr-FR';cur={txt:u.text,idx:0};const me=cur;u.addEventListener('boundary',e=>{if(typeof e.charIndex==='number')me.idx=e.charIndex;});u.addEventListener('end',()=>{if(!paused&&cur===me)cur=null;});const v=pickVoice();if(v)u.voice=v;u.rate=RATE;u.pitch=1;
     setOrb('speak');cap(t,'Assistant');const back=()=>{if(!(window.speechSynthesis&&speechSynthesis.speaking))setOrb(on?'listen':'idle');};u.addEventListener('end',back);u.addEventListener('error',back);setTimeout(back,Math.max(2600,t.length*66));
     if(cb){let done=false;const fin=()=>{if(done)return;done=true;clearTimeout(tm);cb();};u.onend=fin;u.onerror=fin;
       // Secours : certains navigateurs ne signalent pas la fin de la lecture
@@ -902,13 +902,18 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   // États de la boule et sous-titres
   let active=false,capT=null;
   function setOrb(s){const o=$('bot-open');if(o)o.dataset.state=s;}
-  function cap(t,who){const c=$('orb-cap');if(!c)return;clearTimeout(capT);if(!$('bot').hidden){c.hidden=true;return;}const short=t.length>160?t.slice(0,157).replace(/\s+\S*$/,'')+'…':t;c.innerHTML='';c.appendChild(document.createTextNode(short.replace(/\n+/g,' ')));c.hidden=false;capT=setTimeout(()=>{c.hidden=true;},Math.max(5000,t.length*70));}
+  function cap(t,who){return;const c=$('orb-cap');if(!c)return;clearTimeout(capT);if(!$('bot').hidden){c.hidden=true;return;}const short=t.length>160?t.slice(0,157).replace(/\s+\S*$/,'')+'…':t;c.innerHTML='';c.appendChild(document.createTextNode(short.replace(/\n+/g,' ')));c.hidden=false;capT=setTimeout(()=>{c.hidden=true;},Math.max(5000,t.length*70));}
   function mini(){$('bot').hidden=true;$('bot-open').hidden=false;$('orb-pp').hidden=false;}
   // Pause / lecture sans ouvrir la fenêtre
   let paused=false;
   function setPaused(p){paused=p;const b=$('orb-pp');b.setAttribute('aria-pressed',p);b.title=p?'Reprendre':'Pause';b.setAttribute('aria-label',p?"Reprendre la conversation":"Mettre l'assistant en pause");
-    if(p){convo=false;try{speechSynthesis.cancel()}catch(_){}try{if(rec)rec.abort()}catch(_){}setOrb('idle');$('orb-cap').hidden=true;}
-    else{convo=true;speak=true;$('bot-voice').setAttribute('aria-pressed',true);setOrb('idle');listen();}}
+    if(p){convo=false;
+      // On mémorise où la phrase s'est arrêtée
+      resumeTxt=(cur&&window.speechSynthesis&&speechSynthesis.speaking)?cur.txt.slice(cur.idx).trim():'';
+      try{speechSynthesis.cancel()}catch(_){}try{if(rec)rec.abort()}catch(_){}setOrb('idle');}
+    else{convo=true;speak=true;$('bot-voice').setAttribute('aria-pressed',true);setOrb('idle');
+      if(resumeTxt){const r=resumeTxt;resumeTxt='';say(r,listen);}else listen();}}
+  let resumeTxt='';
   $('orb-pp').addEventListener('click',()=>setPaused(!paused));
   function openBot(){active=true;$('bot').hidden=false;$('bot-open').hidden=true;$('orb-pp').hidden=true;$('orb-cap').hidden=true;
     if(!log.children.length){const t="Bonjour, bienvenue chez 3CC Concept ! Je vous présente deux choses : 3CC Shop, notre site de réservation en ligne pour les pros de l'automobile, et nos formations covering et films bâtiment. Qu'est-ce qui vous intéresse ?";addMsg(t,'b');addActs(['site','formations','demo']);const w=document.createElement('div');w.className='acts';const b=document.createElement('button');b.type='button';b.textContent="C'est quoi 3CC Shop ?";b.addEventListener('click',()=>answer("C'est quoi le site 3CC Shop ?"));w.appendChild(b);log.appendChild(w);greet=t;say(t,listen);}
