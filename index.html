@@ -287,7 +287,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
 .mic[data-on="1"]{background:var(--orange);border-color:var(--orange);animation:pl 1.4s infinite}
 @media (max-width:700px){.bot{height:min(48vh,440px);width:calc(100vw - 20px);right:calc(10px + env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px))}.bot-log{padding:10px}.msg{font-size:.9rem}}
 /* Boule vocale */
-.orb{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:20;width:78px;height:78px;border-radius:50%;border:0;padding:0;cursor:pointer;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#ffa066 0%,#ff5500 45%,#a33600 100%);box-shadow:0 12px 34px rgba(255,85,0,.5),inset 0 -6px 14px rgba(0,0,0,.35),inset 0 4px 10px rgba(255,255,255,.35);transition:transform .2s}
+.orb{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(62px + env(safe-area-inset-bottom,0px));z-index:20;width:78px;height:78px;border-radius:50%;border:0;padding:0;cursor:pointer;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#ffa066 0%,#ff5500 45%,#a33600 100%);box-shadow:0 12px 34px rgba(255,85,0,.5),inset 0 -6px 14px rgba(0,0,0,.35),inset 0 4px 10px rgba(255,255,255,.35);transition:transform .2s}
 .orb:hover{transform:scale(1.08)}
 .orb .bars{display:flex;align-items:center;gap:4px;height:34px;position:relative;z-index:2}
 .orb .bars i{display:block;width:5px;height:8px;border-radius:3px;background:#fff;opacity:.95;transition:height .2s}
@@ -306,7 +306,13 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
 @keyframes wave{0%,100%{height:6px}50%{height:32px}}
 @keyframes ripple{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.9);opacity:0}}
 @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-.orb-cap{position:fixed;right:calc(108px + env(safe-area-inset-right,0px));bottom:calc(28px + env(safe-area-inset-bottom,0px));z-index:20;max-width:min(300px,calc(100vw - 140px));background:rgba(11,11,11,.94);border:1px solid #333;color:#fff;border-radius:12px 12px 2px 12px;padding:10px 13px;font-size:.88rem;line-height:1.4;box-shadow:0 10px 30px rgba(0,0,0,.6);animation:botin .3s ease-out}
+.orb-pp{position:fixed;right:calc(38px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:20;width:42px;height:42px;border-radius:50%;border:1px solid #3a3a3a;background:linear-gradient(180deg,#262626,#0c0c0c);color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 3px 0 #000,0 6px 14px rgba(0,0,0,.6)}
+.orb-pp svg{width:18px;height:18px;fill:currentColor}
+.orb-pp:hover{border-color:var(--orange);color:var(--orange)}
+.orb-pp .i-play{display:none}
+.orb-pp[aria-pressed="true"] .i-play{display:block}
+.orb-pp[aria-pressed="true"] .i-pause{display:none}
+.orb-cap{position:fixed;right:calc(108px + env(safe-area-inset-right,0px));bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:20;max-width:min(300px,calc(100vw - 140px));background:rgba(11,11,11,.94);border:1px solid #333;color:#fff;border-radius:12px 12px 2px 12px;padding:10px 13px;font-size:.88rem;line-height:1.4;box-shadow:0 10px 30px rgba(0,0,0,.6);animation:botin .3s ease-out}
 .orb-cap small{display:block;color:var(--orange);font:700 .68rem var(--head);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
 @media (prefers-reduced-motion:reduce){.orb,.orb *{animation:none!important}}
 .bot-note{font-size:.72rem;color:#777;padding:0 14px 8px;background:#0e0e0e}
@@ -691,6 +697,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
 </div>
 <div class="orb-cap" id="orb-cap" hidden></div>
 <button class="orb" id="bot-open" type="button" data-state="idle" aria-label="Agrandir l'assistant" title="Touchez pour agrandir"><span class="ring"></span><span class="ring r2"></span><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></button>
+<button class="orb-pp" id="orb-pp" type="button" aria-pressed="false" aria-label="Mettre l'assistant en pause" title="Pause" hidden><svg class="i-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg><svg class="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg></button>
 <section class="bot" id="bot" hidden aria-label="Assistant 3CC Concept">
   <div class="bot-h">
     <span class="av">3CC</span>
@@ -895,9 +902,15 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   // États de la boule et sous-titres
   let active=false,capT=null;
   function setOrb(s){const o=$('bot-open');if(o)o.dataset.state=s;}
-  function cap(t,who){const c=$('orb-cap');if(!c)return;clearTimeout(capT);if(!$('bot').hidden){c.hidden=true;return;}const short=t.length>160?t.slice(0,157).replace(/\s+\S*$/,'')+'…':t;c.innerHTML='';const s=document.createElement('small');s.textContent=who;c.appendChild(s);c.appendChild(document.createTextNode(short.replace(/\n+/g,' ')));c.hidden=false;capT=setTimeout(()=>{c.hidden=true;},Math.max(5000,t.length*70));}
-  function mini(){$('bot').hidden=true;$('bot-open').hidden=false;}
-  function openBot(){active=true;$('bot').hidden=false;$('bot-open').hidden=true;$('orb-cap').hidden=true;
+  function cap(t,who){const c=$('orb-cap');if(!c)return;clearTimeout(capT);if(!$('bot').hidden){c.hidden=true;return;}const short=t.length>160?t.slice(0,157).replace(/\s+\S*$/,'')+'…':t;c.innerHTML='';c.appendChild(document.createTextNode(short.replace(/\n+/g,' ')));c.hidden=false;capT=setTimeout(()=>{c.hidden=true;},Math.max(5000,t.length*70));}
+  function mini(){$('bot').hidden=true;$('bot-open').hidden=false;$('orb-pp').hidden=false;}
+  // Pause / lecture sans ouvrir la fenêtre
+  let paused=false;
+  function setPaused(p){paused=p;const b=$('orb-pp');b.setAttribute('aria-pressed',p);b.title=p?'Reprendre':'Pause';b.setAttribute('aria-label',p?"Reprendre la conversation":"Mettre l'assistant en pause");
+    if(p){convo=false;try{speechSynthesis.cancel()}catch(_){}try{if(rec)rec.abort()}catch(_){}setOrb('idle');$('orb-cap').hidden=true;}
+    else{convo=true;speak=true;$('bot-voice').setAttribute('aria-pressed',true);setOrb('idle');listen();}}
+  $('orb-pp').addEventListener('click',()=>setPaused(!paused));
+  function openBot(){active=true;$('bot').hidden=false;$('bot-open').hidden=true;$('orb-pp').hidden=true;$('orb-cap').hidden=true;
     if(!log.children.length){const t="Bonjour, bienvenue chez 3CC Concept ! Je vous présente deux choses : 3CC Shop, notre site de réservation en ligne pour les pros de l'automobile, et nos formations covering et films bâtiment. Qu'est-ce qui vous intéresse ?";addMsg(t,'b');addActs(['site','formations','demo']);const w=document.createElement('div');w.className='acts';const b=document.createElement('button');b.type='button';b.textContent="C'est quoi 3CC Shop ?";b.addEventListener('click',()=>answer("C'est quoi le site 3CC Shop ?"));w.appendChild(b);log.appendChild(w);greet=t;say(t,listen);}
     }
   let greet='',greeted=false;
