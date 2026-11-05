@@ -286,6 +286,29 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
 .bot-f input{flex:1;min-width:0;font:400 .95rem var(--body);background:#000;color:#fff;border:1px solid #333;border-radius:999px;padding:10px 14px}
 .mic[data-on="1"]{background:var(--orange);border-color:var(--orange);animation:pl 1.4s infinite}
 @media (max-width:700px){.bot{height:min(48vh,440px);width:calc(100vw - 20px);right:calc(10px + env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px))}.bot-log{padding:10px}.msg{font-size:.9rem}}
+/* Boule vocale */
+.orb{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:20;width:78px;height:78px;border-radius:50%;border:0;padding:0;cursor:pointer;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#ffa066 0%,#ff5500 45%,#a33600 100%);box-shadow:0 12px 34px rgba(255,85,0,.5),inset 0 -6px 14px rgba(0,0,0,.35),inset 0 4px 10px rgba(255,255,255,.35);transition:transform .2s}
+.orb:hover{transform:scale(1.08)}
+.orb .bars{display:flex;align-items:center;gap:4px;height:34px;position:relative;z-index:2}
+.orb .bars i{display:block;width:5px;height:8px;border-radius:3px;background:#fff;opacity:.95;transition:height .2s}
+.orb .ring{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(255,85,0,.7);opacity:0;pointer-events:none}
+.orb[data-state="idle"]{animation:breathe 3.2s ease-in-out infinite}
+.orb[data-state="idle"] .bars i{height:6px}
+.orb[data-state="speak"] .bars i{animation:wave .9s ease-in-out infinite}
+.orb[data-state="speak"] .bars i:nth-child(2){animation-delay:-.7s}
+.orb[data-state="speak"] .bars i:nth-child(3){animation-delay:-.4s}
+.orb[data-state="speak"] .bars i:nth-child(4){animation-delay:-.2s}
+.orb[data-state="speak"] .bars i:nth-child(5){animation-delay:-.55s}
+.orb[data-state="listen"] .ring{animation:ripple 1.8s ease-out infinite}
+.orb[data-state="listen"] .ring.r2{animation-delay:.9s}
+.orb[data-state="listen"] .bars i{animation:wave 1.6s ease-in-out infinite;height:10px}
+.orb[data-state="listen"] .bars i:nth-child(odd){animation-delay:-.8s}
+@keyframes wave{0%,100%{height:6px}50%{height:32px}}
+@keyframes ripple{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.orb-cap{position:fixed;right:calc(108px + env(safe-area-inset-right,0px));bottom:calc(28px + env(safe-area-inset-bottom,0px));z-index:20;max-width:min(300px,calc(100vw - 140px));background:rgba(11,11,11,.94);border:1px solid #333;color:#fff;border-radius:12px 12px 2px 12px;padding:10px 13px;font-size:.88rem;line-height:1.4;box-shadow:0 10px 30px rgba(0,0,0,.6);animation:botin .3s ease-out}
+.orb-cap small{display:block;color:var(--orange);font:700 .68rem var(--head);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
+@media (prefers-reduced-motion:reduce){.orb,.orb *{animation:none!important}}
 .bot-note{font-size:.72rem;color:#777;padding:0 14px 8px;background:#0e0e0e}
 </style>
 
@@ -666,14 +689,15 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     <button class="gate-mute" id="gate-mute" type="button">Entrer sans le son</button>
   </div>
 </div>
-<button class="bot-fab" id="bot-open" type="button" aria-label="Ouvrir l'assistant"><span class="pulse"></span><svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.4 1.3 4.5 3.4 6L4.5 21l4.3-2.3c1 .2 2.1.3 3.2.3 5.5 0 10-3.6 10-8s-4.5-8-10-8z"/></svg>Une question ?</button>
+<div class="orb-cap" id="orb-cap" hidden></div>
+<button class="orb" id="bot-open" type="button" data-state="idle" aria-label="Agrandir l'assistant" title="Touchez pour agrandir"><span class="ring"></span><span class="ring r2"></span><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></button>
 <section class="bot" id="bot" hidden aria-label="Assistant 3CC Concept">
   <div class="bot-h">
     <span class="av">3CC</span>
     <div><b>Assistant 3CC</b><small id="bot-st">Parlez, je vous écoute et je vous réponds</small></div>
     <div class="sp">
       <button class="ib" id="bot-voice" type="button" aria-pressed="true" title="Lire les réponses à voix haute"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg></button>
-      <button class="ib" id="bot-x" type="button" aria-label="Fermer l'assistant">✕</button>
+      <button class="ib" id="bot-x" type="button" aria-label="Réduire l'assistant" title="Réduire"><svg viewBox="0 0 24 24"><path d="M5 11h14v2H5z"/></svg></button>
     </div>
   </div>
   <div class="bot-log" id="bot-log" aria-live="polite"></div>
@@ -841,6 +865,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   try{speechSynthesis.onvoiceschanged=fillVoices;}catch(_){}
   setTimeout(fillVoices,50);
   function say(t,cb){if(!speak||!window.speechSynthesis){if(cb)setTimeout(cb,500);return;}try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/3cc\.shop/gi,'trois cé cé point shoppe').replace(/3\s?CC\s+Shop/gi,'trois cé cé, shoppe').replace(/3\s?CC/gi,'trois cé cé').replace(/\bShop\b/gi,'shoppe').replace(/[•→]/g,' ').replace(/€ HT/g,'euros hors taxe').replace(/€/g,'euros'));u.lang='fr-FR';const v=pickVoice();if(v)u.voice=v;u.rate=RATE;u.pitch=1;
+    setOrb('speak');cap(t,'Assistant');const back=()=>{if(!(window.speechSynthesis&&speechSynthesis.speaking))setOrb(on?'listen':'idle');};u.addEventListener('end',back);u.addEventListener('error',back);setTimeout(back,Math.max(2600,t.length*66));
     if(cb){let done=false;const fin=()=>{if(done)return;done=true;clearTimeout(tm);cb();};u.onend=fin;u.onerror=fin;
       // Secours : certains navigateurs ne signalent pas la fin de la lecture
       const tm=setTimeout(fin,Math.max(2500,t.length*65));}
@@ -867,18 +892,23 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     else if(nav&&A[nav].go){setTimeout(A[nav].go,400);}
   }
 
-  function openBot(){$('bot').hidden=false;$('bot-open').hidden=true;
+  // États de la boule et sous-titres
+  let active=false,capT=null;
+  function setOrb(s){const o=$('bot-open');if(o)o.dataset.state=s;}
+  function cap(t,who){const c=$('orb-cap');if(!c)return;clearTimeout(capT);if(!$('bot').hidden){c.hidden=true;return;}const short=t.length>160?t.slice(0,157).replace(/\s+\S*$/,'')+'…':t;c.innerHTML='';const s=document.createElement('small');s.textContent=who;c.appendChild(s);c.appendChild(document.createTextNode(short.replace(/\n+/g,' ')));c.hidden=false;capT=setTimeout(()=>{c.hidden=true;},Math.max(5000,t.length*70));}
+  function mini(){$('bot').hidden=true;$('bot-open').hidden=false;}
+  function openBot(){active=true;$('bot').hidden=false;$('bot-open').hidden=true;$('orb-cap').hidden=true;
     if(!log.children.length){const t="Bonjour, bienvenue chez 3CC Concept ! Je vous présente deux choses : 3CC Shop, notre site de réservation en ligne pour les pros de l'automobile, et nos formations covering et films bâtiment. Qu'est-ce qui vous intéresse ?";addMsg(t,'b');addActs(['site','formations','demo']);const w=document.createElement('div');w.className='acts';const b=document.createElement('button');b.type='button';b.textContent="C'est quoi 3CC Shop ?";b.addEventListener('click',()=>answer("C'est quoi le site 3CC Shop ?"));w.appendChild(b);log.appendChild(w);greet=t;say(t,listen);}
     }
   let greet='',greeted=false;
   $('bot-open').addEventListener('click',openBot);
   // Écran d'entrée : le clic d'entrée autorise le son, l'assistant parle aussitôt
   const gate=$('gate');
-  function enter(withVoice){speak=withVoice;$('bot-voice').setAttribute('aria-pressed',speak);gate.hidden=true;document.body.style.overflow='';openBot();}
+  function enter(withVoice){speak=withVoice;$('bot-voice').setAttribute('aria-pressed',speak);gate.hidden=true;document.body.style.overflow='';openBot();if(withVoice){mini();setTimeout(()=>{const l=[...log.querySelectorAll('.msg.b')].pop();if(l)cap(l.textContent,'Assistant');},50);}}
   $('gate-go').addEventListener('click',()=>enter(true));
   $('gate-mute').addEventListener('click',()=>enter(false));
   document.body.style.overflow='hidden';
-  $('bot-x').addEventListener('click',()=>{$('bot').hidden=true;$('bot-open').hidden=false;try{speechSynthesis.cancel()}catch(_){}try{if(typeof rec!=='undefined'&&rec)rec.abort()}catch(_){} });
+  $('bot-x').addEventListener('click',mini);
   $('bot-vsel').addEventListener('change',()=>{const vs=frVoices();chosen=vs[+$('bot-vsel').value]||null;say("Voici ma nouvelle voix.");});
   $('bot-voice').addEventListener('click',e=>{speak=!speak;e.currentTarget.setAttribute('aria-pressed',speak);if(!speak)try{speechSynthesis.cancel()}catch(_){} });
   $('bot-f').addEventListener('submit',e=>{e.preventDefault();const q=inp.value.trim();if(!q)return;inp.value='';answer(q);});
@@ -887,21 +917,21 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,on=false;
   const mic=$('bot-mic'),note=$('bot-note');
   let convo=true,silent=0;
-  function listen(){if(!convo||!SR||on||$('bot').hidden)return;if(document.querySelector('dialog[open]')){setTimeout(listen,800);return;}if(window.speechSynthesis&&speechSynthesis.speaking){setTimeout(listen,400);return;}setTimeout(()=>{if(!on)mic.click();},250);}
+  function listen(){if(!convo||!SR||on||!active)return;if(document.querySelector('dialog[open]')){setTimeout(listen,800);return;}if(window.speechSynthesis&&speechSynthesis.speaking){setTimeout(listen,400);return;}setTimeout(()=>{if(!on)mic.click();},250);}
   if(!SR){note.textContent="La dictée vocale n'est pas disponible sur ce navigateur : tapez votre question.";}
   mic.addEventListener('click',()=>{
     if(!SR){note.textContent="La dictée vocale n'est pas disponible sur ce navigateur : tapez votre question.";return;}
     if(on){convo=false;rec&&rec.stop();note.textContent='Micro coupé. Appuyez dessus pour reprendre la conversation.';return;}
     convo=true;
     try{rec=new SR();rec.lang='fr-FR';rec.interimResults=true;rec.maxAlternatives=1;
-      rec.onstart=()=>{on=true;mic.dataset.on='1';note.textContent='Je vous écoute…';try{speechSynthesis.cancel()}catch(_){}};
+      rec.onstart=()=>{on=true;mic.dataset.on='1';setOrb('listen');note.textContent='Je vous écoute…';try{speechSynthesis.cancel()}catch(_){}};
       let got=false,blocked=false;
-      rec.onresult=e=>{let t='';for(const r of e.results)t+=r[0].transcript;inp.value=t;if(e.results[e.results.length-1].isFinal){got=true;silent=0;const q=t.trim();inp.value='';try{rec.stop()}catch(_){}if(q)answer(q);}};
+      rec.onresult=e=>{let t='';for(const r of e.results)t+=r[0].transcript;inp.value=t;if($('bot').hidden)cap(t,'Vous');if(e.results[e.results.length-1].isFinal){got=true;silent=0;const q=t.trim();inp.value='';try{rec.stop()}catch(_){}if(q)answer(q);}};
       rec.onerror=e=>{if(e.error==='not-allowed'||e.error==='service-not-allowed'){blocked=true;convo=false;note.textContent="Le micro n'est pas autorisé ici. Autorisez-le dans le navigateur ou tapez votre question.";}else if(e.error!=='no-speech'&&e.error!=='aborted'){note.textContent="Je n'ai pas bien entendu. Répétez ou tapez votre question.";}};
-      rec.onend=()=>{on=false;mic.dataset.on='';
-        if(!got&&!blocked&&convo&&!$('bot').hidden&&!(window.speechSynthesis&&speechSynthesis.speaking)){
+      rec.onend=()=>{on=false;mic.dataset.on='';if(!(window.speechSynthesis&&speechSynthesis.speaking))setOrb('idle');
+        if(!got&&!blocked&&convo&&active&&!(window.speechSynthesis&&speechSynthesis.speaking)){
           if(++silent<=4){setTimeout(listen,250);return;}
-          note.textContent='Je reste disponible : appuyez sur le micro ou tapez votre question.';silent=0;return;}
+          note.textContent='Je reste disponible : appuyez sur le micro ou tapez votre question.';silent=0;if($('bot').hidden)cap('Je reste disponible. Touchez la boule pour me reparler.','Assistant');return;}
         if(note.textContent==='Je vous écoute…')note.textContent='Conversation vocale active.';};
       rec.start();}catch(_){note.textContent="Le micro n'a pas pu démarrer. Tapez votre question.";}
   });
