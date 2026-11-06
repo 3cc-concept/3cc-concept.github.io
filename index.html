@@ -286,6 +286,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
 .bot-f input{flex:1;min-width:0;font:400 .95rem var(--body);background:#000;color:#fff;border:1px solid #333;border-radius:999px;padding:10px 14px}
 .mic[data-on="1"]{background:var(--orange);border-color:var(--orange);animation:pl 1.4s infinite}
 @media (max-width:700px){.bot{height:min(48vh,440px);width:calc(100vw - 20px);right:calc(10px + env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px))}.bot-log{padding:10px}.msg{font-size:.9rem}}
+.filling{outline:2px solid var(--orange)!important;box-shadow:0 0 0 5px rgba(255,85,0,.25)!important}
 /* Boule vocale */
 .orb{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(62px + env(safe-area-inset-bottom,0px));z-index:20;width:78px;height:78px;border-radius:50%;border:0;padding:0;cursor:pointer;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#ffa066 0%,#ff5500 45%,#a33600 100%);box-shadow:0 12px 34px rgba(255,85,0,.5),inset 0 -6px 14px rgba(0,0,0,.35),inset 0 4px 10px rgba(255,255,255,.35);transition:transform .2s}
 .orb:hover{transform:scale(1.08)}
@@ -829,8 +830,8 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     {k:/c.est quoi|qu.est.ce|3\s?cc.?shop|3sc|[àa] quoi sert|utilit[ée]|expli|pr[ée]sent|int[ée]r[êe]t|pourquoi (un|ce) site|avantage/,t:"Avec plaisir, je vous explique.\n\nQu'est-ce que c'est ? 3CC Shop est le site de réservation et de vente en ligne que nous avons créé pour nos propres ateliers de covering et de vitres teintées. Il tourne tous les jours sur 3cc.shop, et nous le proposons aujourd'hui aux autres professionnels.\n\nPourquoi ? Parce qu'un atelier perd beaucoup de temps au téléphone : demandes de prix, disponibilités, rendez-vous oubliés. Et chaque appel manqué peut être un client qui part chez un concurrent.\n\nComment ça marche ? Votre client choisit l'atelier, son véhicule et la prestation. Il voit le prix tout de suite, choisit un créneau libre et paie un acompte. Vous recevez la commande, le planning se remplit tout seul.\n\nÀ quoi ça vous sert ? Moins d'appels pendant vos poses, des commandes jour et nuit, moins de rendez-vous manqués, plus de visibilité sur Google, donc plus de clients et plus de chantiers.\n\nSouhaitez-vous le tester vous-même ou que nous vous en fassions une démonstration ?",a:['test','demo','offres']},
     {k:/grand.?est|alsace|lorraine|vosges|r[ée]gion|pourquoi.*(hors|r[ée]serv)/,t:"La formation films bâtiment est réservée aux personnes installées hors Grand Est, car nous posons nous-mêmes dans la région. La formation covering, elle, est ouverte à tout le monde, quelle que soit votre région.",a:['tabcov','tabbat']},
     {k:/financ|cpf|opco|france travail|p[ôo]le emploi|prise en charge|faf|agefice|fafcea|rembours/,t:"Nos formations peuvent être financées via notre organisme de formation certifié :\n• salarié : OPCO de votre employeur\n• artisan, indépendant : FAFCEA, AGEFICE ou FIF PL\n• demandeur d'emploi : France Travail\n• sinon paiement en 3 fois sans frais.\nNous montons le dossier avec vous après la pré-commande.",a:['formations','cov5']},
-    {k:/(covering|wrapping|vinyle).*(prix|co[uû]t|tarif|combien)|(prix|co[uû]t|tarif|combien).*(covering|wrapping|vinyle)|formation covering/,t:"Formation covering, ouverte à tous :\n• Découverte, 3 jours (21 h) : 1 390 € HT\n• Complet, 5 jours (35 h) avec covering d'un véhicule entier : 2 290 € HT\nProchaines sessions : 18-20 janvier et 12-16 avril 2027.",a:['cov3','cov5']},
-    {k:/(film|vitrage|b[âa]timent|solaire|vitre).*(formation|prix|co[uû]t|tarif|combien|apprendre)|(formation|apprendre).*(film|vitrage|b[âa]timent|solaire)/,t:"Formation films pour bâtiment (réservée hors Grand Est) :\n• Découverte, 3 jours : 1 290 € HT\n• Complet, 5 jours, avec grands formats et chiffrage : 2 190 € HT\nProchaines sessions : 8-12 février et 15-17 mars 2027.",a:['bat3','bat5']},
+    {k:/(covering|wrapping|vinyle).*(prix|co[uû]t|tarif|combien)|(prix|co[uû]t|tarif|combien).*(covering|wrapping|vinyle)|formation covering/,t:"Formation covering, ouverte à tous :\n• Découverte, 3 jours (21 h) : 1 390 € HT\n• Complet, 5 jours (35 h) avec covering d'un véhicule entier : 2 290 € HT\nProchaines sessions : 18-20 janvier et 12-16 avril 2027.\n\nSouhaitez-vous réserver une place ?",a:['cov3','cov5']},
+    {k:/(film|vitrage|b[âa]timent|solaire|vitre).*(formation|prix|co[uû]t|tarif|combien|apprendre)|(formation|apprendre).*(film|vitrage|b[âa]timent|solaire)/,t:"Formation films pour bâtiment (réservée hors Grand Est) :\n• Découverte, 3 jours : 1 290 € HT\n• Complet, 5 jours, avec grands formats et chiffrage : 2 190 € HT\nProchaines sessions : 8-12 février et 15-17 mars 2027.\n\nSouhaitez-vous réserver une place ?",a:['bat3','bat5']},
     {k:/formation|stage|apprendre|devenir poseur|reconversion|former/,t:"Nous proposons deux formations en atelier à Moyenmoutier, en 3 ou 5 jours, 4 stagiaires maximum :\n• Covering, ouverte à tous, dès 1 390 € HT\n• Films bâtiment, réservée hors Grand Est, dès 1 290 € HT\nLaquelle vous intéresse ?",a:['tabcov','tabbat']},
     {k:/date|session|quand|prochain|calendrier/,t:"Prochaines sessions :\n• Covering 3 j : 18 → 20 janv. 2027\n• Films bâtiment 5 j : 8 → 12 fév. 2027\n• Films bâtiment 3 j : 15 → 17 mars 2027\n• Covering 5 j : 12 → 16 avr. 2027",a:['cov3','cov5','bat3','bat5']},
     {k:/d[ée]butant|exp[ée]rience|niveau|pr[ée]requis|jamais/,t:"Aucune expérience n'est demandée. Les formules de 3 jours partent de zéro : il suffit d'être soigneux et à l'aise de ses mains.",a:['formations']},
@@ -864,14 +865,14 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
       b.dataset.aid=i;b.textContent=a.l;w.appendChild(b);});
     log.appendChild(w);log.scrollTop=log.scrollHeight;return w;}
   // Choix de la voix la plus naturelle disponible sur l'appareil
-  const RATE=1.18;let chosen=null;var cur=null;
+  const RATE=1.1;let chosen=null;var cur=null;
   const score=v=>{const n=v.name;let s=0;if(/natural|online|neural/i.test(n))s+=50;if(/premium|enhanced|amélior/i.test(n))s+=40;if(/google/i.test(n))s+=30;if(/denise|vivienne|eloise|henri|remy|audrey|am[eé]lie|thomas|marie|aur[eé]lie/i.test(n))s+=10;if(/fr-FR/i.test(v.lang))s+=5;if(v.localService===false)s+=3;return s;};
   function frVoices(){try{return speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang)).sort((a,b)=>score(b)-score(a));}catch(_){return[];}}
   function pickVoice(){if(chosen)return chosen;return frVoices()[0]||null;}
   function fillVoices(){const sel=$('bot-vsel');if(!sel)return;const vs=frVoices();if(!vs.length){sel.hidden=true;return;}sel.hidden=false;const cur=sel.value;sel.innerHTML=vs.map((v,i)=>'<option value="'+i+'">'+v.name.replace(/Microsoft |Google |\(.*?\)| - .*$|Online/g,'').trim()+(score(v)>=40?' ★':'')+'</option>').join('');if(cur&&cur<vs.length)sel.value=cur;chosen=vs[+sel.value]||vs[0];}
   try{speechSynthesis.onvoiceschanged=fillVoices;}catch(_){}
   setTimeout(fillVoices,50);
-  function say(t,cb){if(!speak||!window.speechSynthesis){if(cb)setTimeout(cb,500);return;}try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/3cc\.shop/gi,'trois cé cé point shoppe').replace(/3\s?CC\s+Shop/gi,'trois cé cé, shoppe').replace(/3\s?CC/gi,'trois cé cé').replace(/\bShop\b/gi,'shoppe').replace(/[•→]/g,' ').replace(/€ HT/g,'euros hors taxe').replace(/€/g,'euros'));u.lang='fr-FR';cur={txt:u.text,idx:0};const me=cur;u.addEventListener('boundary',e=>{if(typeof e.charIndex==='number')me.idx=e.charIndex;});u.addEventListener('end',()=>{if(!paused&&cur===me)cur=null;});const v=pickVoice();if(v)u.voice=v;u.rate=RATE;u.pitch=1;
+  function say(t,cb){if(!speak||!window.speechSynthesis){if(cb)setTimeout(cb,500);return;}try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/3cc\.shop/gi,'trois cé cé point shoppe').replace(/3\s?CC\s+Shop/gi,'trois cé cé, shoppe').replace(/3\s?CC/gi,'trois cé cé').replace(/\bShop\b/gi,'shoppe').replace(/[•→]/g,' ').replace(/€ HT/g,'euros hors taxe').replace(/€/g,'euros').replace(/@/g,' arobase ').replace(/\n+/g,' '));u.lang='fr-FR';cur={txt:u.text,idx:0};const me=cur;u.addEventListener('boundary',e=>{if(typeof e.charIndex==='number')me.idx=e.charIndex;});u.addEventListener('end',()=>{if(!paused&&cur===me)cur=null;});const v=pickVoice();if(v)u.voice=v;u.rate=RATE;u.pitch=1;
     setOrb('speak');cap(t,'Assistant');const back=()=>{if(!(window.speechSynthesis&&speechSynthesis.speaking))setOrb(on?'listen':'idle');};u.addEventListener('end',back);u.addEventListener('error',back);setTimeout(back,Math.max(2600,t.length*66));
     if(cb){let done=false;const fin=()=>{if(done)return;done=true;clearTimeout(tm);cb();};u.onend=fin;u.onerror=fin;
       // Secours : certains navigateurs ne signalent pas la fin de la lecture
@@ -880,6 +881,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
 
   async function answer(q){
     addMsg(q,'u');hist.push({role:'user',content:q});
+    if(handleCtx(q))return;
     let out=null;
     if(ai){const tp=addMsg('…','b','typing');
       try{const msgs=[{role:'user',content:KB+"\n\nCompris ?"},{role:'assistant',content:"Compris.\nACTIONS:"}].concat(hist.slice(-8));
@@ -889,15 +891,143 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
       }catch(_){ai=null;}
       tp.remove();}
     if(!out)out=rules(q);
-    addMsg(out.t,'b');const w=addActs(out.a);hist.push({role:'assistant',content:out.t});say(out.t,listen);
-    // Guidage automatique : l'assistant ouvre la bonne page (ou le formulaire si la personne le demande)
     const ids=out.a||[];
     const nav=ids.find(i=>['site','offres','formations','tabcov','tabbat','accueil'].includes(i));
-    const dlg=ids.find(i=>['demo','cov3','cov5','bat3','bat5'].includes(i));
-    const wants=/je (veux|voudrais|souhaite|aimerais|prends)|inscri|pr[ée].?command|r[ée]server (ma|une) place|une d[ée]mo/i.test(q);
-    if(wants&&dlg&&w){const el=w.querySelector('[data-aid="'+dlg+'"]');if(el)setTimeout(()=>el.click(),600);}
-    else if(nav&&A[nav].go){setTimeout(A[nav].go,400);}
+    const wants=/je (veux|voudrais|souhaite|aimerais|prends)|inscri|pr[ée].?command|r[ée]server|une d[ée]mo|m'inscrire/i.test(q);
+    const tgt=chooseTarget(q,ids);
+    if(nav&&A[nav].go)setTimeout(A[nav].go,400);
+    if(wants&&tgt){if(tgt.endsWith('?'))askDur(tgt.slice(0,3));else askMode(tgt);return;}
+    addMsg(out.t,'b');addActs(out.a);hist.push({role:'assistant',content:out.t});say(out.t,listen);
+    pending=(tgt&&/(d[ée]mo|r[ée]server|place|inscri)[^?]*\?/i.test(out.t))?{k:'offer',target:tgt}:null;
   }
+
+  // ===== Conversation guidée : questions, contexte et remplissage vocal des formulaires =====
+  const strip=s=>(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’']/g,"'");
+  const YES=/\b(oui|ouais|yes|ok|okay|d'accord|bien sur|volontiers|carrement|avec plaisir|j'accepte|allez|vas.?y|exactement|parfait|ca marche)\b/;
+  const NO=/\b(non|pas maintenant|plus tard|non merci|pas besoin|pas la peine|refuse)\b/;
+  const U={zero:0,un:1,une:1,deux:2,trois:3,quatre:4,cinq:5,six:6,sept:7,huit:8,neuf:9,dix:10,onze:11,douze:12,treize:13,quatorze:14,quinze:15,seize:16};
+  const T={vingt:20,trente:30,quarante:40,cinquante:50,soixante:60};
+  function w2d(n){const tk=strip(n).replace(/-/g,' ').split(/\s+/).filter(Boolean);const out=[];let i=0;
+    while(i<tk.length){const w=tk[i];
+      if(w==='quatre'&&tk[i+1]&&/^vingts?$/.test(tk[i+1])){let v=80;i+=2;if(tk[i]==='et')i++;if(tk[i] in U){v+=U[tk[i]];i++;if(v===90&&tk[i] in U&&U[tk[i]]<10){v+=U[tk[i]];i++;}}out.push(String(v));continue;}
+      if(w in T){let v=T[w];i++;if(tk[i]==='et')i++;if(v===60&&tk[i] in U&&U[tk[i]]>=10){v+=U[tk[i]];i++;if(v===70&&tk[i] in U&&U[tk[i]]<10){v+=U[tk[i]];i++;}}else if(tk[i] in U&&U[tk[i]]<10){v+=U[tk[i]];i++;}out.push(String(v));continue;}
+      if(w==='dix'&&tk[i+1] in U&&U[tk[i+1]]>=7&&U[tk[i+1]]<10){out.push(String(10+U[tk[i+1]]));i+=2;continue;}
+      if(w in U){out.push(String(U[w]));i++;continue;}
+      out.push(w);i++;}
+    return out.join(' ');}
+  const capW=s=>s.replace(/(^|[\s-])(\p{L})/gu,(m,a,b)=>a+b.toUpperCase());
+  const dur=n=>/\b(5|cinq)\b|complet/.test(n)?'5':/\b(3|trois)\b|decouverte/.test(n)?'3':'';
+  const NAMES={demo:'votre demande de démo',cov3:'la formation covering de 3 jours',cov5:'la formation covering de 5 jours',bat3:'la formation films bâtiment de 3 jours',bat5:'la formation films bâtiment de 5 jours'};
+  const GE2=['08','10','51','52','54','55','57','67','68','88'];
+  const SYN={
+    'd-met':[[/cover|wrap|vinyle/,0],[/teint|vitre/,1],[/ppf|detail|ceram|protection/,2],[/lav|nettoy/,3],[/pare.?brise/,4],[/garag|carross|mecan/,5],[/batiment|store|vitrage|film/,6]],
+    'd-off':[[/sais pas|hesite|aucune idee|conseil/,0],[/essentiel|petit|simple|base/,1],[/\bpro\b|professionnel/,2],[/reseau|franchise|groupe/,3]],
+    'd-how':[[/visio|video|distance|en ligne|zoom|teams|ordinateur/,0],[/chez moi|mon atelier|mes locaux|deplac|venez|venir chez/,2],[/atelier|moyenmoutier|sur place|chez vous|vos locaux/,1]],
+    'p-fin':[[/accompagn|sais pas|aide|conseil/,0],[/opco|employeur|salarie|patron/,1],[/faf|artisan|independant|agefice|fafcea|fif/,2],[/france travail|pole emploi|chomage|demandeur/,3],[/moi.?meme|seul|perso|autofin|payer|cash|propre/,4]],
+    'p-rap':[[/apres.?midi|aprem|soir/,3],[/midi|dejeuner/,2],[/matin/,1],[/possible|vite|maintenant|n'importe|quand vous|des que/,0]]
+  };
+  function matchOpt(id,n){const el=$(id);const opts=[...el.options];
+    if(id==='d-nb'||id==='p-nb'){const m=w2d(n).match(/\d+/);let k=m?+m[0]:(/seul|juste moi|^moi|une seule|un seul/.test(n)?1:0);if(!k)return null;return opts[Math.min(k,opts.length)-1].value||opts[Math.min(k,opts.length)-1].text;}
+    for(const [re,ix] of (SYN[id]||[]))if(re.test(n))return opts[ix].value||opts[ix].text;
+    let best=-1,bs=0;opts.forEach((o,ix)=>{const ws=strip(o.text).split(/[^a-z0-9]+/).filter(w=>w.length>2);const s=ws.filter(w=>n.includes(w)).length;if(s>bs){bs=s;best=ix;}});
+    if(best>=0)return opts[best].value||opts[best].text;
+    if(id==='d-met')return opts[opts.length-1].value||opts[opts.length-1].text;
+    return null;}
+  const FIELDS={
+    demo:[
+      {id:'d-nom',q:"Très bien, c'est parti. Quel est votre prénom et votre nom ?",k:/\bnom\b|prenom/,l:'Nom'},
+      {id:'d-soc',q:"Quel est le nom de votre entreprise ?",k:/entreprise|societe/,l:'Entreprise'},
+      {id:'d-met',q:"Quel est votre métier principal ? Par exemple covering, vitres teintées, detailing, garage…",t:'select',k:/metier|activite/,l:'Métier'},
+      {id:'d-tel',q:"À quel numéro de téléphone pouvons-nous vous rappeler ?",t:'tel',k:/telephone|numero|portable/,l:'Téléphone'},
+      {id:'d-mail',q:"Votre adresse e-mail ? Dites-la par exemple ainsi : jean point dupont, arobase, gmail point com.",t:'email',k:/mail|adresse/,l:'E-mail'},
+      {id:'d-nb',q:"Combien d'ateliers avez-vous ?",t:'select',k:/atelier/,l:'Ateliers'},
+      {id:'d-off',q:"Quelle offre vous intéresse : Essentiel, Pro, Réseau, ou vous ne savez pas encore ?",t:'select',k:/offre|formule/,l:'Offre'},
+      {id:'d-how',q:"Préférez-vous la démonstration en visio, à notre atelier de Moyenmoutier, ou chez vous ?",t:'select',k:/demo|visio|rendez/,l:'Démo'},
+      {id:'d-msg',q:"Dernière question : que souhaitez-vous vendre en ligne ? Vous pouvez aussi dire « passer ».",opt:true,k:/projet|message|vendre/,l:'Projet'}
+    ],
+    pre:[
+      {id:'p-prenom',q:"Parfait. Quel est votre prénom ?",k:/prenom/,l:'Prénom'},
+      {id:'p-nom',q:"Et votre nom de famille ?",k:/\bnom\b/,l:'Nom'},
+      {id:'p-tel',q:"Votre numéro de téléphone ?",t:'tel',k:/telephone|numero|portable/,l:'Téléphone'},
+      {id:'p-mail',q:"Votre adresse e-mail ? Par exemple : jean point dupont, arobase, gmail point com.",t:'email',k:/mail|adresse/,l:'E-mail'},
+      {id:'p-soc',q:"Le nom de votre entreprise, si vous en avez une. Sinon, dites « passer ».",opt:true,k:/entreprise|societe/,l:'Entreprise'},
+      {id:'p-dep',q:"Dans quel département êtes-vous installé ? Dites simplement le numéro, par exemple 75.",t:'dep',k:/departement/,l:'Département'},
+      {id:'p-nb',q:"Combien de stagiaires souhaitez-vous inscrire ?",t:'select',k:/stagiaire|personne|place/,l:'Stagiaires'},
+      {id:'p-fin',q:"Comment pensez-vous financer la formation ? Par votre employeur, un fonds d'artisan, France Travail, vous-même, ou vous préférez être accompagné ?",t:'select',k:/financ|paie|payer/,l:'Financement'},
+      {id:'p-rap',q:"Quand préférez-vous être rappelé : le matin, le midi, l'après-midi, ou dès que possible ?",t:'select',k:/rappel|moment|heure/,l:'Rappel'},
+      {id:'p-ok',q:"Dernière chose : acceptez-vous d'être recontacté par 3CC Concept au sujet de cette formation ?",t:'check',k:/accord|accept|recontact/,l:'Accord'}
+    ]};
+  let flow=null,pending=null,nudges=0;
+  window.addEventListener('hashchange',()=>{nudges=0;});
+  function bot(t){addMsg(t,'b');hist.push({role:'assistant',content:t});say(t,listen);}
+  function openDlg(target){const b=document.createElement('button');b.type='button';b.hidden=true;if(target==='demo')b.setAttribute('data-open','demo');else b.setAttribute('data-pre',target);document.body.appendChild(b);b.click();b.remove();}
+  function hl(id){document.querySelectorAll('.filling').forEach(e=>e.classList.remove('filling'));const el=id&&$(id);if(el){el.classList.add('filling');try{el.scrollIntoView({block:'center',behavior:'smooth'})}catch(_){}}}
+  function askDur(fam){pending={k:'dur',fam};bot("Très bien. Plutôt la formule découverte de 3 jours, ou la formule complète de 5 jours ?");}
+  function askMode(target){pending={k:'mode',target};bot("Avec plaisir. Voulez-vous que je remplisse "+NAMES[target]+" avec vous maintenant, à la voix ? Ou préférez-vous remplir le formulaire vous-même ?");}
+  function chooseTarget(q,ids){const n=strip(q),d=dur(n);
+    for(const fam of ['cov','bat']){if(ids.includes(fam+'3')&&ids.includes(fam+'5')){if(d)return fam+d;return fam+'?';}}
+    return ids.find(i=>['demo','cov3','cov5','bat3','bat5'].includes(i));}
+  function startFlow(target){openDlg(target);flow={key:target==='demo'?'demo':'pre',target,i:0,stage:'ask',skip:new Set()};setTimeout(askField,450);}
+  function curField(){return FIELDS[flow.key][flow.i];}
+  function askField(pre){while(flow&&curField()&&flow.skip.has(curField().id))flow.i++;
+    const f=flow&&curField();if(!f){review();return;}hl(f.id);bot((pre?pre+' ':'')+f.q);}
+  function shown(f){const el=$(f.id);if(f.t==='check')return el.checked?'oui':'non';if(el.tagName==='SELECT')return el.options[el.selectedIndex].text;return el.value;}
+  function review(){flow.stage='review';hl(null);
+    const parts=FIELDS[flow.key].filter(f=>f.t!=='check'&&$(f.id).value).map(f=>f.l+' : '+shown(f));
+    bot("Parfait, tout est rempli. Je récapitule. "+parts.join('. ')+". Si tout est juste, touchez le bouton orange « Envoyer » pour valider. Pour changer une information, dites par exemple « modifier le téléphone ».");}
+  function endFlow(msg){flow=null;hl(null);if(msg)bot(msg);}
+  function parse(f,q){const raw=q.trim().replace(/[.!?]+$/,'');const n=strip(raw);
+    if(f.opt&&/^(passer|je passe|aucun|aucune|rien|non|pas d|je n'en ai pas|sans|pas encore)/.test(n))return '';
+    switch(f.t){
+      case 'tel':{let d=w2d(n).replace(/\D/g,'');if(d.length===11&&d.startsWith('33'))d='0'+d.slice(2);return d.length>=9&&d.length<=12?d.replace(/(\d{2})(?=\d)/g,'$1 ').trim():null;}
+      case 'email':{let e=n.replace(/\s*(arobase|arrobase|at)\s*/g,'@').replace(/\s*point\s*/g,'.').replace(/\s*(tiret bas|underscore)\s*/g,'_').replace(/\s*tiret\s*/g,'-').replace(/\s+/g,'').replace(/[^a-z0-9@._+-]/g,'');return /^[^@]+@[^@]+\.[a-z]{2,}$/.test(e)?e:null;}
+      case 'dep':{const m=w2d(n).match(/\b2[ab]\b|\d{1,3}/);return m?m[0].toUpperCase().padStart(2,'0'):null;}
+      case 'select':return matchOpt(f.id,n);
+      case 'check':if(YES.test(n))return true;if(NO.test(n))return false;return null;
+      default:{const v=raw.replace(/^(alors|euh|donc|oui)\s*,?\s*/i,'').replace(/^(je m'appelle|je m appelle|mon nom c'est|mon nom est|mon prenom est|c'est|moi c'est|je suis|nous sommes|l'entreprise|la societe|ma societe|mon entreprise)\s+/i,'').trim();return v?(/nom|prenom/.test(f.id)?capW(v):v.charAt(0).toUpperCase()+v.slice(1)):null;}
+    }}
+  const ACK=['Noté.','Très bien.','Parfait.','Merci.','C\'est noté.'];let ai2=0;
+  function flowInput(q){const n=strip(q);
+    if(/\b(annul|arrete|stop|laisse tomber|on arrete)\b/.test(n)){endFlow("D'accord, j'arrête là. Le formulaire reste ouvert, vous pouvez le compléter vous-même.");return;}
+    if(/repete|pardon|j'ai pas compris|comment ca/.test(n)&&flow.stage!=='review'){askField();return;}
+    if(flow.stage==='review'){
+      if(/modif|corrig|chang|erreur|faux|pas bon/.test(n)){const ix=FIELDS[flow.key].findIndex(f=>f.k&&f.k.test(n));
+        if(ix>=0){flow.i=ix;flow.stage='fix';flow.skip.delete(FIELDS[flow.key][ix].id);askField('Bien sûr.');}
+        else bot("Quelle information voulez-vous modifier ? Le nom, le téléphone, l'e-mail…");return;}
+      bot("Pour valider votre demande, touchez simplement le bouton orange « Envoyer » en bas du formulaire. Je reste là si vous voulez modifier quelque chose.");return;}
+    const f=curField();const v=parse(f,q);
+    if(v===null){const hint=f.t==='tel'?"Je n'ai pas bien saisi le numéro. Pouvez-vous le redire, chiffre par chiffre ?":f.t==='email'?"Je n'ai pas bien saisi l'adresse. Redites-la lentement, en disant « arobase » et « point ».":f.t==='dep'?"Je n'ai pas compris le département. Dites seulement son numéro, par exemple 75.":f.t==='check'?"Répondez simplement par oui ou par non.":"Je n'ai pas bien compris. "+f.q;bot(hint);return;}
+    const el=$(f.id);
+    if(f.t==='check'){if(!v){endFlow("Sans votre accord, nous ne pourrons pas vous rappeler. Vous pouvez cocher la case vous-même dans le formulaire si vous changez d'avis.");return;}el.checked=true;}
+    else{el.value=v;el.dispatchEvent(new Event('change',{bubbles:true}));}
+    if(f.id==='p-prenom'){const w=v.split(/\s+/);if(w.length>=2){el.value=w[0];$('p-nom').value=w.slice(1).join(' ');flow.skip.add('p-nom');}}
+    if(f.id==='p-dep'&&/b[aâ]timent/i.test($('pre-title').textContent)&&GE2.includes(v)){
+      endFlow();const c=document.querySelector('#dlg-pre [data-close]');if(c)c.click();pending={k:'offer',target:'cov?'};
+      bot("Je suis désolé : la formation films bâtiment est réservée aux professionnels installés hors Grand Est, je ne peux donc pas vous y inscrire. En revanche, la formation covering est ouverte à tous. Voulez-vous que je vous y inscrive ?");return;}
+    if(flow.stage==='fix'){flow.stage='ask';review();return;}
+    flow.i++;askField(ACK[(ai2++)%ACK.length]);}
+  function handleCtx(q){const n=strip(q);
+    if(flow){flowInput(q);return true;}
+    if(!pending)return false;
+    const p=pending;pending=null;
+    if(p.k==='dur'){const d=dur(n);if(d){askMode(p.fam+d);return true;}if(NO.test(n)){bot("Très bien. Qu'est-ce que vous recherchez exactement ?");return true;}pending=p;bot("Dites « trois jours » pour la formule découverte, ou « cinq jours » pour la formule complète.");return true;}
+    if(p.k==='mode'){
+      if(/moi.?meme|manuel|seul|ecri|formulaire|clavier|\bnon\b|je prefere le faire/.test(n)){openDlg(p.target);bot("Très bien, je vous ouvre le formulaire. Remplissez-le, puis touchez « Envoyer » pour valider.");return true;}
+      if(/voix|vocal|oral|parl|avec vous|maintenant|remplis|vas.?y|allez|\boui\b|d'accord|ok/.test(n)){startFlow(p.target);return true;}
+      pending=p;bot("Dites « à la voix » et je remplis avec vous, ou « moi-même » pour le remplir seul.");return true;}
+    if(p.k==='offer'){
+      if(YES.test(n)||/inscri|reserv|demo/.test(n)){if(p.target.endsWith('?')){const d=dur(n);if(d)askMode(p.target.slice(0,3)+d);else askDur(p.target.slice(0,3));}else askMode(p.target);return true;}
+      if(NO.test(n)){bot("Très bien, pas de souci. Qu'est-ce que vous recherchez exactement ? Je peux vous renseigner sur le site ou sur les formations.");return true;}
+      return false;}
+    return false;}
+  function nudge(){const h=location.hash.slice(1);
+    const t=h==='site'?"Pour vous conseiller au mieux : quel est votre métier, et combien d'ateliers avez-vous ?":h==='formations'?"Quelle formation vous intéresse le plus : le covering, ou les films pour bâtiment ?":"Qu'est-ce que vous recherchez aujourd'hui : un site de réservation pour votre entreprise, ou une formation ?";
+    bot(t);}
+  ['dlg-pre','dlg-demo'].forEach(id=>$(id).addEventListener('close',()=>{if(flow){flow=null;hl(null);}}));
+  [['fd','demo-ok','d-err','dlg-demo'],['fp','pre-ok','p-err','dlg-pre']].forEach(([f,ok,er,dl])=>$(f).addEventListener('submit',()=>setTimeout(()=>{
+    if(!$(ok).hidden){const had=!!flow;flow=null;hl(null);bot((had?"C'est envoyé, merci ! ":"Merci, votre demande est bien enregistrée. ")+"Nous vous rappelons très vite. Puis-je vous aider pour autre chose ?");setTimeout(()=>{try{$(dl).close()}catch(_){}},4000);}
+    else if(flow&&!$(er).hidden){bot("Il manque quelque chose : "+$(er).textContent);}
+  },80)));
 
   // États de la boule et sous-titres
   let active=false,capT=null;
@@ -935,7 +1065,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,on=false;
   const mic=$('bot-mic'),note=$('bot-note');
   let convo=true,silent=0;
-  function listen(){if(!convo||!SR||on||!active)return;if(document.querySelector('dialog[open]')){setTimeout(listen,800);return;}if(window.speechSynthesis&&speechSynthesis.speaking){setTimeout(listen,400);return;}setTimeout(()=>{if(!on)mic.click();},250);}
+  function listen(){if(!convo||!SR||on||!active)return;if(!flow&&document.querySelector('dialog[open]')){setTimeout(listen,800);return;}if(window.speechSynthesis&&speechSynthesis.speaking){setTimeout(listen,400);return;}setTimeout(()=>{if(!on)mic.click();},250);}
   if(!SR){note.textContent="La dictée vocale n'est pas disponible sur ce navigateur : tapez votre question.";}
   mic.addEventListener('click',()=>{
     if(!SR){note.textContent="La dictée vocale n'est pas disponible sur ce navigateur : tapez votre question.";return;}
@@ -943,12 +1073,16 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     convo=true;
     try{rec=new SR();rec.lang='fr-FR';rec.interimResults=true;rec.maxAlternatives=1;
       rec.onstart=()=>{on=true;mic.dataset.on='1';setOrb('listen');note.textContent='Je vous écoute…';try{speechSynthesis.cancel()}catch(_){}};
-      let got=false,blocked=false;
-      rec.onresult=e=>{let t='';for(const r of e.results)t+=r[0].transcript;inp.value=t;if($('bot').hidden)cap(t,'Vous');if(e.results[e.results.length-1].isFinal){got=true;silent=0;const q=t.trim();inp.value='';try{rec.stop()}catch(_){}if(q)answer(q);}};
+      let got=false,blocked=false,vt=null;
+      rec.onresult=e=>{if(got)return;let t='';for(const r of e.results)t+=r[0].transcript;inp.value=t;clearTimeout(vt);
+        const fin=()=>{if(got)return;got=true;silent=0;const q=inp.value.trim();inp.value='';try{rec.stop()}catch(_){}if(q)answer(q);};
+        // Validation automatique : après un court silence, la phrase est envoyée même si le navigateur ne la valide pas
+        if(e.results[e.results.length-1].isFinal)fin();else vt=setTimeout(fin,1300);};
       rec.onerror=e=>{if(e.error==='not-allowed'||e.error==='service-not-allowed'){blocked=true;convo=false;note.textContent="Le micro n'est pas autorisé ici. Autorisez-le dans le navigateur ou tapez votre question.";}else if(e.error!=='no-speech'&&e.error!=='aborted'){note.textContent="Je n'ai pas bien entendu. Répétez ou tapez votre question.";}};
-      rec.onend=()=>{on=false;mic.dataset.on='';if(!(window.speechSynthesis&&speechSynthesis.speaking))setOrb('idle');
+      rec.onend=()=>{on=false;mic.dataset.on='';clearTimeout(vt);if(!(window.speechSynthesis&&speechSynthesis.speaking))setOrb('idle');
+        if(!got&&inp.value.trim()){got=true;silent=0;const q=inp.value.trim();inp.value='';answer(q);return;}
         if(!got&&!blocked&&convo&&active&&!(window.speechSynthesis&&speechSynthesis.speaking)){
-          if(++silent<=4){setTimeout(listen,250);return;}
+          if(++silent<=4){if(silent===2&&flow){const f=curField();if(f){bot('Je vous écoute. '+f.q);return;}}if(silent===2&&!flow&&!pending&&nudges<2){nudges++;nudge();return;}setTimeout(listen,250);return;}
           note.textContent='Je reste disponible : appuyez sur le micro ou tapez votre question.';silent=0;if($('bot').hidden)cap('Je reste disponible. Touchez la boule pour me reparler.','Assistant');return;}
         if(note.textContent==='Je vous écoute…')note.textContent='Conversation vocale active.';};
       rec.start();}catch(_){note.textContent="Le micro n'a pas pu démarrer. Tapez votre question.";}
