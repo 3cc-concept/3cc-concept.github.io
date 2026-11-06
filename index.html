@@ -877,14 +877,14 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
       b.dataset.aid=i;b.textContent=a.l;w.appendChild(b);});
     log.appendChild(w);log.scrollTop=log.scrollHeight;return w;}
   // Choix de la voix la plus naturelle disponible sur l'appareil
-  const RATE=1.1;let chosen=null;var cur=null;
+  const RATE=1.1;let chosen=null;var cur=null,lastSpoken='';
   const score=v=>{const n=v.name;let s=0;if(/natural|online|neural/i.test(n))s+=50;if(/premium|enhanced|amélior/i.test(n))s+=40;if(/google/i.test(n))s+=30;if(/denise|vivienne|eloise|henri|remy|audrey|am[eé]lie|thomas|marie|aur[eé]lie/i.test(n))s+=10;if(/fr-FR/i.test(v.lang))s+=5;if(v.localService===false)s+=3;return s;};
   function frVoices(){try{return speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang)).sort((a,b)=>score(b)-score(a));}catch(_){return[];}}
   function pickVoice(){if(chosen)return chosen;return frVoices()[0]||null;}
   function fillVoices(){const sel=$('bot-vsel');if(!sel)return;const vs=frVoices();if(!vs.length){sel.hidden=true;return;}sel.hidden=false;const cur=sel.value;sel.innerHTML=vs.map((v,i)=>'<option value="'+i+'">'+v.name.replace(/Microsoft |Google |\(.*?\)| - .*$|Online/g,'').trim()+(score(v)>=40?' ★':'')+'</option>').join('');if(cur&&cur<vs.length)sel.value=cur;chosen=vs[+sel.value]||vs[0];}
   try{speechSynthesis.onvoiceschanged=fillVoices;}catch(_){}
   setTimeout(fillVoices,50);
-  function say(t,cb){if(!speak||!window.speechSynthesis){if(cb)setTimeout(cb,500);return;}try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/3cc\.shop/gi,'trois cé cé point shoppe').replace(/3\s?CC\s+Shop/gi,'trois cé cé, shoppe').replace(/3\s?CC/gi,'trois cé cé').replace(/\bShop\b/gi,'shoppe').replace(/[•→]/g,' ').replace(/€ HT/g,'euros hors taxe').replace(/€/g,'euros').replace(/@/g,' arobase ').replace(/\n+/g,' '));u.lang='fr-FR';cur={txt:u.text,idx:0,t0:Date.now()};const me=cur;u.addEventListener('start',()=>{me.t0=Date.now();});u.addEventListener('boundary',e=>{if(typeof e.charIndex==='number')me.idx=e.charIndex;});u.addEventListener('end',()=>{if(!paused&&cur===me)cur=null;});const v=pickVoice();if(v)u.voice=v;u.rate=RATE;u.pitch=1;
+  function say(t,cb){if(!speak||!window.speechSynthesis){if(cb)setTimeout(cb,500);return;}try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/3cc\.shop/gi,'trois cé cé point shoppe').replace(/3\s?CC\s+Shop/gi,'trois cé cé, shoppe').replace(/3\s?CC/gi,'trois cé cé').replace(/\bShop\b/gi,'shoppe').replace(/[•→]/g,' ').replace(/€ HT/g,'euros hors taxe').replace(/€/g,'euros').replace(/@/g,' arobase ').replace(/\n+/g,' '));u.lang='fr-FR';lastSpoken=u.text;cur={txt:u.text,idx:0,t0:Date.now()};const me=cur;u.addEventListener('start',()=>{me.t0=Date.now();});u.addEventListener('boundary',e=>{if(typeof e.charIndex==='number')me.idx=e.charIndex;});u.addEventListener('end',()=>{if(!paused&&cur===me)cur=null;});const v=pickVoice();if(v)u.voice=v;u.rate=RATE;u.pitch=1;
     setOrb('speak');cap(t,'Assistant');const back=()=>{if(!(window.speechSynthesis&&speechSynthesis.speaking))setOrb(on?'listen':'idle');};u.addEventListener('end',back);u.addEventListener('error',back);setTimeout(back,Math.max(2600,t.length*66));
     if(cb){let done=false,tm=null,tries=0;const fin=()=>{if(done)return;done=true;clearTimeout(tm);cb();};u.onend=fin;u.onerror=fin;
       // Secours : certains navigateurs ne signalent pas la fin de la lecture (on attend tant que c'est en pause ou en cours)
@@ -904,7 +904,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
       }catch(_){ai=null;}
       tp.remove();}
     if(!out)out=rules(q);
-    const ids=out.a||[];
+    const ids=out.a||[];lastActs=ids;
     const nav=ids.find(i=>['site','offres','formations','tabcov','tabbat','accueil'].includes(i));
     const wants=/je (veux|voudrais|souhaite|aimerais|prends)|inscri|pr[ée].?command|r[ée]server|une d[ée]mo|m'inscrire/i.test(q);
     const tgt=chooseTarget(q,ids);
@@ -970,7 +970,8 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
       {id:'p-rap',q:"Quand préférez-vous être rappelé : le matin, le midi, l'après-midi, ou dès que possible ?",t:'select',k:/rappel|moment|heure/,l:'Rappel'},
       {id:'p-ok',q:"Dernière chose : acceptez-vous d'être recontacté par 3CC Concept au sujet de cette formation ?",t:'check',k:/accord|accept|recontact/,l:'Accord'}
     ]};
-  let flow=null,pending=null,nudges=0;
+  let flow=null,pending=null,nudges=0,lastActs=[];
+  const isQ=n=>/\?|^(comment|combien|pourquoi|quand|quel|quelle|quels|quelles|qui|ou)\b|c'est quoi|qu'est.ce|est.ce qu|\b(prix|tarif|date|financ)/.test(n);
   window.addEventListener('hashchange',()=>{nudges=0;});
   function bot(t){addMsg(t,'b');hist.push({role:'assistant',content:t});say(t,listen);}
   function openDlg(target){const b=document.createElement('button');b.type='button';b.hidden=true;if(target==='demo')b.setAttribute('data-open','demo');else b.setAttribute('data-pre',target);document.body.appendChild(b);b.click();b.remove();}
@@ -987,6 +988,9 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   function shown(f){const el=$(f.id);if(f.t==='check')return el.checked?'oui':'non';if(el.tagName==='SELECT')return el.options[el.selectedIndex].text;return el.value;}
   function review(){flow.stage='review';hl(null);
     const parts=FIELDS[flow.key].filter(f=>f.t!=='check'&&$(f.id).value).map(f=>f.l+' : '+shown(f));
+    const REQ={demo:['d-nom','d-soc','d-tel','d-mail'],pre:['p-prenom','p-nom','p-tel','p-mail','p-dep']};
+    const miss=FIELDS[flow.key].filter(f=>REQ[flow.key].includes(f.id)&&!$(f.id).value.trim()).map(f=>f.l.toLowerCase());
+    if(miss.length){bot("Presque fini. Je récapitule. "+parts.join('. ')+". Il manque encore : "+miss.join(', ')+". Dites par exemple « modifier le "+miss[0]+" », ou tapez-le directement dans le formulaire, puis touchez « Envoyer ».");return;}
     bot("Parfait, tout est rempli. Je récapitule. "+parts.join('. ')+". Si tout est juste, touchez le bouton orange « Envoyer » pour valider. Pour changer une information, dites par exemple « modifier le téléphone ».");}
   function endFlow(msg){flow=null;hl(null);if(msg)bot(msg);}
   function parse(f,q){const raw=q.trim().replace(/[.!?]+$/,'');const n=strip(raw);
@@ -1009,6 +1013,9 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
         else bot("Quelle information voulez-vous modifier ? Le nom, le téléphone, l'e-mail…");return;}
       bot("Pour valider votre demande, touchez simplement le bouton orange « Envoyer » en bas du formulaire. Je reste là si vous voulez modifier quelque chose.");return;}
     const f=curField();const v=parse(f,q);
+    if(v===null&&isQ(n)&&!/@|\d{3}/.test(q)){const o=rules(q);bot(o.t.replace(/\n\n(Puis-je|Avez-vous|Je reste)[\s\S]*$/,'')+" Reprenons. "+f.q);return;}
+    if(v===null){flow.fails=(flow.fails||0)+1;if(flow.fails>=2){flow.fails=0;flow.i++;askField("Je passe cette question, vous pourrez la compléter vous-même dans le formulaire.");return;}}
+    else flow.fails=0;
     if(v===null){const hint=f.t==='tel'?"Je n'ai pas bien saisi le numéro. Pouvez-vous le redire, chiffre par chiffre ?":f.t==='email'?"Je n'ai pas bien saisi l'adresse. Redites-la lentement, en disant « arobase » et « point ».":f.t==='dep'?"Je n'ai pas compris le département. Dites seulement son numéro, par exemple 75.":f.t==='check'?"Répondez simplement par oui ou par non.":"Je n'ai pas bien compris. "+f.q;bot(hint);return;}
     const el=$(f.id);
     if(f.t==='check'){if(!v){endFlow("Sans votre accord, nous ne pourrons pas vous rappeler. Vous pouvez cocher la case vous-même dans le formulaire si vous changez d'avis.");return;}el.checked=true;}
@@ -1021,13 +1028,18 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     flow.i++;askField(ACK[(ai2++)%ACK.length]);}
   function handleCtx(q){const n=strip(q);
     if(flow){flowInput(q);return true;}
-    if(!pending)return false;
+    if(!pending){if(n.split(/\s+/).length<=4&&!/merci/.test(n)){
+        if(YES.test(n)&&!NO.test(n)){const L=lastActs||[];const t=chooseTarget(q,L);if(t){if(t.endsWith('?'))askDur(t.slice(0,3));else askMode(t);return true;}
+          const nv=L.find(i=>A[i]&&A[i].go);if(nv){A[nv].go();bot("Voici la page. Que souhaitez-vous savoir ?");return true;}
+          bot("Avec plaisir ! Que souhaitez-vous : découvrir le site internet 3CC Shop, ou nos formations ?");return true;}
+        if(NO.test(n)){bot("D'accord. Qu'est-ce que vous recherchez exactement ?");return true;}}
+      return false;}
     const p=pending;pending=null;
-    if(p.k==='dur'){const d=dur(n);if(d){askMode(p.fam+d);return true;}if(NO.test(n)){bot("Très bien. Qu'est-ce que vous recherchez exactement ?");return true;}pending=p;bot("Dites « trois jours » pour la formule découverte, ou « cinq jours » pour la formule complète.");return true;}
+    if(p.k==='dur'){const d=dur(n);if(d){askMode(p.fam+d);return true;}if(NO.test(n)){bot("Très bien. Qu'est-ce que vous recherchez exactement ?");return true;}if(p.tries||isQ(n))return false;p.tries=1;pending=p;bot("Dites « trois jours » pour la formule découverte, ou « cinq jours » pour la formule complète.");return true;}
     if(p.k==='mode'){
       if(/moi.?meme|manuel|seul|ecri|formulaire|clavier|\bnon\b|je prefere le faire/.test(n)){openDlg(p.target);bot("Très bien, je vous ouvre le formulaire. Remplissez-le, puis touchez « Envoyer » pour valider.");return true;}
       if(/voix|vocal|oral|parl|avec vous|maintenant|remplis|vas.?y|allez|\boui\b|d'accord|ok/.test(n)){startFlow(p.target);return true;}
-      pending=p;bot("Dites « à la voix » et je remplis avec vous, ou « moi-même » pour le remplir seul.");return true;}
+      if(p.tries||isQ(n))return false;p.tries=1;pending=p;bot("Dites « à la voix » et je remplis avec vous, ou « moi-même » pour le remplir seul.");return true;}
     if(p.k==='offer'){
       if(YES.test(n)||/inscri|reserv|demo/.test(n)){if(p.target.endsWith('?')){const d=dur(n);if(d)askMode(p.target.slice(0,3)+d);else askDur(p.target.slice(0,3));}else askMode(p.target);return true;}
       if(NO.test(n)){bot("Très bien, pas de souci. Qu'est-ce que vous recherchez exactement ? Je peux vous renseigner sur le site ou sur les formations.");return true;}
@@ -1091,24 +1103,30 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   // Reconnaissance vocale
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,on=false;
   const mic=$('bot-mic'),note=$('bot-note');
-  let convo=true,silent=0;
-  function listen(){if(!convo||!SR||on||!active)return;if(!flow&&document.querySelector('dialog[open]')){setTimeout(listen,800);return;}if(window.speechSynthesis&&speechSynthesis.speaking){setTimeout(listen,400);return;}setTimeout(()=>{if(!on)mic.click();},250);}
+  let convo=true,silent=0,quick=0;
+  // iPhone renvoie souvent la même phrase plusieurs fois en grandissant : on garde la version la plus complète
+  function joinRes(res){let t='';for(const r of res){const x=((r[0]&&r[0].transcript)||'').trim();if(!x)continue;const a=t.toLowerCase(),b=x.toLowerCase();if(!t||b.startsWith(a))t=x;else if(a.includes(b))continue;else t+=' '+x;}return t;}
+  // On ignore ce que le micro capte de la propre voix de l'assistant
+  function isEcho(q){const Q=strip(q).replace(/[^a-z0-9 ]/g,'').trim(),L=strip(lastSpoken||'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ');return Q.split(' ').length>=5&&L.includes(Q);}
+  function listen(){if(!convo||!SR||on||!active)return;if(!flow&&document.querySelector('dialog[open]')){setTimeout(listen,800);return;}if(window.speechSynthesis&&speechSynthesis.speaking){setTimeout(listen,400);return;}setTimeout(()=>{if(!on&&!(window.speechSynthesis&&speechSynthesis.speaking))mic.click();},600);}
   if(!SR){note.textContent="La dictée vocale n'est pas disponible sur ce navigateur : tapez votre question.";}
   mic.addEventListener('click',()=>{
     if(!SR){note.textContent="La dictée vocale n'est pas disponible sur ce navigateur : tapez votre question.";return;}
     if(on){convo=false;rec&&rec.stop();note.textContent='Micro coupé. Appuyez dessus pour reprendre la conversation.';return;}
     convo=true;
     try{rec=new SR();rec.lang='fr-FR';rec.interimResults=true;rec.maxAlternatives=1;
-      rec.onstart=()=>{on=true;mic.dataset.on='1';setOrb('listen');note.textContent='Je vous écoute…';try{speechSynthesis.cancel()}catch(_){}};
-      let got=false,blocked=false,vt=null;
-      rec.onresult=e=>{if(got)return;let t='';for(const r of e.results)t+=r[0].transcript;inp.value=t;clearTimeout(vt);
-        const fin=()=>{if(got)return;got=true;silent=0;const q=inp.value.trim();inp.value='';try{rec.stop()}catch(_){}if(q)answer(q);};
+      rec.onstart=()=>{on=true;recT0=Date.now();mic.dataset.on='1';setOrb('listen');note.textContent='Je vous écoute…';try{speechSynthesis.cancel()}catch(_){}};
+      let got=false,blocked=false,vt=null,recT0=Date.now();
+      rec.onresult=e=>{if(got)return;const t=joinRes(e.results);inp.value=t;clearTimeout(vt);
+        const fin=()=>{if(got)return;const q=inp.value.trim();inp.value='';if(q&&isEcho(q)){try{rec.stop()}catch(_){}return;}got=true;silent=0;try{rec.stop()}catch(_){}if(q)answer(q);};
         // Validation automatique : après un court silence, la phrase est envoyée même si le navigateur ne la valide pas
-        if(e.results[e.results.length-1].isFinal)fin();else vt=setTimeout(fin,1300);};
+        if(e.results[e.results.length-1].isFinal)fin();else vt=setTimeout(fin,1700);};
       rec.onerror=e=>{if(e.error==='not-allowed'||e.error==='service-not-allowed'){blocked=true;convo=false;note.textContent="Le micro n'est pas autorisé ici. Autorisez-le dans le navigateur ou tapez votre question.";}else if(e.error!=='no-speech'&&e.error!=='aborted'){note.textContent="Je n'ai pas bien entendu. Répétez ou tapez votre question.";}};
       rec.onend=()=>{on=false;mic.dataset.on='';clearTimeout(vt);if(!(window.speechSynthesis&&speechSynthesis.speaking))setOrb('idle');
-        if(!got&&inp.value.trim()){got=true;silent=0;const q=inp.value.trim();inp.value='';answer(q);return;}
-        if(!got&&!blocked&&convo&&active&&!(window.speechSynthesis&&speechSynthesis.speaking)){
+        if(!got&&inp.value.trim()){const q=inp.value.trim();inp.value='';if(!isEcho(q)){got=true;silent=0;answer(q);return;}}
+        // Micro coupé tout de suite (erreur passagère) : on réessaie sans relancer le visiteur
+        if(!got&&!blocked&&convo&&active&&Date.now()-recT0<2500){if(++quick<=4){setTimeout(listen,1200);return;}quick=0;}
+        if(!got&&!blocked&&convo&&active&&!(window.speechSynthesis&&speechSynthesis.speaking)){quick=0;
           if(++silent<=4){if(silent===2&&flow){const f=curField();if(f){bot('Je vous écoute. '+f.q);return;}}if(silent===2&&!flow&&!pending&&nudges<2){nudges++;nudge();return;}setTimeout(listen,250);return;}
           note.textContent='Je reste disponible : appuyez sur le micro ou tapez votre question.';silent=0;if($('bot').hidden)cap('Je reste disponible. Touchez la boule pour me reparler.','Assistant');return;}
         if(note.textContent==='Je vous écoute…')note.textContent='Conversation vocale active.';};
