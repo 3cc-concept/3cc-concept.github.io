@@ -945,10 +945,113 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   const FALLBACK_DEF="Je peux vous renseigner sur le site internet 3CC Shop pour les professionnels (prix, démo, fonctionnement) ou sur nos formations covering et films bâtiment (programme, dates, prix, financement). Que souhaitez-vous savoir ?";
   const NUDGE_DEF={accueil:"Qu'est-ce que vous recherchez aujourd'hui : un site de réservation pour votre entreprise, ou une formation ?",site:"Pour vous conseiller au mieux : quel est votre métier, et combien d'ateliers avez-vous ?",formations:"Quelle formation vous intéresse le plus : le covering, ou les films pour bâtiment ?"};
   let BT={};
-  function botApply(c){BT=c||{};R.forEach((r,i)=>{r.t=(BT.r&&BT.r[r.id])||RDEF[i];});}
+
+  // ===== Base de connaissances par sujet et par type de question (pour suivre le fil de la conversation) =====
+  const KN=[
+    {id:'cov-intro',topic:'cov',facet:'intro',label:'Covering · présentation',t:"La formation covering vous apprend l'habillage vinyle des véhicules, des utilitaires et des vitrines. Elle est ouverte à tous et existe en 2 formules : la découverte de 3 jours à 1 390 € HT, ou la formule complète de 5 jours à 2 290 € HT."},
+    {id:'bat-intro',topic:'bat',facet:'intro',label:'Films bâtiment · présentation',t:"La formation films bâtiment vous apprend à poser des films solaires, d'intimité et de sécurité sur les vitrages des maisons, commerces et immeubles. Elle est réservée aux personnes installées hors Grand Est et existe en 2 formules : la découverte de 3 jours à 1 290 € HT, ou la formule complète de 5 jours à 2 190 € HT."},
+    {id:'cov-prix',topic:'cov',facet:'prix',label:'Covering · prix',t:"La formation covering coûte 1 390 € HT par stagiaire pour la formule découverte de 3 jours, et 2 290 € HT pour la formule complète de 5 jours."},
+    {id:'cov-diff',topic:'cov',facet:'diff',label:'Covering · différence 3 jours / 5 jours',t:"La formule de 3 jours, à 1 390 € HT, vous apprend les bases : la préparation des surfaces, la pose à plat, la découpe sans lame, et les pièces galbées comme les rétroviseurs, le capot et les pare-chocs. La formule de 5 jours, à 2 290 € HT, reprend ces 3 jours, puis ajoute le covering d'un véhicule complet avec le formateur, le marquage d'utilitaires et de vitrines, et le chiffrage d'un devis. Pour découvrir ou compléter votre métier, 3 jours suffisent. Pour en faire votre activité, prenez 5 jours."},
+    {id:'cov-prog3',topic:'cov',facet:'prog',v:'3',label:'Covering · programme 3 jours',t:"La formule découverte de covering dure 3 jours, soit 21 heures. Le premier jour : les vinyles, l'outillage et la préparation des surfaces. Le deuxième : la pose à plat, la tension du film et la découpe sans lame. Le troisième : les pièces galbées, comme les rétroviseurs, le capot et les pare-chocs, avec la chauffe et les finitions."},
+    {id:'cov-prog5',topic:'cov',facet:'prog',v:'5',label:'Covering · programme 5 jours',t:"La formule complète de covering dure 5 jours, soit 35 heures. Elle reprend les 3 jours de la découverte. Le quatrième jour, vous réalisez le covering d'un véhicule complet en binôme avec le formateur. Le cinquième, vous apprenez le marquage d'utilitaires et de vitrines, le chiffrage d'un devis, puis vous passez l'évaluation."},
+    {id:'cov-dates',topic:'cov',facet:'dates',label:'Covering · dates',t:"Prochaines sessions de covering : la formule 3 jours du 18 au 20 janvier 2027, et la formule 5 jours du 12 au 16 avril 2027."},
+    {id:'cov-duree',topic:'cov',facet:'duree',label:'Covering · durée',t:"La formation covering dure 3 jours, soit 21 heures, en formule découverte, ou 5 jours, soit 35 heures, en formule complète. Les journées vont de 8 h 30 à 16 h 30."},
+    {id:'cov-public',topic:'cov',facet:'public',label:'Covering · pour qui',t:"La formation covering est ouverte à tous, débutants compris, quelle que soit votre région : reconversion, carrossiers, préparateurs ou créateurs d'entreprise. Aucune expérience n'est demandée."},
+    {id:'bat-prix',topic:'bat',facet:'prix',label:'Films bâtiment · prix',t:"La formation films pour bâtiment coûte 1 290 € HT par stagiaire pour la formule découverte de 3 jours, et 2 190 € HT pour la formule complète de 5 jours."},
+    {id:'bat-diff',topic:'bat',facet:'diff',label:'Films bâtiment · différence 3 jours / 5 jours',t:"La formule de 3 jours, à 1 290 € HT, vous apprend les familles de films, la prise de cotes, la découpe et la pose sur vitrages fixes et ouvrants, jusqu'aux finitions au joint. La formule de 5 jours, à 2 190 € HT, reprend ces 3 jours, puis ajoute les grands formats, les raccords, les films de sécurité, la coupe usine ou sur place, le métré, le calepinage et le chiffrage d'un devis en situation de chantier. Pour découvrir, 3 jours suffisent. Pour en faire votre métier, prenez 5 jours."},
+    {id:'bat-prog3',topic:'bat',facet:'prog',v:'3',label:'Films bâtiment · programme 3 jours',t:"La formule découverte films bâtiment dure 3 jours, soit 21 heures. Le premier jour : les familles de films, les fiches techniques et la préparation du vitrage. Le deuxième : la prise de cotes, la découpe et la pose sur vitrages fixes. Le troisième : les ouvrants, les finitions au joint, le contrôle qualité et l'évaluation."},
+    {id:'bat-prog5',topic:'bat',facet:'prog',v:'5',label:'Films bâtiment · programme 5 jours',t:"La formule complète films bâtiment dure 5 jours, soit 35 heures. Elle reprend les 3 jours de la découverte. Le quatrième jour : les grands formats, les raccords, les films de sécurité, la coupe usine ou sur place. Le cinquième : le métré, le calepinage, le chiffrage d'un devis et une mise en situation de chantier."},
+    {id:'bat-dates',topic:'bat',facet:'dates',label:'Films bâtiment · dates',t:"Prochaines sessions films bâtiment : la formule 5 jours du 8 au 12 février 2027, et la formule 3 jours du 15 au 17 mars 2027."},
+    {id:'bat-duree',topic:'bat',facet:'duree',label:'Films bâtiment · durée',t:"La formation films bâtiment dure 3 jours, soit 21 heures, en formule découverte, ou 5 jours, soit 35 heures, en formule complète. Les journées vont de 8 h 30 à 16 h 30."},
+    {id:'bat-public',topic:'bat',facet:'public',label:'Films bâtiment · pour qui',t:"La formation films bâtiment est ouverte aux débutants, mais elle est réservée aux personnes et entreprises installées en dehors de la région Grand Est, car nous y posons nous-mêmes."},
+    {id:'form-diff',topic:'formation',facet:'diff',label:'Formations · covering ou films bâtiment',t:"Le covering, c'est l'habillage vinyle des véhicules, des utilitaires et des vitrines : la formation est ouverte à tous. Les films bâtiment, ce sont les films solaires, d'intimité et de sécurité posés sur les vitrages des maisons, commerces et immeubles : la formation est réservée aux personnes installées hors Grand Est."},
+    {id:'form-prix',topic:'formation',facet:'prix',label:'Formations · prix',t:"Covering : 1 390 € HT en 3 jours, ou 2 290 € HT en 5 jours. Films bâtiment : 1 290 € HT en 3 jours, ou 2 190 € HT en 5 jours. Le tout par stagiaire, et finançable selon votre situation."},
+    {id:'form-prog',topic:'formation',facet:'prog',label:'Formations · 3 jours ou 5 jours',t:"Chaque formation existe en 2 formules. La découverte de 3 jours apprend les bases et la pose. La formule complète de 5 jours reprend ces 3 jours et ajoute 2 jours pour travailler comme un pro : un chantier complet et le chiffrage d'un devis."},
+    {id:'form-dates',topic:'formation',facet:'dates',label:'Formations · dates',t:"Prochaines sessions : covering 3 jours du 18 au 20 janvier, films bâtiment 5 jours du 8 au 12 février, films bâtiment 3 jours du 15 au 17 mars, et covering 5 jours du 12 au 16 avril 2027."},
+    {id:'form-duree',topic:'formation',facet:'duree',label:'Formations · durée',t:"Chaque formation dure 3 jours, soit 21 heures, ou 5 jours, soit 35 heures. Les journées vont de 8 h 30 à 12 h, puis de 13 h à 16 h 30."},
+    {id:'form-public',topic:'formation',facet:'public',label:'Formations · pour qui',t:"Aucune expérience n'est demandée. La formation covering est ouverte à tous ; la formation films bâtiment est réservée aux personnes installées hors Grand Est."},
+    {id:'form-places',topic:'formation',facet:'places',label:'Formations · places disponibles',t:"Chaque session accueille 4 stagiaires au maximum. Pour savoir s'il reste de la place, le plus simple est de pré-réserver : nous vous confirmons la disponibilité au téléphone, sans paiement à l'avance."},
+    {id:'form-horaires',topic:'formation',facet:'horaires',label:'Formations · horaires',t:"Les journées de formation se déroulent de 8 h 30 à 12 h, puis de 13 h à 16 h 30, avec le déjeuner pris sur place."},
+    {id:'form-lieu',topic:'formation',facet:'lieu',label:'Formations · lieu',t:"Les formations ont lieu dans notre atelier : Pôle Automobile, 181 avenue de la 100e Division US, 88420 Moyenmoutier, dans les Vosges. Nous vous envoyons une liste d'hébergements avec la convocation."},
+    {id:'site-prix',topic:'site',facet:'prix',label:'Site · prix des offres',t:"Le site 3CC Shop existe en 3 offres. Essentiel : 1 900 € HT à la mise en place, puis 79 € HT par mois. Pro : 2 900 € HT, puis 129 € HT par mois. Réseau : sur devis. L'hébergement, les sauvegardes et les mises à jour sont compris."},
+    {id:'site-diff',topic:'site',facet:'diff',label:'Site · différence entre les offres',t:"Essentiel, à 1 900 € HT puis 79 € par mois, est fait pour un atelier, avec jusqu'à 4 prestations, la réservation, le paiement en ligne et une boutique. Pro, à 2 900 € HT puis 129 € par mois, gère jusqu'à 3 ateliers et ajoute le configurateur par modèle de véhicule, l'agenda avec durée d'immobilisation, l'acompte en ligne, la galerie avant/après et une demi-journée de prise en main. Réseau, sur devis, est pensé pour les franchises et les groupes : ateliers illimités, tarifs par site et tableau de bord commun."},
+    {id:'site-essentiel',topic:'site',facet:'prog',v:'essentiel',label:'Site · offre Essentiel',t:"L'offre Essentiel coûte 1 900 € HT à la mise en place, puis 79 € HT par mois. Elle comprend 1 atelier, jusqu'à 4 prestations, la réservation et le paiement en ligne, une boutique produits, l'hébergement, les sauvegardes et les mises à jour."},
+    {id:'site-pro',topic:'site',facet:'prog',v:'pro',label:'Site · offre Pro',t:"L'offre Pro coûte 2 900 € HT à la mise en place, puis 129 € HT par mois. Elle gère jusqu'à 3 ateliers, avec un configurateur par modèle de véhicule, un agenda qui calcule la durée d'immobilisation, l'acompte en ligne, une galerie avant/après et une demi-journée de prise en main."},
+    {id:'site-reseau',topic:'site',facet:'prog',v:'reseau',label:'Site · offre Réseau',t:"L'offre Réseau est sur devis. Elle est pensée pour les franchises et les groupes : ateliers illimités, tarifs par site, tableau de bord commun, connexion à vos outils et un interlocuteur dédié."},
+    {id:'site-prog',topic:'site',facet:'prog',label:'Site · ce que fait le site',t:"Le client choisit l'atelier, son véhicule et la prestation, voit le prix, réserve un créneau libre et paie un acompte. Vous recevez la commande, le créneau est bloqué dans votre agenda, et le client reçoit sa confirmation. Le site comprend aussi une boutique, une galerie de réalisations et des pages pour Google."},
+    {id:'site-duree',topic:'site',facet:'duree',label:'Site · délai de mise en ligne',t:"Comptez environ 3 semaines entre le premier appel et la mise en ligne de votre site, prise en main comprise."}
+  ];
+  const KDEF=KN.map(k=>k.t);
+  const ctx={topic:null,facet:null,v:null};
+  const ACTS={cov:['cov3','cov5'],bat:['bat3','bat5'],site:['demo','offres'],formation:['tabcov','tabbat']};
+  function facetOf(n){
+    if(/differen|compar|entre les deux|par rapport|\bvs\b|versus|qu'est.ce qui change|ce qui change|quel(le)? est (la|le) mieux entre/.test(n))return 'diff';
+    if(/laquelle|lequel|choisir|conseill|recommand|\bmieux\b|pour moi|me faut|adapte|hesite/.test(n))return 'conseil';
+    if(/places? (dispo|restante|libre)|il reste (de la |des )?places?|encore (de la )?place|complet\b.*\?|c'est complet/.test(n))return 'places';
+    if(/duree|combien de (jours|temps|heures)|nombre de jours|ca dure|dure combien|combien ca dure|longtemps/.test(n))return 'duree';
+    if(/\bprix\b|tarif|c'est combien|combien (ca coute|ca fait|c'est|coute|vaut|pour)|\bcoute|\bcout\b|\bcher\b|budget|montant|^combien ?\??$|^et combien/.test(n))return 'prix';
+    if(/horaire|a quelle heure|quelle heure|heure de debut|commence a quelle|finit a quelle/.test(n))return 'horaires';
+    if(/financ|opco|cpf|france travail|prise en charge|materiel|outil|inclus|repas|dejeuner|attestation|\bkit\b|annul|report|engagement|resili|google|referencement|heberg|domaine|mobile|smartphone|garantie/.test(n))return 'skip';
+    if(/programme|contenu|on apprend|j'apprends|apprendre quoi|on fait quoi|qu'est.ce qu'on fait|deroul|jour par jour|en detail|detaill|module|ca comprend|comprend quoi|c'est quoi (la|le) |c'est quoi l'/.test(n))return 'prog';
+    if(/\bdates?\b|\bquand\b|sessions?|prochaine|calendrier|quel mois/.test(n))return 'dates';
+    if(/duree|combien de (jours|temps|heures)|nombre de jours|ca dure|dure combien|longtemps/.test(n))return 'duree';
+    if(/pour qui|debutant|niveau|prerequis|experience|ouvert a|qui peut/.test(n))return 'public';
+    if(/\bou (ca|se|est|a lieu)|\blieu\b|adresse|quelle ville|c'est ou/.test(n))return 'lieu';
+    return null;}
+  function topicOf(n){
+    if(/covering|vinyle/.test(n))return 'cov';
+    if(/\b(films?|batiment|solaires?|vitrages?|intimite|bureaux|fenetres?)\b/.test(n)&&!/vitre teintee/.test(n))return 'bat';
+    if(/\b(essentiel|reseau|abonnement|offres?|site|3cc shop|shop|plateforme|logiciel|reservation en ligne)\b/.test(n)||(/\bpro\b/.test(n)&&!/professionnel/.test(n)))return 'site';
+    if(/\b(formations?|stages?)\b/.test(n))return 'formation';
+    return null;}
+  function variantOf(n){if(/\b(3|trois) ?(jours?|j)\b|decouverte/.test(n))return '3';if(/\b(5|cinq) ?(jours?|j)\b|complete?\b/.test(n))return '5';if(/essentiel/.test(n))return 'essentiel';if(/reseau/.test(n))return 'reseau';if(/\bpro\b/.test(n)&&!/professionnel/.test(n))return 'pro';return null;}
+  function visibleTopic(){const h=location.hash.slice(1);if(h==='site')return 'site';if(h==='formations'){const b=$('t-bat');return b&&b.getAttribute('aria-selected')==='true'?'bat':'cov';}return null;}
+  const kbGet=(t,f,v)=>KN.find(k=>k.topic===t&&k.facet===f&&(v?k.v===v:!k.v))||(v?KN.find(k=>k.topic===t&&k.facet===f&&!k.v):null);
+  // Réponse brute à une question, en tenant compte du sujet en cours
+  function kbText(q,defTopic){const n=fixText(q);let f=facetOf(n),t=topicOf(n);const v=variantOf(n);
+    if(f==='skip')return null;
+    const short=n.split(/\s+/).length<=3,follow=/^(et|puis|aussi|sinon|mais)\b/.test(n);
+    if((!f||f==='prog')&&v&&(follow||short||/c'est quoi|qu'est.ce|explique|detail/.test(n)))f='prog';
+    if(!f&&t&&(follow||short)&&ctx.facet&&!['conseil','lieu','places','intro','horaires','skip'].includes(ctx.facet)&&t!==ctx.topic)f=ctx.facet;
+    if(!f&&(t==='cov'||t==='bat'))f='intro';
+    if(!f)return null;
+    if(!t)t=defTopic||ctx.topic||visibleTopic();
+    if(!t)t=v&&/^[35]$/.test(v)?'formation':(v?'site':null);
+    if(!t)return null;
+    if((t==='cov'||t==='bat')&&['lieu','places','horaires'].includes(f))t='formation';
+    if(f==='intro'&&!(t==='cov'||t==='bat'))return null;
+    if(t==='site'&&f==='conseil')return null;
+    if(f==='conseil'){if(t==='formation')return {t:"Tout dépend de ce que vous voulez poser. "+kbGet('formation','diff').t+" Laquelle vous intéresse ?",topic:t,f,ask:{k:'which'}};
+      return {t:"Pour bien vous conseiller : votre objectif, c'est de découvrir le métier ou d'ajouter une corde à votre arc, ou bien d'en faire votre activité principale ?",topic:t,f,ask:{k:'goal',fam:t}};}
+    let k=kbGet(t,f,(f==='prog'||f==='prix')?v:null);
+    if(!k&&(t==='cov'||t==='bat')&&f==='prog')k=kbGet(t,'diff');
+    if(!k&&t==='site'&&['dates','public'].includes(f))return null;
+    if(!k)k=kbGet('formation',f);
+    if(!k)return null;
+    let txt=k.t;
+    if(f==='prix'&&(t==='cov'||t==='bat')&&(v==='3'||v==='5')){const P={cov:{'3':'1 390','5':'2 290'},bat:{'3':'1 290','5':'2 190'}};txt="La formule de "+v+" jours "+(t==='cov'?'en covering':'en films bâtiment')+" coûte "+P[t][v]+" € HT par stagiaire.";}
+    ctx.topic=t;ctx.facet=f;ctx.v=v;
+    return {t:txt,topic:t,f,v};}
+  function followUp(t,v){if(t==='cov'||t==='bat')return {q:"Souhaitez-vous réserver une place ?",p:{k:'offer',target:t+((v==='3'||v==='5')?v:'?')}};
+    if(t==='site')return {q:"Voulez-vous une démo personnalisée ?",p:{k:'offer',target:'demo'}};
+    if(t==='formation')return {q:"Laquelle vous intéresse : le covering ou les films bâtiment ?",p:{k:'which'}};return null;}
+  // Réponse complète (avec navigation et question de relance)
+  function kbAnswer(q){const n=fixText(q);
+    if(/je (veux|voudrais|souhaite|aimerais|prends|vais prendre)|inscri|reserv|pre.?command/.test(n)&&!isQ(n)){const t=topicOf(n)||((/inscri|reserv|place|pre.?command/.test(n))&&(ctx.topic==='cov'||ctx.topic==='bat')?ctx.topic:null);const v=variantOf(n);
+      if((t==='cov'||t==='bat')&&/inscri|reserv|place|pre.?command|formation|stage|apprendre/.test(n)){ctx.topic=t;const g=t==='cov'?'tabcov':'tabbat';setTimeout(A[g].go,300);if(v==='3'||v==='5')askMode(t+v);else askDur(t);return true;}
+      if(/\bdemo\b|essai|tester le site|essayer/.test(n)){ctx.topic='site';askMode('demo');return true;}}
+    const r=kbText(q);if(!r)return false;
+    if(topicOf(n)){const g=r.topic==='cov'?'tabcov':r.topic==='bat'?'tabbat':r.topic==='site'?'site':null;if(g&&A[g])setTimeout(A[g].go,300);}
+    if(r.ask){pending=r.ask;bot(r.t);lastActs=ACTS[r.topic]||[];return true;}
+    const fu=followUp(r.topic,r.v);bot(r.t+(fu?' '+fu.q:''));if(fu)pending=fu.p;lastActs=ACTS[r.topic]||[];addActs(lastActs);return true;}
+  function topicOfPending(p){if(!p)return null;if(p.fam)return p.fam;if(p.target){if(/^cov/.test(p.target))return 'cov';if(/^bat/.test(p.target))return 'bat';if(p.target==='demo')return 'site';}if(p.k==='ateliers')return 'site';if(p.k==='which')return 'formation';return null;}
+  function reask(p){if(p.k==='dur')return "Alors, plutôt 3 jours ou 5 jours ?";if(p.k==='mode')return "Voulez-vous que je remplisse avec vous à la voix, ou préférez-vous le formulaire ?";if(p.k==='ateliers')return "Combien d'ateliers avez-vous ?";
+    if(p.k==='goal')return "Alors : découvrir le métier, ou en faire votre activité principale ?";if(p.k==='which')return "Laquelle vous intéresse : le covering ou les films bâtiment ?";
+    if(p.k==='offer')return p.target==='demo'?"Voulez-vous une démo personnalisée ?":p.target==='call'?"Voulez-vous que je prenne vos coordonnées ?":"Souhaitez-vous réserver une place ?";return '';}
+  function botApply(c){BT=c||{};R.forEach((r,i)=>{r.t=(BT.r&&BT.r[r.id])||RDEF[i];});KN.forEach((k,i)=>{k.t=(BT.r&&BT.r[k.id])||KDEF[i];});}
   try{botApply(JSON.parse(document.getElementById('bot-cfg').textContent||'{}'));}catch(_){botApply({});}
   window.__botApply=botApply;
-  window.__botTexts=()=>({greet:BT.greet||GREET_DEF,fallback:BT.fallback||FALLBACK_DEF,extra:BT.extra||'',nudge:Object.assign({},NUDGE_DEF,BT.n||{}),items:R.map((r,i)=>({id:r.id,label:r.label,t:r.t,def:RDEF[i]})),defs:{greet:GREET_DEF,fallback:FALLBACK_DEF,extra:'',n:NUDGE_DEF}});
+  window.__botTexts=()=>({greet:BT.greet||GREET_DEF,fallback:BT.fallback||FALLBACK_DEF,extra:BT.extra||'',nudge:Object.assign({},NUDGE_DEF,BT.n||{}),items:R.map((r,i)=>({id:r.id,label:r.label,t:r.t,def:RDEF[i]})).concat(KN.map((k,i)=>({id:k.id,label:k.label,t:k.t,def:KDEF[i]}))),defs:{greet:GREET_DEF,fallback:FALLBACK_DEF,extra:'',n:NUDGE_DEF}});
   const norm=s=>s.toLowerCase().normalize('NFC');
   const END=["Puis-je vous aider pour autre chose ?","Avez-vous d'autres questions ? Je reste à votre disposition.","Je reste à votre écoute si besoin."];let ei=0;
   const polite=t=>/\?\s*$|bientôt|journée à vous|Autre chose/.test(t)?t:t+"\n\n"+END[(ei++)%END.length];
@@ -1021,6 +1124,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   async function answer(q){
     addMsg(q,'u');hist.push({role:'user',content:q});
     if(handleCtx(q))return;
+    if(kbAnswer(q))return;
     if(smart(q))return;
     let out=null;
     if(ai){const tp=addMsg('…','b','typing');
@@ -1031,12 +1135,13 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
       }catch(_){ai=null;}
       tp.remove();}
     if(!out)out=rules(q);
+    {const T={'prix-covering':'cov','prix-batiment':'bat','formations':'formation','dates':'formation','debutant':'formation','inclus':'formation','horaires':'formation','materiel':'formation','financement':'formation','tarifs-site':'site','demo':'site','fonctionnement':'site','perso':'site','gains':'site','metiers':'site','delai':'site','3ccshop':'site','engagement':'site','google':'site','page-site':'site','page-formations':'formation'};if(out.id&&T[out.id]){ctx.topic=T[out.id];ctx.facet=null;}}
     const ids=out.a||[];lastActs=ids;
     const nav=ids.find(i=>['site','offres','formations','tabcov','tabbat','accueil'].includes(i));
     const wants=/je (veux|voudrais|souhaite|aimerais|prends)|inscri|pr[ée].?command|r[ée]server|une d[ée]mo|m'inscrire|rappel/i.test(q)||/je (veux|voudrais|souhaite)|inscri|reserv|une demo/.test(fixText(q));
     const tgt=chooseTarget(q,ids);
     if(nav&&A[nav].go)setTimeout(A[nav].go,400);
-    if(wants&&tgt){if(tgt.endsWith('?'))askDur(tgt.slice(0,3));else askMode(tgt);return;}
+    if(wants&&tgt&&out.id){if(tgt.endsWith('?'))askDur(tgt.slice(0,3));else askMode(tgt);return;}
     addMsg(out.t,'b');addActs(out.a);hist.push({role:'assistant',content:out.t});say(out.t,listen);
     pending=(tgt&&/(d[ée]mo|r[ée]server|place|inscri|coordonn|rappel)[^?]*\?/i.test(out.t))?{k:'offer',target:tgt}:null;
   }
@@ -1111,7 +1216,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   function bot(t){addMsg(t,'b');hist.push({role:'assistant',content:t});say(t,listen);}
   function openDlg(target){const b=document.createElement('button');b.type='button';b.hidden=true;if(target==='demo'||target==='call')b.setAttribute('data-open',target);else b.setAttribute('data-pre',target);document.body.appendChild(b);b.click();b.remove();}
   function hl(id){document.querySelectorAll('.filling').forEach(e=>e.classList.remove('filling'));const el=id&&$(id);if(el){el.classList.add('filling');try{el.scrollIntoView({block:'center',behavior:'smooth'})}catch(_){}}}
-  function askDur(fam){pending={k:'dur',fam};bot("Très bien. Plutôt la formule découverte de 3 jours, ou la formule complète de 5 jours ?");}
+  function askDur(fam){pending={k:'dur',fam};ctx.topic=fam;bot("Très bien. Plutôt la formule découverte de 3 jours, ou la formule complète de 5 jours ?");}
   function askMode(target){pending={k:'mode',target};bot("Avec plaisir. Voulez-vous que je remplisse "+NAMES[target]+" avec vous maintenant, à la voix ? Ou préférez-vous remplir le formulaire vous-même ?");}
   function chooseTarget(q,ids){const n=strip(q),d=dur(n);
     for(const fam of ['cov','bat']){if(ids.includes(fam+'3')&&ids.includes(fam+'5')){if(d)return fam+d;return fam+'?';}}
@@ -1152,7 +1257,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
         else bot("Quelle information voulez-vous modifier ? Le nom, le téléphone, l'e-mail…");return;}
       bot("Pour valider votre demande, touchez simplement le bouton orange « Envoyer » en bas du formulaire. Je reste là si vous voulez modifier quelque chose.");return;}
     const f=curField();const v=parse(f,q);
-    if(v===null&&isQ(n)&&!/@|\d{3}/.test(q)){const o=rules(q);bot(o.t.replace(/\n\n(Puis-je|Avez-vous|Je reste)[\s\S]*$/,'')+" Reprenons. "+f.q);return;}
+    if(v===null&&isQ(n)&&!/@|\d{3}/.test(q)){const kr=kbText(q,flow.key==='demo'?'site':/^cov/.test(flow.target)?'cov':/^bat/.test(flow.target)?'bat':null);if(kr&&!kr.ask){bot(kr.t+' Reprenons. '+f.q);return;}const o=rules(q);bot(o.t.replace(/\n\n(Puis-je|Avez-vous|Je reste)[\s\S]*$/,'')+" Reprenons. "+f.q);return;}
     if(v===null){flow.fails=(flow.fails||0)+1;if(flow.fails>=2){flow.fails=0;flow.i++;askField("Je passe cette question, vous pourrez la compléter vous-même dans le formulaire.");return;}}
     else flow.fails=0;
     if(v===null){const hint=f.t==='tel'?"Je n'ai pas bien saisi le numéro. Pouvez-vous le redire, chiffre par chiffre ?":f.t==='email'?"Je n'ai pas bien saisi l'adresse. Redites-la lentement, en disant « arobase » et « point ».":f.t==='dep'?"Je n'ai pas compris le département. Dites seulement son numéro, par exemple 75.":f.t==='check'?"Répondez simplement par oui ou par non.":"Je n'ai pas bien compris. "+f.q;bot(hint);return;}
@@ -1175,6 +1280,15 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
         if(NO.test(n)){bot("D'accord. Qu'est-ce que vous recherchez exactement ?");return true;}}
       return false;}
     const p=pending;pending=null;
+    if(isQ(n)||facetOf(fixText(q))){const pt=topicOfPending(p),r=kbText(q,pt);
+      if(r&&r.ask){pending=r.ask;bot(r.t);return true;}
+      if(r){const F=['cov','bat','formation'];const same=!pt||pt===r.topic||(F.includes(pt)&&F.includes(r.topic));
+        if(same){bot(r.t+' '+reask(p));pending=p;}else{const fu=followUp(r.topic,r.v);bot(r.t+(fu?' '+fu.q:''));pending=fu?fu.p:null;}lastActs=ACTS[r.topic]||[];return true;}}
+    if(p.k==='goal'){const m=fixText(q);const five=/metier|activite|vivre|lancer|installer|pro\b|professionnel|principal|serieux|a fond|complet|cinq|\b5\b/.test(m),three=/decouvr|tester|essayer|corde|ajouter|complement|curiosit|perso|loisir|trois|\b3\b|base/.test(m);
+      if(five||three){const v=five?'5':'3';const nm=p.fam==='cov'?'covering':'films bâtiment';bot((v==='5'?"Alors je vous conseille la formule complète de 5 jours en "+nm+" : vous repartez prêt à réaliser et chiffrer vos chantiers.":"Alors la formule découverte de 3 jours en "+nm+" est faite pour vous : vous apprenez les bases et la pose.")+" Souhaitez-vous réserver une place ?");pending={k:'offer',target:p.fam+v};lastActs=[p.fam+v];ctx.topic=p.fam;return true;}
+      if(!p.tries){p.tries=1;pending=p;bot(reask(p));return true;}return false;}
+    if(p.k==='which'){const t=topicOf(fixText(q));if(t==='cov'||t==='bat'){const g=t==='cov'?'tabcov':'tabbat';setTimeout(A[g].go,300);ctx.topic=t;const f=ctx.facet&&ctx.facet!=='conseil'?ctx.facet:'diff';const k=kbGet(t,f)||kbGet(t,'diff');pending={k:'offer',target:t+'?'};bot(k.t+" Souhaitez-vous réserver une place ?");lastActs=ACTS[t];return true;}
+      if(!p.tries){p.tries=1;pending=p;bot(reask(p));return true;}return false;}
     if(p.k==='ateliers'){const m=w2d(n).match(/\d+/);const k=m?+m[0]:(/seul|juste|qu'un|un\b/.test(n)?1:0);if(k){prof.ateliers=k;const r=reco();bot(r);lastActs=['demo','offres'];pending={k:'offer',target:'demo'};if(location.hash!=='#site')location.hash='site';return true;}if(p.tries||isQ(n))return false;p.tries=1;pending=p;bot("Dites simplement un nombre, par exemple : deux ateliers.");return true;}
     if(p.k==='dur'){const d=dur(n);if(d){askMode(p.fam+d);return true;}if(NO.test(n)){bot("Très bien. Qu'est-ce que vous recherchez exactement ?");return true;}if(p.tries||isQ(n))return false;p.tries=1;pending=p;bot("Dites « trois jours » pour la formule découverte, ou « cinq jours » pour la formule complète.");return true;}
     if(p.k==='mode'){
