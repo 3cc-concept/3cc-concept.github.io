@@ -1186,6 +1186,11 @@ body.adm-text [data-adm-region]:focus{outline:none}
 #adm-blk button:hover{border-color:#ff5500}
 #adm-blk button.red{background:#d63031;border-color:#d63031}
 body.adm.adm-has-sel{padding-bottom:80px}
+body.adm-text #adm-blk{display:none!important}
+body.adm-text.adm-has-sel{padding-bottom:0}
+body.adm-text #adm-mode{order:-1;background:#1f9d55;border-color:#1f9d55;color:#fff}
+body.adm-text [data-adm-region] :is(h1,h2,h3,h4,p,li,span,a,small,b){outline:none!important}
+body.adm-text #adm-box{box-shadow:none;border-style:dashed;border-width:1px}
 @media (max-width:640px){body.adm-panel-open #adm-blk{display:none}}
 #adm-panel.wide{width:460px}
 .af textarea{width:100%;min-height:76px;resize:vertical;font:400 14px/1.45 system-ui,sans-serif;color:#fff;background:#000;border:1px solid #444;border-radius:6px;padding:8px 10px}
@@ -1252,7 +1257,7 @@ body.adm.adm-has-sel{padding-bottom:80px}
     setMode('blocks');
     toast("Mode administration. Touchez un bloc pour le sélectionner, « Écrire le texte » pour changer les mots, puis « Valider ».");}
   function regions(edit){REGIONS().forEach(r=>{r.setAttribute('data-adm-region','');if(edit){r.setAttribute('contenteditable','true');r.setAttribute('spellcheck','true');}else{r.removeAttribute('contenteditable');r.removeAttribute('spellcheck');}});}
-  function setMode(m){mode=m;regions(m==='text');document.body.classList.toggle('adm-text',m==='text');const b=$('adm-mode');if(b){b.setAttribute('aria-pressed',m==='text');b.textContent=m==='text'?'✎ Écriture activée':'✎ Écrire le texte';}}
+  function setMode(m){mode=m;regions(m==='text');document.body.classList.toggle('adm-text',m==='text');const b=$('adm-mode');if(b){b.setAttribute('aria-pressed',m==='text');b.textContent=m==='text'?'✓ Terminer l’écriture':'✎ Écrire le texte';if(m==='text'){const bar=$('adm-bar');if(bar)bar.scrollLeft=0;}}}
   function curPage(){const g=$('gate');if(g&&!g.hidden)return 'gate';const h=location.hash.slice(1);return ['site','formations'].includes(h)?h:'accueil';}
   function page(p){const g=$('gate');
     if(p==='gate'){g.hidden=false;}else{g.hidden=true;if(location.hash.slice(1)!==p)location.hash=p;}
@@ -1314,7 +1319,7 @@ body.adm.adm-has-sel{padding-bottom:80px}
       case 'phist':openHist();break;
       case 'pbot':openBotTexts();break;
       case 'desel':deselect();break;
-      case 'txt':if(!sel)return;{setMode('text');const r=REGIONS().find(x=>x.contains(sel));try{r.focus({preventScroll:true});const rg=document.createRange();rg.selectNodeContents(sel);rg.collapse(false);const sl=getSelection();sl.removeAllRanges();sl.addRange(rg);}catch(_){}toast('Écrivez directement dans le texte. Touchez « ✎ Écriture activée » pour arrêter.');}break;
+      case 'txt':if(!sel)return;{setMode('text');const r=REGIONS().find(x=>x.contains(sel));try{r.focus({preventScroll:true});const rg=document.createRange();rg.selectNodeContents(sel);rg.collapse(false);const sl=getSelection();sl.removeAllRanges();sl.addRange(rg);}catch(_){}toast('Écrivez. Touchez « ✓ Terminer l’écriture » en haut quand c’est fini.');}break;
       case 'padd':openAdd();break;
       case 'ptheme':openTheme();break;
       case 'pset':openSettings(false);break;
