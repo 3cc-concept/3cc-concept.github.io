@@ -799,6 +799,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   });
 })();
 </script>
+<script type="application/json" id="bot-cfg" data-own>{}</script>
 <script data-own>
 (function(){
   const $=id=>document.getElementById(id);
@@ -848,11 +849,21 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     {k:/contact|joindre|rappel|humain|quelqu.un|mail|num[ée]ro/,t:"Vous pouvez nous joindre au 06 98 80 22 33 ou à contact@3cc.shop. Le plus simple : laissez vos coordonnées dans une demande de démo ou une pré-commande, nous vous rappelons dans la journée.",a:['demo','formations']},
     {k:/merci|super|parfait|top/,t:"Avec plaisir ! Autre chose ?",a:['site','formations']}
   ];
+  const RID=[['bonjour','Bonjour / salutation'],['accueil',"Retour à l'accueil"],['page-site','Ouvrir la page Site internet'],['page-formations','Ouvrir la page Formations'],['aurevoir','Au revoir'],['3ccshop','Explication de 3CC Shop'],['grandest','Règle « hors Grand Est »'],['financement','Financement des formations'],['prix-covering','Prix de la formation covering'],['prix-batiment','Prix de la formation films bâtiment'],['formations','Présentation des formations'],['dates','Dates des sessions'],['debutant','Débutants / prérequis'],['inclus','Ce qui est inclus dans les formations'],['tarifs-site','Tarifs du site 3CC Shop'],['demo','Démo / tester le site'],['fonctionnement','Fonctionnement du site'],['perso','Personnalisation du site'],['gains','Ce que le site fait gagner'],['metiers','Métiers concernés'],['delai','Délai de mise en ligne'],['adresse','Adresse / lieu de formation'],['contact','Contact'],['merci','Remerciements']];
+  const RDEF=R.map(r=>r.t);R.forEach((r,i)=>{r.id=(RID[i]||['r'+i])[0];r.label=(RID[i]||['','Réponse '+(i+1)])[1];});
+  const GREET_DEF="Bienvenue sur 3CC Concept ! Nous proposons 3CC Shop, notre site de réservation en ligne pour les pros de l'automobile, et des formations covering et films bâtiment. Qu'est-ce qui vous intéresse ?";
+  const FALLBACK_DEF="Je peux vous renseigner sur le site internet 3CC Shop pour les professionnels (prix, démo, fonctionnement) ou sur nos formations covering et films bâtiment (programme, dates, prix, financement). Que souhaitez-vous savoir ?";
+  const NUDGE_DEF={accueil:"Qu'est-ce que vous recherchez aujourd'hui : un site de réservation pour votre entreprise, ou une formation ?",site:"Pour vous conseiller au mieux : quel est votre métier, et combien d'ateliers avez-vous ?",formations:"Quelle formation vous intéresse le plus : le covering, ou les films pour bâtiment ?"};
+  let BT={};
+  function botApply(c){BT=c||{};R.forEach((r,i)=>{r.t=(BT.r&&BT.r[r.id])||RDEF[i];});}
+  try{botApply(JSON.parse(document.getElementById('bot-cfg').textContent||'{}'));}catch(_){botApply({});}
+  window.__botApply=botApply;
+  window.__botTexts=()=>({greet:BT.greet||GREET_DEF,fallback:BT.fallback||FALLBACK_DEF,extra:BT.extra||'',nudge:Object.assign({},NUDGE_DEF,BT.n||{}),items:R.map((r,i)=>({id:r.id,label:r.label,t:r.t,def:RDEF[i]})),defs:{greet:GREET_DEF,fallback:FALLBACK_DEF,extra:'',n:NUDGE_DEF}});
   const norm=s=>s.toLowerCase().normalize('NFC');
   const END=["Puis-je vous aider pour autre chose ?","Avez-vous d'autres questions ? Je reste à votre disposition.","Je reste à votre écoute si besoin."];let ei=0;
   const polite=t=>/\?\s*$|bientôt|journée à vous|Autre chose/.test(t)?t:t+"\n\n"+END[(ei++)%END.length];
   function rules(q){const n=norm(q);for(const r of R){if(r.k.test(n))return {t:polite(r.t),a:r.a};}
-    return {t:"Je peux vous renseigner sur le site internet 3CC Shop pour les professionnels (prix, démo, fonctionnement) ou sur nos formations covering et films bâtiment (programme, dates, prix, financement). Que souhaitez-vous savoir ?",a:['site','formations','demo']};}
+    return {t:BT.fallback||FALLBACK_DEF,a:['site','formations','demo']};}
 
   // Connaissances pour l'IA, quand elle est disponible
   const KB="Tu es l'assistant vocal du site 3CC Concept (Moyenmoutier, Vosges). Réponds en français, avec courtoisie et en vouvoyant : salue au premier message, remercie quand on te remercie, termine par une proposition d'aide (« Puis-je vous aider pour autre chose ? »), dis au revoir poliment. Réponses de 1 à 5 phrases courtes, sans markdown, pour être lues à voix haute. Si on te demande ce qu'est le site 3CC Shop, explique dans l'ordre : ce que c'est, pourquoi il existe, comment il fonctionne, ce qu'il apporte au professionnel. Guide la personne vers l'action utile.\nFAITS : 1) Site internet 3CC Shop pour les pros de l'automobile : le client choisit atelier, véhicule, prestation, voit le prix, réserve un créneau libre, paie un acompte ; agenda avec durée d'immobilisation ; boutique ; galerie avant/après ; pages Google. Bénéfices : moins d'appels, aucun client perdu, ventes 24h/24, moins de rendez-vous manqués. Offres : Essentiel 1900 € HT + 79 €/mois (1 atelier, 4 prestations) ; Pro 2900 € HT + 129 €/mois (3 ateliers, configurateur véhicule, acompte, prise en main) ; Réseau sur devis. Mise en ligne en 3 semaines. Tester sur 3cc.shop ou demander une démo personnalisée de 20 min. Métiers : covering, vitres teintées, PPF, detailing, lavage, pare-brise, carrosserie, garages, pneus, motos, camping-cars, vans, bateaux, films bâtiment, enseignes. 2) Formations à Moyenmoutier, 4 stagiaires max, kit, repas et attestation inclus. Covering (ouvert à tous) : 3 j 1390 € HT (18-20 janv. 2027), 5 j 2290 € HT (12-16 avr. 2027). Films bâtiment (réservé aux personnes installées hors Grand Est) : 3 j 1290 € HT (15-17 mars 2027), 5 j 2190 € HT (8-12 fév. 2027). Financement via organisme certifié : OPCO, FAF, France Travail, ou 3 fois sans frais. Contact 06 98 80 22 33, contact@3cc.shop. N'invente aucun autre prix ni fait.\nÀ la fin, ajoute une dernière ligne : ACTIONS: suivie de 0 à 3 identifiants séparés par des virgules parmi site, offres, demo, test, formations, tabcov, tabbat, cov3, cov5, bat3, bat5.";
@@ -886,7 +897,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     if(handleCtx(q))return;
     let out=null;
     if(ai){const tp=addMsg('…','b','typing');
-      try{const msgs=[{role:'user',content:KB+"\n\nCompris ?"},{role:'assistant',content:"Compris.\nACTIONS:"}].concat(hist.slice(-8));
+      try{const msgs=[{role:'user',content:KB+(BT.extra?"\nINFORMATIONS À JOUR, PRIORITAIRES SUR LE RESTE : "+BT.extra:"")+"\n\nCompris ?"},{role:'assistant',content:"Compris.\nACTIONS:"}].concat(hist.slice(-8));
         const r=await ai(msgs,{modelTier:'quick'});const txt=(r&&r.text)||'';
         const m=txt.match(/ACTIONS:\s*([^\n]*)\s*$/i);const ids=m?m[1].split(',').map(s=>s.trim()).filter(Boolean):[];
         const t=txt.replace(/ACTIONS:[^\n]*\s*$/i,'').trim();if(t)out={t,a:ids};
@@ -1023,7 +1034,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
       return false;}
     return false;}
   function nudge(){const h=location.hash.slice(1);
-    const t=h==='site'?"Pour vous conseiller au mieux : quel est votre métier, et combien d'ateliers avez-vous ?":h==='formations'?"Quelle formation vous intéresse le plus : le covering, ou les films pour bâtiment ?":"Qu'est-ce que vous recherchez aujourd'hui : un site de réservation pour votre entreprise, ou une formation ?";
+    const N=Object.assign({},NUDGE_DEF,BT.n||{});const t=h==='site'?N.site:h==='formations'?N.formations:N.accueil;
     bot(t);}
   ['dlg-pre','dlg-demo'].forEach(id=>$(id).addEventListener('close',()=>{if(flow){flow=null;hl(null);}}));
   [['fd','demo-ok','d-err','dlg-demo'],['fp','pre-ok','p-err','dlg-pre']].forEach(([f,ok,er,dl])=>$(f).addEventListener('submit',()=>setTimeout(()=>{
@@ -1063,7 +1074,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   window.__bot={pause:()=>{try{setPaused(true)}catch(_){}}};
   $('orb-pp').addEventListener('click',()=>setPaused(!paused));
   function openBot(){active=true;$('bot').hidden=false;$('bot-open').hidden=true;$('orb-pp').hidden=true;$('orb-cap').hidden=true;
-    if(!log.children.length){const t="Bienvenue sur 3CC Concept ! Nous proposons 3CC Shop, notre site de réservation en ligne pour les pros de l'automobile, et des formations covering et films bâtiment. Qu'est-ce qui vous intéresse ?";addMsg(t,'b');addActs(['site','formations','demo']);const w=document.createElement('div');w.className='acts';const b=document.createElement('button');b.type='button';b.textContent="C'est quoi 3CC Shop ?";b.addEventListener('click',()=>answer("C'est quoi le site 3CC Shop ?"));w.appendChild(b);log.appendChild(w);greet=t;say(t,listen);}
+    if(!log.children.length){const t=BT.greet||GREET_DEF;addMsg(t,'b');addActs(['site','formations','demo']);const w=document.createElement('div');w.className='acts';const b=document.createElement('button');b.type='button';b.textContent="C'est quoi 3CC Shop ?";b.addEventListener('click',()=>answer("C'est quoi le site 3CC Shop ?"));w.appendChild(b);log.appendChild(w);greet=t;say(t,listen);}
     }
   let greet='',greeted=false;
   $('bot-open').addEventListener('click',openBot);
@@ -1113,7 +1124,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   const cfgEl=$('site-cfg');
   let cfg={code:'3cc',palette:['#ff5500','#000000','#ffffff','#b2b2b2','#191919'],theme:{vars:{},head:'',body:'',size:0}};
   try{const c=JSON.parse(cfgEl.textContent);cfg=Object.assign(cfg,c);cfg.theme=Object.assign({vars:{},head:'',body:'',size:0},c.theme||{});}catch(_){}
-  const saveCfg=()=>{cfgEl.textContent=JSON.stringify(cfg);};
+  const saveCfg=()=>{cfgEl.textContent=JSON.stringify(cfg).replace(/</g,'\\u003c');};
 
   const BLOCKS='.tile,.tile li,.tnum,.strip>div,.gain,.perso>div,.trades>div,.trades li,.plan,.plan li,.how>div,.ba>div,.ba li,.cta>div,.course,.course .meta span,.days li,.incl>div,.fund li,.feat,details,.facts>div,.sessions>div,.who span,.tabintro .who,.goal,.demo,.btn,.badge,.kicker,.lead,.navlinks a,.tagline,h1,h2,h3,h4,p,img,section.band,.adm-card';
   const PROTECT='main,header,footer,.nav,.gate-in,[id^="v-"],[role="tabpanel"]';
@@ -1168,7 +1179,21 @@ body.adm-text [data-adm-region]:focus{outline:none}
 .pchip .x{background:none;border:0;color:#999;cursor:pointer;font-size:14px;padding:0 3px}
 .asub{margin:14px 0 8px;font:900 12px Roboto,Arial,sans-serif;text-transform:uppercase;letter-spacing:.8px;color:#fff}
 .ahelp{margin:0 0 10px;color:#9a9a9a;font-size:12px}
-#adm-toast{position:fixed;z-index:1003;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));max-width:calc(100vw - 30px);background:#111;color:#fff;border:1px solid #ff5500;border-radius:8px;padding:11px 16px;font:500 14px system-ui,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+#adm-blk{position:fixed;z-index:1000;left:50%;transform:translateX(-50%);bottom:calc(12px + env(safe-area-inset-bottom,0px));max-width:calc(100vw - 16px);display:flex;align-items:center;gap:6px;padding:8px;background:#111;border:1.5px solid #ff5500;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.7);overflow-x:auto;scrollbar-width:none}
+#adm-blk::-webkit-scrollbar{display:none}
+#adm-blk span{flex:none;font:900 11px Roboto,Arial,sans-serif;letter-spacing:1px;text-transform:uppercase;color:#ff5500;padding:0 6px}
+#adm-blk button{flex:none;height:36px;padding:0 12px;border-radius:8px;border:1px solid #3a3a3a;background:#1d1d1d;color:#fff;font:600 13px system-ui,sans-serif;cursor:pointer;white-space:nowrap}
+#adm-blk button:hover{border-color:#ff5500}
+#adm-blk button.red{background:#d63031;border-color:#d63031}
+body.adm.adm-has-sel{padding-bottom:80px}
+@media (max-width:640px){body.adm-panel-open #adm-blk{display:none}}
+#adm-panel.wide{width:460px}
+.af textarea{width:100%;min-height:76px;resize:vertical;font:400 14px/1.45 system-ui,sans-serif;color:#fff;background:#000;border:1px solid #444;border-radius:6px;padding:8px 10px}
+.mini{background:#1d1d1d;border:1px solid #444;color:#ddd;border-radius:5px;padding:2px 7px;font:500 11px system-ui,sans-serif;cursor:pointer}
+.hrow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-top:1px solid #2b2b2b}
+.hrow span{font-size:12.5px;color:#ddd}
+.hrow small{display:block;color:#888}
+#adm-toast{position:fixed;z-index:1003;left:50%;transform:translateX(-50%);top:calc(66px + env(safe-area-inset-top,0px));max-width:calc(100vw - 30px);background:#111;color:#fff;border:1px solid #ff5500;border-radius:8px;padding:11px 16px;font:500 14px system-ui,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.6)}
 #adm-toast.bad{border-color:#d63031}
 .adm-modal{position:fixed;inset:0;z-index:1005;background:rgba(0,0,0,.78);display:grid;place-items:center;padding:16px}
 .adm-modal .card{width:min(360px,100%);background:#121212;border:1px solid #333;border-radius:12px;padding:20px;display:grid;gap:12px;color:#fff;font:400 14px system-ui,sans-serif}
@@ -1194,16 +1219,17 @@ body.adm-text [data-adm-region]:focus{outline:none}
   <button class="ab" id="adm-mode" data-a="mode" aria-pressed="false">✎ Écrire le texte</button>
   <button class="ab" data-a="padd">＋ Ajouter</button>
   <button class="ab" data-a="ptheme">◐ Couleurs &amp; polices</button>
-  <button class="ab" data-a="undo">↶ Annuler</button>
+  <button class="ab" data-a="undo" title="Annuler la dernière action">↶ Annuler</button>
+  <button class="ab" data-a="redo" title="Rétablir">↷ Rétablir</button>
+  <button class="ab" data-a="phist">Historique</button>
+  <button class="ab" data-a="pbot">Paroles de l'assistant</button>
   <button class="ab" data-a="pset" title="Réglages">⚙ Réglages</button>
   <span class="asep"></span>
   <button class="ab" id="adm-quit" data-a="quit">Quitter</button>
   <button class="ab ok" id="adm-save" data-a="save">✓ Valider</button>
 </div>
 <div id="adm-box" hidden></div>
-<div class="adm-h" id="adm-mini" hidden><button data-a="up" title="Monter">↑</button><button data-a="down" title="Descendre">↓</button><button data-a="parent">Bloc parent</button><button data-a="pstyle">Style</button></div>
-<div class="adm-h" id="adm-xw" hidden><button data-a="del" title="Supprimer ce bloc" aria-label="Supprimer ce bloc">✕</button></div>
-<div class="adm-h" id="adm-pw" hidden><button data-a="dup">＋ Ajouter un encart pareil</button></div>
+<div id="adm-blk" hidden><span id="adm-bname">Bloc</span><button data-a="txt">✎ Modifier le texte</button><button data-a="pstyle">Style</button><button data-a="dup">＋ Dupliquer</button><button data-a="up" title="Monter" aria-label="Monter">↑</button><button data-a="down" title="Descendre" aria-label="Descendre">↓</button><button data-a="parent">Bloc parent</button><button data-a="del" class="red">✕ Supprimer</button><button data-a="desel" aria-label="Désélectionner">Fermer</button></div>
 <div id="adm-panel" hidden></div>
 <div id="adm-toast" hidden></div>
 <input type="file" id="adm-file" accept="image/*" hidden>`;
@@ -1218,7 +1244,8 @@ body.adm-text [data-adm-region]:focus{outline:none}
   function openLogin(){if(on||$('adm-login'))return;loginUI();}
 
   // ---------- Entrée / sortie ----------
-  function enter(){build();on=true;document.body.classList.add('adm');
+  let pristine='';
+  function enter(){try{pristine=buildDoc(!!(window.claude&&window.claude.use));}catch(_){pristine='';}build();on=true;document.body.classList.add('adm');
     try{window.__bot&&window.__bot.pause()}catch(_){}try{speechSynthesis.cancel()}catch(_){}
     document.querySelectorAll('dialog[open]').forEach(d=>{try{d.close()}catch(_){}});
     const h=location.hash.slice(1);page(['site','formations'].includes(h)?h:'accueil');
@@ -1237,14 +1264,12 @@ body.adm-text [data-adm-region]:focus{outline:none}
   // ---------- Sélection ----------
   function deselect(){sel=null;place();if(panelKind==='style')closePanel();}
   function select(el){sel=el;styleSnap=false;place();if(panelKind==='style')openStyle();}
-  function place(){const ids=['adm-box','adm-mini','adm-xw','adm-pw'];
-    if(!sel||!sel.isConnected||!on){ids.forEach(i=>{if($(i))$(i).hidden=true;});return;}
-    const r=sel.getBoundingClientRect(),sx=scrollX,sy=scrollY,vw=document.documentElement.clientWidth;
-    const box=$('adm-box');Object.assign(box.style,{left:(r.left+sx-4)+'px',top:(r.top+sy-4)+'px',width:(r.width+8)+'px',height:(r.height+8)+'px'});box.hidden=false;
-    const prot=sel.matches(PROTECT);
-    const mini=$('adm-mini');mini.hidden=false;const mt=Math.max(r.top-42,64);mini.style.top=(mt+sy)+'px';mini.style.left=(Math.min(Math.max(6,r.left),vw-250)+sx)+'px';
-    const xw=$('adm-xw');xw.hidden=prot;xw.style.top=(Math.max(r.top-16,mt+38)+sy)+'px';xw.style.left=(Math.min(r.right-18,vw-40)+sx)+'px';
-    const pw=$('adm-pw');pw.hidden=prot;pw.style.top=(r.bottom+sy-14)+'px';pw.style.left=(Math.min(Math.max(r.left+r.width/2,110),vw-110)+sx)+'px';}
+  function bname(el){const t=el.tagName;if(t==='IMG')return 'Image';if(/^H[1-4]$/.test(t))return 'Titre';if(el.matches('.btn,.navlinks a'))return 'Bouton';if(el.matches('section,.band'))return 'Section';if(t==='P'||el.matches('.lead,.kicker,.tagline'))return 'Texte';if(t==='LI'||el.matches('.who span,.badge,.tnum,.meta span'))return 'Étiquette';return 'Encart';}
+  function place(){const box=$('adm-box'),blk=$('adm-blk');if(!box)return;
+    if(!sel||!sel.isConnected||!on){box.hidden=true;if(blk)blk.hidden=true;document.body.classList.remove('adm-has-sel');return;}
+    const r=sel.getBoundingClientRect();Object.assign(box.style,{left:(r.left+scrollX-4)+'px',top:(r.top+scrollY-4)+'px',width:(r.width+8)+'px',height:(r.height+8)+'px'});box.hidden=false;
+    const prot=sel.matches(PROTECT);blk.hidden=false;document.body.classList.add('adm-has-sel');$('adm-bname').textContent=bname(sel);
+    blk.querySelectorAll('[data-a="del"],[data-a="dup"],[data-a="up"],[data-a="down"]').forEach(x=>x.hidden=prot);}
   addEventListener('scroll',()=>{if(on)place();},{passive:true});
   addEventListener('resize',()=>{if(on)place();});
 
@@ -1270,8 +1295,13 @@ body.adm-text [data-adm-region]:focus{outline:none}
   addEventListener('hashchange',checkHash);setTimeout(checkHash,0);
 
   // ---------- Historique (annuler) ----------
-  function snap(){undo.push({r:REGIONS().map(x=>x.innerHTML),t:$('theme-ovr').textContent,c:JSON.stringify(cfg)});if(undo.length>40)undo.shift();}
-  function doUndo(){const s=undo.pop();if(!s){toast('Rien à annuler.');return;}REGIONS().forEach((x,i)=>{if(s.r[i]!=null)x.innerHTML=s.r[i];});$('theme-ovr').textContent=s.t;cfg=JSON.parse(s.c);saveCfg();sel=null;place();if(panelKind)closePanel();toast('Dernière action annulée.');}
+  let redo=[];
+  function state(){return {r:REGIONS().map(x=>x.innerHTML),t:$('theme-ovr').textContent,c:JSON.stringify(cfg),b:$('bot-cfg')?$('bot-cfg').textContent:'{}'};}
+  function restore(s){REGIONS().forEach((x,i)=>{if(s.r[i]!=null)x.innerHTML=s.r[i];});$('theme-ovr').textContent=s.t;cfg=JSON.parse(s.c);saveCfg();if($('bot-cfg')){$('bot-cfg').textContent=s.b;try{window.__botApply&&window.__botApply(JSON.parse(s.b||'{}'))}catch(_){}}sel=null;place();if(panelKind)closePanel();}
+  function snap(){undo.push(state());if(undo.length>60)undo.shift();redo=[];}
+  function doUndo(){const s=undo.pop();if(!s){toast('Rien à annuler.');return;}redo.push(state());restore(s);toast('Action annulée. « ↷ Rétablir » pour la refaire.');}
+  function doRedo(){const s=redo.pop();if(!s){toast('Rien à rétablir.');return;}undo.push(state());restore(s);toast('Action rétablie.');}
+  document.addEventListener('keydown',e=>{if(!on||!(e.ctrlKey||e.metaKey)||e.key.toLowerCase()!=='z')return;const a=document.activeElement;if(a&&(a.isContentEditable||a.closest&&a.closest('#adm-panel')))return;e.preventDefault();e.shiftKey?doRedo():doUndo();});
 
   // ---------- Actions sur un bloc ----------
   function act(a,btn){
@@ -1280,6 +1310,11 @@ body.adm-text [data-adm-region]:focus{outline:none}
       case 'tab':pass=true;try{$(btn.dataset.v)&&$(btn.dataset.v).click();}finally{pass=false;}deselect();break;
       case 'mode':setMode(mode==='text'?'blocks':'text');break;
       case 'undo':doUndo();break;
+      case 'redo':doRedo();break;
+      case 'phist':openHist();break;
+      case 'pbot':openBotTexts();break;
+      case 'desel':deselect();break;
+      case 'txt':if(!sel)return;{setMode('text');const r=REGIONS().find(x=>x.contains(sel));try{r.focus({preventScroll:true});const rg=document.createRange();rg.selectNodeContents(sel);rg.collapse(false);const sl=getSelection();sl.removeAllRanges();sl.addRange(rg);}catch(_){}toast('Écrivez directement dans le texte. Touchez « ✎ Écriture activée » pour arrêter.');}break;
       case 'padd':openAdd();break;
       case 'ptheme':openTheme();break;
       case 'pset':openSettings(false);break;
@@ -1300,8 +1335,8 @@ body.adm-text [data-adm-region]:focus{outline:none}
 
   // ---------- Panneaux ----------
   const panel=()=>$('adm-panel');
-  function showPanel(kind,html){panelKind=kind;const p=panel();p.innerHTML=html;p.hidden=false;}
-  function closePanel(){panelKind='';const p=panel();if(p){p.hidden=true;p.innerHTML='';}}
+  function showPanel(kind,html){panelKind=kind;const p=panel();p.innerHTML=html;p.hidden=false;p.classList.toggle('wide',kind==='bot');document.body.classList.add('adm-panel-open');p.scrollTop=0;}
+  function closePanel(){panelKind='';document.body.classList.remove('adm-panel-open');const p=panel();if(p){p.hidden=true;p.innerHTML='';}}
   function hex(c,fb){if(!c)return fb||'#000000';c=c.trim();if(/^#[0-9a-f]{6}$/i.test(c))return c.toLowerCase();if(/^#[0-9a-f]{3}$/i.test(c))return '#'+c.slice(1).split('').map(x=>x+x).join('').toLowerCase();const m=c.match(/rgba?\(([^)]+)\)/);if(!m)return fb||'#000000';const v=m[1].split(/[ ,\/]+/).filter(Boolean).map(Number);if(v.length>3&&v[3]===0)return fb||'#000000';return '#'+v.slice(0,3).map(n=>Math.round(n).toString(16).padStart(2,'0')).join('');}
   const chips=k=>cfg.palette.map(c=>`<button type="button" class="chip" data-p="chip" data-k="${k}" data-v="${esc(c)}" style="background:${esc(c)}" title="${esc(c)}"></button>`).join('');
   const fam1=f=>(f||'').split(',')[0].replace(/["']/g,'').trim();
@@ -1470,35 +1505,83 @@ ${TV.map(([v,l])=>`<div class="af"><label>${l}</label><div class="arow"><input t
       return '<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>'+reset+'</style></head><body>'+body.innerHTML+'</body></html>';}
     return '<!doctype html>\n'+root.outerHTML;}
   const b64=s=>{const by=new TextEncoder().encode(s);let bin='';for(let i=0;i<by.length;i+=0x8000)bin+=String.fromCharCode.apply(null,by.subarray(i,i+0x8000));return btoa(bin);};
-  async function pushGh(g,html){
+  async function pushGh(g,html,msg){
     const url='https://api.github.com/repos/'+encodeURIComponent(g.owner)+'/'+encodeURIComponent(g.repo)+'/contents/'+g.path.split('/').map(encodeURIComponent).join('/');
     const H={'Authorization':'Bearer '+g.token,'Accept':'application/vnd.github+json'};
     let sha=null;let r;
     try{r=await fetch(url+'?ref='+encodeURIComponent(g.branch)+'&t='+Date.now(),{headers:H,cache:'no-store'});}catch(_){throw new Error("Impossible de joindre GitHub. Vérifiez la connexion internet.");}
     if(r.status===401)throw new Error('Jeton GitHub refusé. Vérifiez-le dans ⚙ Réglages.');
     if(r.ok)sha=(await r.json()).sha;else if(r.status!==404)throw new Error('GitHub a répondu une erreur '+r.status+'.');
-    const body={message:'Mise à jour du site depuis l’administration',content:b64(html),branch:g.branch};if(sha)body.sha=sha;
+    const body={message:msg||'Mise à jour du site depuis l’administration',content:b64(html),branch:g.branch};if(sha)body.sha=sha;
     const p=await fetch(url,{method:'PUT',headers:Object.assign({'Content-Type':'application/json'},H),body:JSON.stringify(body)});
     if(!p.ok){const j=await p.json().catch(()=>({}));
       if(p.status===401)throw new Error('Jeton GitHub refusé. Vérifiez-le dans ⚙ Réglages.');
       if(p.status===403||p.status===404)throw new Error("GitHub refuse l'écriture : vérifiez le nom d'utilisateur, le nom du dépôt, et que le jeton a « Contents : Read and write » sur ce dépôt.");
       if(p.status===409||p.status===422)throw new Error('GitHub a refusé la mise à jour (conflit). Réessayez dans quelques secondes.');
       throw new Error('GitHub : '+(j.message||p.status));}}
+  function backups(){try{return JSON.parse(localStorage.getItem('adm-bk')||'[]')}catch(_){return []}}
+  function addBackup(h){if(!h)return;let b=backups();b.unshift({d:Date.now(),h});b=b.slice(0,5);while(b.length){try{localStorage.setItem('adm-bk',JSON.stringify(b));return;}catch(_){b.pop();}}}
+  const fmt=d=>{try{return new Date(d).toLocaleString('fr-FR',{dateStyle:'short',timeStyle:'short'})}catch(_){return String(d)}};
+  async function publishDoc(html,msg){
+    if(window.claude&&window.claude.use){let art=null;try{art=await window.claude.use('artifact');}catch(_){}if(!art)throw new Error("Vous n'avez pas le droit de modifier cette page.");try{await art.publish(html);}catch(e){throw new Error(e&&e.code==='conflict'?'Une autre version vient d’être enregistrée. Rechargez la page.':'Enregistrement impossible ici.');}return 'art';}
+    const g=ghGet();if(!g.token||!g.owner||!g.repo){openSettings(false);throw new Error('Connectez d’abord GitHub dans ⚙ Réglages.');}
+    await pushGh(g,html,msg);return 'gh';}
+  function openHist(){const isArt=!!(window.claude&&window.claude.use),g=ghGet(),bk=backups();
+    showPanel('hist',`<h4>Historique <button type="button" data-p="close" aria-label="Fermer">✕</button></h4>
+<p class="ahelp">Pendant vos modifications : « ↶ Annuler » revient en arrière action par action, « ↷ Rétablir » refait. Ici, vous revenez à une version déjà validée.</p>
+<p class="asub">Versions gardées sur cet appareil</p>
+${bk.length?bk.map((b,i)=>`<div class="hrow"><span>Avant la validation du<small>${fmt(b.d)}</small></span><button type="button" class="ab" data-p="hlocal" data-v="${i}">Revenir</button></div>`).join(''):'<p class="ahelp">Aucune pour l’instant : une copie est gardée automatiquement à chaque « Valider ».</p>'}
+${isArt?'':`<p class="asub">Versions en ligne sur GitHub</p><div id="adm-ghl"><p class="ahelp">${g.token?'Chargement…':'Connectez GitHub dans ⚙ Réglages pour voir les versions en ligne.'}</p></div>`}`);
+    if(!isArt&&g.token)loadCommits(g);}
+  async function loadCommits(g){const box=$('adm-ghl');try{
+    const r=await fetch('https://api.github.com/repos/'+encodeURIComponent(g.owner)+'/'+encodeURIComponent(g.repo)+'/commits?path='+encodeURIComponent(g.path)+'&sha='+encodeURIComponent(g.branch)+'&per_page=12',{headers:{'Authorization':'Bearer '+g.token,'Accept':'application/vnd.github+json'},cache:'no-store'});
+    if(!r.ok)throw 0;const list=await r.json();if(!box||!box.isConnected)return;
+    box.innerHTML=list.map((c,i)=>`<div class="hrow"><span>${esc((c.commit.message||'').split('\n')[0].slice(0,60))}<small>${fmt(c.commit.author&&c.commit.author.date)}${i===0?' · en ligne':''}</small></span>${i===0?'':`<button type="button" class="ab" data-p="hgh" data-v="${esc(c.sha)}">Revenir</button>`}</div>`).join('')||'<p class="ahelp">Aucune version trouvée.</p>';
+  }catch(_){if(box)box.innerHTML='<p class="ahelp">Impossible de lire les versions GitHub. Vérifiez les Réglages.</p>';}}
+  async function restoreHtml(html,label){toast('Retour à la version '+label+'…');
+    try{const k=await publishDoc(html,'Retour à la version '+label);if(k==='gh'){leave();toast('Version rétablie. Le site sera à jour dans 1 à 2 minutes : rechargez alors la page.');}}
+    catch(e){toast(e.message,true);}}
+  function confirmBtn(b){if(b.dataset.sure)return true;b.dataset.sure='1';const t=b.textContent;b.textContent='Confirmer ?';setTimeout(()=>{delete b.dataset.sure;b.textContent=t;},3500);return false;}
+  document.addEventListener('click',async e=>{const b=e.target.closest('#adm-panel [data-p="hlocal"],#adm-panel [data-p="hgh"]');if(!b)return;e.preventDefault();e.stopPropagation();if(!confirmBtn(b))return;
+    if(b.dataset.p==='hlocal'){const bk=backups()[+b.dataset.v];if(bk)restoreHtml(bk.h,'du '+fmt(bk.d));return;}
+    const g=ghGet();try{const r=await fetch('https://api.github.com/repos/'+encodeURIComponent(g.owner)+'/'+encodeURIComponent(g.repo)+'/contents/'+g.path.split('/').map(encodeURIComponent).join('/')+'?ref='+encodeURIComponent(b.dataset.v),{headers:{'Authorization':'Bearer '+g.token,'Accept':'application/vnd.github.raw'},cache:'no-store'});if(!r.ok)throw 0;restoreHtml(await r.text(),'choisie');}catch(_){toast('Impossible de récupérer cette version.',true);}},true);
+  // Paroles de l'assistant
+  function botCfg(){try{return JSON.parse($('bot-cfg').textContent||'{}')||{}}catch(_){return {}}}
+  function botSet(k,v){const c=botCfg(),T=window.__botTexts&&window.__botTexts();if(!T)return;const [a,b]=k.split('.');
+    const def=a==='r'?(T.items.find(i=>i.id===b)||{}).def:a==='n'?T.defs.n[b]:T.defs[a];
+    if(b){const g=a==='n'?'n':'r';c[g]=c[g]||{};if(!v.trim()||v===def)delete c[g][b];else c[g][b]=v;}else{if(!v.trim()||v===def)delete c[a];else c[a]=v;}
+    $('bot-cfg').textContent=JSON.stringify(c).replace(/</g,'\\u003c');window.__botApply&&window.__botApply(c);}
+  function openBotTexts(){const T=window.__botTexts&&window.__botTexts();if(!T){toast("L'assistant n'est pas disponible sur cette page.",true);return;}
+    const area=(k,l,v)=>`<div class="af"><label>${esc(l)}<span><button type="button" class="mini" data-p="blisten" data-k="${k}">▶ Écouter</button> <button type="button" class="mini" data-p="bdef" data-k="${k}">Texte d'origine</button></span></label><textarea data-bk="${k}" rows="3">${esc(v)}</textarea></div>`;
+    showPanel('bot',`<h4>Paroles de l'assistant <button type="button" data-p="close" aria-label="Fermer">✕</button></h4>
+<p class="ahelp">Changez les phrases : l'assistant les utilise tout de suite. Touchez « ✓ Valider » pour les mettre en ligne.</p>
+${area('greet','Message de bienvenue',T.greet)}
+<p class="asub">Relances quand le visiteur ne dit rien</p>
+${area('n.accueil','Sur la page d’accueil',T.nudge.accueil)}${area('n.site','Sur la page Site internet',T.nudge.site)}${area('n.formations','Sur la page Formations',T.nudge.formations)}
+<p class="asub">Réponses aux questions</p>
+${T.items.map(i=>area('r.'+i.id,i.label,i.t)).join('')}
+${area('fallback','Quand il ne comprend pas la question',T.fallback)}
+<p class="asub">Informations en plus</p>
+${area('extra','Nouveaux prix, dates, consignes… (utilisé par l’assistant intelligent)',T.extra)}`);}
+  document.addEventListener('input',e=>{const t=e.target;if(!t.matches||!t.matches('#adm-panel textarea[data-bk]'))return;if(!t.dataset.snapped){snap();t.dataset.snapped='1';}botSet(t.dataset.bk,t.value);});
+  document.addEventListener('click',e=>{const b=e.target.closest('#adm-panel [data-p="blisten"],#adm-panel [data-p="bdef"]');if(!b)return;e.preventDefault();e.stopPropagation();const ta=document.querySelector('#adm-panel textarea[data-bk="'+b.dataset.k+'"]');if(!ta)return;
+    if(b.dataset.p==='blisten'){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(ta.value.replace(/3\s?CC\s+Shop/gi,'trois cé cé, shoppe').replace(/3\s?CC/gi,'trois cé cé').replace(/€ HT/g,'euros hors taxe').replace(/€/g,'euros'));u.lang='fr-FR';const v=speechSynthesis.getVoices().find(x=>/^fr/i.test(x.lang)&&/natural|premium|enhanced|google/i.test(x.name))||speechSynthesis.getVoices().find(x=>/^fr/i.test(x.lang));if(v)u.voice=v;u.rate=1.1;speechSynthesis.speak(u);}catch(_){}return;}
+    const T=window.__botTexts();const [a,k2]=b.dataset.k.split('.');const def=a==='r'?(T.items.find(i=>i.id===k2)||{}).def:a==='n'?T.defs.n[k2]:T.defs[a];snap();ta.value=def||'';botSet(b.dataset.k,ta.value);},true);
   async function save(){const btn=$('adm-save');if(btn.disabled)return;
     closePanel();sel=null;place();setMode('blocks');saveCfg();
     if(window.claude&&window.claude.use){btn.disabled=true;toast('Enregistrement…');
       let art=null;try{art=await window.claude.use('artifact');}catch(_){}
-      if(art){try{await art.publish(buildDoc(true));toast('Enregistré ! La page se recharge avec vos modifications.');return;}
+      if(art){try{addBackup(pristine);await art.publish(buildDoc(true));toast('Enregistré ! La page se recharge avec vos modifications.');return;}
         catch(e){btn.disabled=false;toast(e&&e.code==='conflict'?'Une autre version vient d’être enregistrée. Rechargez la page.':"Enregistrement impossible ici. Vérifiez que vous avez le droit de modifier cette page.",true);return;}}
       btn.disabled=false;toast("Vous n'avez pas le droit de modifier cette page.",true);return;}
     const g=ghGet();
     if(!g.token||!g.owner||!g.repo){openSettings(true);toast('Une seule fois : connectez GitHub pour publier.');return;}
     btn.disabled=true;toast('Publication sur GitHub…');
-    try{await pushGh(g,buildDoc(false));btn.disabled=false;leave();
+    try{const doc=buildDoc(false);addBackup(pristine);await pushGh(g,doc);pristine=doc;btn.disabled=false;leave();
       toast('C’est en ligne ! Le site public sera à jour dans 1 à 2 minutes.');}
     catch(err){btn.disabled=false;toast(err.message,true);}}
   function leave(){on=false;closePanel();sel=null;place();regions(false);REGIONS().forEach(r=>r.removeAttribute('data-adm-region'));document.body.classList.remove('adm','adm-text');
-    ['adm-bar','adm-box','adm-mini','adm-xw','adm-pw','adm-panel','adm-file'].forEach(i=>{const e=$(i);if(e)e.remove();});built=false;}
+    ['adm-bar','adm-box','adm-blk','adm-panel','adm-file'].forEach(i=>{const e=$(i);if(e)e.remove();});built=false;}
 
   let tt=null;
   function toast(m,bad){let t=$('adm-toast');if(!t){build();t=$('adm-toast');}t.textContent=m;t.className=bad?'bad':'';t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>{t.hidden=true;},bad?7000:4200);}
