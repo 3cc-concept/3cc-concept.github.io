@@ -1231,7 +1231,7 @@ body.adm-text #adm-box{box-shadow:none;border-style:dashed;border-width:1px}
   <button class="ab" data-a="pset" title="Réglages">⚙ Réglages</button>
   <span class="asep"></span>
   <button class="ab" id="adm-quit" data-a="quit">Quitter</button>
-  <button class="ab ok" id="adm-save" data-a="save">✓ Valider</button>
+  <button class="ab ok" id="adm-save" data-a="save">✓ Valider${window.claude&&window.claude.use?'':' et télécharger'}</button>
 </div>
 <div id="adm-box" hidden></div>
 <div id="adm-blk" hidden><span id="adm-bname">Bloc</span><button data-a="txt">✎ Modifier le texte</button><button data-a="pstyle">Style</button><button data-a="dup">＋ Dupliquer</button><button data-a="up" title="Monter" aria-label="Monter">↑</button><button data-a="down" title="Descendre" aria-label="Descendre">↓</button><button data-a="parent">Bloc parent</button><button data-a="del" class="red">✕ Supprimer</button><button data-a="desel" aria-label="Désélectionner">Fermer</button></div>
@@ -1468,7 +1468,7 @@ ${TV.map(([v,l])=>`<div class="af"><label>${l}</label><div class="arow"><input t
       closePanel();if(afterGh&&n.token)save();else toast('Réglages enregistrés.'+(code!==cfg.code?'':''));}
     if(p==='csave'){const code=$('ag-code').value.trim();if(code&&code!==cfg.code){snap();cfg.code=code;saveCfg();}closePanel();toast('Code enregistré. Touchez « Valider » pour l’appliquer.');}
     if(p==='gforget'){try{const g=ghGet();delete g.token;localStorage.setItem('adm-gh',JSON.stringify(g));}catch(_){}openSettings(false);toast('Jeton oublié sur cet appareil.');}
-    if(p==='dl'){try{const blob=new Blob([buildDoc(false)],{type:'text/html'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='index.html';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},2000);toast('Fichier préparé. Envoyez-le sur GitHub à la place de l’ancien index.html.');}catch(_){toast("Le téléchargement n'est pas possible ici.",true);}}
+    if(p==='dl'){closePanel();dlDoc(buildDoc(false));}
     place();
   });
   document.addEventListener('input',e=>{const t=e.target;if(!t.closest||!t.closest('#adm-panel'))return;
@@ -1579,12 +1579,16 @@ ${area('extra','Nouveaux prix, dates, consignes… (utilisé par l’assistant i
       if(art){try{addBackup(pristine);await art.publish(buildDoc(true));toast('Enregistré ! La page se recharge avec vos modifications.');return;}
         catch(e){btn.disabled=false;toast(e&&e.code==='conflict'?'Une autre version vient d’être enregistrée. Rechargez la page.':"Enregistrement impossible ici. Vérifiez que vous avez le droit de modifier cette page.",true);return;}}
       btn.disabled=false;toast("Vous n'avez pas le droit de modifier cette page.",true);return;}
-    const g=ghGet();
-    if(!g.token||!g.owner||!g.repo){openSettings(true);toast('Une seule fois : connectez GitHub pour publier.');return;}
-    btn.disabled=true;toast('Publication sur GitHub…');
-    try{const doc=buildDoc(false);addBackup(pristine);await pushGh(g,doc);pristine=doc;btn.disabled=false;leave();
-      toast('C’est en ligne ! Le site public sera à jour dans 1 à 2 minutes.');}
-    catch(err){btn.disabled=false;toast(err.message,true);}}
+    const g=ghGet();const doc=buildDoc(false);
+    if(g.token&&g.owner&&g.repo){btn.disabled=true;toast('Publication sur GitHub…');
+      try{addBackup(pristine);await pushGh(g,doc);pristine=doc;btn.disabled=false;leave();toast('C’est en ligne ! Le site public sera à jour dans 1 à 2 minutes.');return;}
+      catch(err){btn.disabled=false;
+        showPanel('dl',`<h4>Publication directe impossible <button type="button" data-p="close" aria-label="Fermer">✕</button></h4><p class="ahelp">${esc(err.message)}</p><p class="ahelp">Téléchargez le fichier, puis envoyez-le sur GitHub à la place de l'ancien index.html.</p><button type="button" class="ab or" data-p="dl">Télécharger index.html</button>`);return;}}
+    // Sans jeton GitHub : on télécharge le fichier à envoyer sur GitHub
+    addBackup(pristine);pristine=doc;dlDoc(doc);}
+  function dlDoc(doc){try{const blob=new Blob([doc],{type:'application/octet-stream'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='index.html';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},4000);
+      toast('Fichier index.html téléchargé. Sur GitHub : supprimez l’ancien index.html, puis envoyez celui-ci.');}
+    catch(_){toast("Le téléchargement n'est pas possible ici.",true);}}
   function leave(){on=false;closePanel();sel=null;place();regions(false);REGIONS().forEach(r=>r.removeAttribute('data-adm-region'));document.body.classList.remove('adm','adm-text');
     ['adm-bar','adm-box','adm-blk','adm-panel','adm-file'].forEach(i=>{const e=$(i);if(e)e.remove();});built=false;}
 
