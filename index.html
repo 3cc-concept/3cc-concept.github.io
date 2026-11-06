@@ -3,6 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="3CC Concept : le site de réservation en ligne 3CC Shop pour les pros de l'automobile (covering, vitres teintées, PPF, detailing) et des formations covering et films bâtiment à Moyenmoutier (Vosges).">
+<meta name="theme-color" content="#000000">
+<meta property="og:type" content="website">
+<meta property="og:title" content="3CC Concept · Site de réservation 3CC Shop et formations covering">
+<meta property="og:description" content="Vos clients réservent et paient en ligne, vous posez. Formations covering et films bâtiment en 3 ou 5 jours à Moyenmoutier.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23ff5500'/%3E%3Ctext x='32' y='43' font-family='Arial' font-weight='900' font-size='26' text-anchor='middle' fill='%23fff'%3E3CC%3C/text%3E%3C/svg%3E">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -59,6 +65,14 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var
 .navlinks a[aria-current="page"]{color:var(--white);border-color:var(--orange);background:linear-gradient(180deg,#3a1a08,#120700);box-shadow:inset 0 1px 0 rgba(255,140,80,.35),0 3px 0 #000,0 0 12px rgba(255,85,0,.35)}
 .dot{width:36px;height:36px;border-radius:50%;background:var(--orange);display:grid;place-items:center;flex:none}
 .dot svg{width:16px;height:16px;fill:#fff}
+.navlinks a.dot{padding:0;border:0;border-radius:50%;background:var(--orange);box-shadow:0 3px 10px rgba(255,85,0,.35);color:#fff}
+.navlinks a.dot.wa,.dot.wa{background:#1f9d55;box-shadow:0 3px 10px rgba(31,157,85,.35)}
+@media (max-width:520px){.nav{gap:10px}.logo svg{height:44px}.navlinks{gap:6px}.navlinks a:not(.dot){padding:7px 8px;font-size:.64rem;letter-spacing:.8px}.dot{width:32px;height:32px}.navlinks .dot.wa{display:none}}
+.sendst{font-size:.92rem;font-weight:500;margin:0}
+.callband{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:6px;padding:20px 22px;margin-top:22px}
+.callband p{max-width:52ch}
+.faq2 details{border-top:1px solid rgba(0,0,0,.2)}
+.faq2 details p{color:#222}
 @media (max-width:860px){.tagline{display:none}.navlinks{gap:8px}.navlinks a{padding:7px 10px}}
 @media (max-width:480px){.navlinks .hide-xs{display:none}}
 
@@ -338,7 +352,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
       <a class="hide-xs" href="#accueil" data-nav="accueil">Accueil</a>
       <a href="#site" data-nav="site">Site internet</a>
       <a href="#formations" data-nav="formations">Formations</a>
-      <span class="dot" title="06 98 80 22 33"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg></span>
+      <a class="dot" href="tel:+33698802233" title="Appeler le 06 98 80 22 33" aria-label="Appeler le 06 98 80 22 33"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg></a><a class="dot wa" href="https://wa.me/33698802233" target="_blank" rel="noopener" title="Écrire sur WhatsApp" aria-label="Écrire sur WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3zm4.6 12.6c-.2.6-1.1 1.1-1.6 1.2-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6s.6-1.9.9-2.1c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.1.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 1.9 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.7-.1 1.2z"/></svg></a>
     </nav>
   </div>
 </header>
@@ -372,6 +386,10 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
       <div><b>2</b><span>ateliers : Colmar, Moyenmoutier</span></div>
       <div><b>24 h/24</b><span>commandes en ligne</span></div>
       <div><b>4 max</b><span>stagiaires par session</span></div>
+    </div>
+    <div class="callband">
+      <p><b>Une question ?</b> Un conseiller vous rappelle gratuitement, au moment qui vous arrange.</p>
+      <div class="row"><button class="btn or" type="button" data-open="call">Être rappelé</button><a class="btn line" href="https://wa.me/33698802233" target="_blank" rel="noopener">WhatsApp</a></div>
     </div>
   </div>
 </section>
@@ -506,6 +524,19 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
           <ul><li>Ateliers illimités</li><li>Tarifs par site</li><li>Tableau de bord consolidé</li><li>Connexion à vos outils</li><li>Interlocuteur dédié</li></ul>
           <button class="btn" type="button" data-open="demo" data-offer="Réseau">Nous consulter</button></article>
       </div>
+    </div>
+  </section>
+
+  <section class="band grey2 faq2">
+    <div class="wrap">
+      <span class="kicker">Questions fréquentes</span>
+      <h2 style="margin:10px 0 18px">Avant de vous lancer</h2>
+      <details><summary>Le site fonctionne-t-il sur téléphone ?</summary><p>Oui. Le site s'adapte aux téléphones, aux tablettes et aux ordinateurs : la plupart de vos clients réserveront depuis leur mobile.</p></details>
+      <details><summary>Est-ce que j'utilise mon propre nom de domaine ?</summary><p>Oui, le site fonctionne sur votre nom de domaine, à vos couleurs et avec votre logo.</p></details>
+      <details><summary>Qu'est-ce qui est compris dans l'abonnement ?</summary><p>L'hébergement, les sauvegardes et les mises à jour. Les conditions précises vous sont présentées pendant la démo.</p></details>
+      <details><summary>Combien de temps pour être en ligne ?</summary><p>Environ 3 semaines entre l'appel découverte et la mise en ligne, prise en main comprise.</p></details>
+      <details><summary>Je ne suis pas à l'aise avec l'informatique.</summary><p>Nous configurons tout pour vous et vous formons à la gestion des commandes, du planning et de la boutique. Nous restons joignables ensuite.</p></details>
+      <details><summary>Puis-je voir un site qui fonctionne déjà ?</summary><p>Oui : 3cc.shop est notre propre site, en service tous les jours pour nos ateliers. Vous pouvez le tester jusqu'au panier.</p></details>
     </div>
   </section>
 
@@ -653,8 +684,9 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     <div class="okbox" id="pre-ok" hidden>
       <h3 style="color:var(--ok)" id="pre-ok-t">Merci, nous vous rappelons très vite</h3>
       <p style="color:var(--muted)">Vous pouvez aussi nous joindre au <b style="color:var(--white)">06 98 80 22 33</b> ou à <b style="color:var(--white)">contact@3cc.shop</b>.</p>
+      <p class="sendst" id="pre-st"></p>
+      <div class="row"><a class="btn" id="pre-wa" href="https://wa.me/33698802233" target="_blank" rel="noopener">Envoyer aussi par WhatsApp</a><button class="btn line" type="button" data-close>Fermer</button></div>
       <pre id="pre-recap"></pre>
-      <button class="btn" type="button" data-close>Fermer</button>
     </div>
   </div>
 </dialog>
@@ -682,8 +714,34 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     <div class="okbox" id="demo-ok" hidden>
       <h3 style="color:var(--ok)" id="demo-ok-t">Merci, nous vous rappelons</h3>
       <p style="color:var(--muted)">Préparez la liste de vos prestations et vos prix actuels : nous vous montrerons votre futur site avec. Contact direct : <b style="color:var(--white)">06 98 80 22 33</b>.</p>
+      <p class="sendst" id="demo-st"></p>
+      <div class="row"><a class="btn" id="demo-wa" href="https://wa.me/33698802233" target="_blank" rel="noopener">Envoyer aussi par WhatsApp</a><button class="btn line" type="button" data-close>Fermer</button></div>
       <pre id="demo-recap"></pre>
-      <button class="btn" type="button" data-close>Fermer</button>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="dlg-call" aria-labelledby="call-title">
+  <div class="dlg">
+    <header><div><span class="kicker">Rappel gratuit</span><h3 id="call-title" style="margin-top:6px">Être rappelé par un conseiller</h3></div><button class="x" type="button" data-close aria-label="Fermer">✕</button></header>
+    <div id="call-body">
+      <form id="fc" novalidate>
+        <div class="g2">
+          <label for="c-nom">Prénom et nom<input id="c-nom" type="text" autocomplete="name"></label>
+          <label for="c-tel">Téléphone<input id="c-tel" type="tel" autocomplete="tel" placeholder="06 12 34 56 78"></label>
+        </div>
+        <label for="c-sujet">C'est au sujet de<select id="c-sujet"><option>Le site internet 3CC Shop</option><option>La formation covering</option><option>La formation films bâtiment</option><option>Autre chose</option></select></label>
+        <label for="c-rap">Quand vous rappeler ?<select id="c-rap"><option>Dès que possible</option><option>Matin (8h–12h)</option><option>Midi (12h–14h)</option><option>Après-midi (14h–18h)</option></select></label>
+        <p class="err" id="c-err" hidden></p>
+        <button class="btn or" type="submit">Être rappelé</button>
+        <p style="color:var(--muted);font-size:.85rem">Gratuit et sans engagement.</p>
+      </form>
+    </div>
+    <div class="okbox" id="call-ok" hidden>
+      <h3 style="color:var(--ok)" id="call-ok-t">Merci, nous vous rappelons très vite</h3>
+      <p class="sendst" id="call-st"></p>
+      <div class="row"><a class="btn" id="call-wa" href="https://wa.me/33698802233" target="_blank" rel="noopener">Envoyer aussi par WhatsApp</a><button class="btn line" type="button" data-close>Fermer</button></div>
+      <pre id="call-recap"></pre>
     </div>
   </div>
 </dialog>
@@ -722,7 +780,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   <div class="wrap foot">
     <div><h3>3CC Concept</h3><p>Sites de réservation et de vente en ligne pour les pros de l'automobile, et formations pratiques covering et films à Moyenmoutier.</p></div>
     <div><h3>Liens utiles</h3><a href="#accueil">Accueil</a><a href="#site">Site internet 3CC Shop</a><a href="#formations">Formations</a><a href="https://3cc.shop" target="_blank" rel="noopener">3cc.shop ↗</a></div>
-    <div><h3>Contact</h3><p>06 98 80 22 33<br>contact@3cc.shop<br>Pôle Automobile, 181 av. de la 100ᵉ Division US<br>88420 Moyenmoutier</p></div>
+    <div><h3>Contact</h3><p>06 98 80 22 33<br>contact@3cc.shop<br>Pôle Automobile, 181 av. de la 100ᵉ Division US<br>88420 Moyenmoutier</p><button class="btn or" type="button" data-open="call" style="margin-top:12px">Être rappelé</button></div>
   </div>
   <div class="wrap legal">Mentions légales · Politique de confidentialité · CGV</div>
 </footer>
@@ -768,6 +826,8 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     if(pre){cur=pre.dataset.pre;const o=C[cur];$('pre-title').textContent=o.n;$('pre-sess').textContent=o.s+' · '+o.d;
       $('p-dep').placeholder=o.b?'hors Grand Est, ex. 75':'ex. 88';
       $('pre-body').hidden=false;$('pre-ok').hidden=true;$('p-err').hidden=true;priceLine();open($('dlg-pre'));return;}
+    const cl=e.target.closest('[data-open="call"]');
+    if(cl){$('call-body').hidden=false;$('call-ok').hidden=true;$('c-err').hidden=true;open($('dlg-call'));return;}
     const dm=e.target.closest('[data-open="demo"]');
     if(dm){if(dm.dataset.offer)$('d-off').value=dm.dataset.offer;$('demo-body').hidden=false;$('demo-ok').hidden=true;$('d-err').hidden=true;open($('dlg-demo'));}
   });
@@ -785,6 +845,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     const n=+v('p-nb'),ht=o.p*n;
     $('pre-recap').textContent=['PRÉ-COMMANDE FORMATION','Formation : '+o.n+' ('+o.d+')','Session : '+o.s,'Stagiaires : '+n,'Montant : '+eur(ht)+' HT ('+eur(Math.round(ht*1.2))+' TTC)','','Nom : '+v('p-prenom')+' '+v('p-nom'),'Téléphone : '+v('p-tel'),'E-mail : '+v('p-mail'),'Entreprise : '+(v('p-soc')||'—'),'Département : '+dep,'Financement : '+v('p-fin'),'Rappel : '+v('p-rap')].join('\n');
     $('pre-ok-t').textContent='Merci '+v('p-prenom')+', nous vous rappelons très vite';
+    send('Pré-commande formation – '+o.n+' – '+v('p-prenom')+' '+v('p-nom'),$('pre-recap').textContent,{Nom:v('p-prenom')+' '+v('p-nom'),Téléphone:v('p-tel'),email:v('p-mail')},'pre-st','pre-wa');
     $('pre-body').hidden=true;$('pre-ok').hidden=false;$('fp').reset();
   });
 
@@ -795,8 +856,30 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     if(m){$('d-err').textContent=m;$('d-err').hidden=false;return;}
     $('demo-recap').textContent=['DEMANDE DE DÉMO SITE 3CC SHOP','Entreprise : '+v('d-soc'),'Métier : '+v('d-met'),'Ateliers : '+v('d-nb'),'Offre : '+v('d-off'),'Démo : '+v('d-how'),'Contact : '+v('d-nom'),'Téléphone : '+v('d-tel'),'E-mail : '+v('d-mail'),'Projet : '+(v('d-msg')||'—')].join('\n');
     $('demo-ok-t').textContent='Merci, nous rappelons '+v('d-soc')+' très vite';
+    send('Demande de démo 3CC Shop – '+v('d-soc'),$('demo-recap').textContent,{Nom:v('d-nom'),Entreprise:v('d-soc'),Téléphone:v('d-tel'),email:v('d-mail')},'demo-st','demo-wa');
     $('demo-body').hidden=true;$('demo-ok').hidden=false;$('fd').reset();
   });
+
+  $('fc').addEventListener('submit',e=>{
+    e.preventDefault();const v=id=>$(id).value.trim();let m='';
+    if(!v('c-nom')||!v('c-tel'))m="Merci d'indiquer votre nom et votre numéro de téléphone.";
+    else if(v('c-tel').replace(/\D/g,'').length<9)m='Le numéro de téléphone doit contenir au moins 9 chiffres.';
+    if(m){$('c-err').textContent=m;$('c-err').hidden=false;return;}
+    const recap=['DEMANDE DE RAPPEL','Nom : '+v('c-nom'),'Téléphone : '+v('c-tel'),'Sujet : '+v('c-sujet'),'Rappel : '+v('c-rap')].join('\n');
+    $('call-recap').textContent=recap;$('call-ok-t').textContent='Merci '+v('c-nom').split(/\s+/)[0]+', nous vous rappelons très vite';
+    send('Demande de rappel – '+v('c-nom'),recap,{Nom:v('c-nom'),Téléphone:v('c-tel')},'call-st','call-wa');
+    $('call-body').hidden=true;$('call-ok').hidden=false;$('fc').reset();
+  });
+
+  // Envoi des demandes par e-mail (service FormSubmit) + lien WhatsApp prérempli
+  function siteCfg(){let c={};try{c=JSON.parse(document.getElementById('site-cfg').textContent)||{}}catch(_){}return {email:c.email||'contact@3cc.shop',wa:(c.wa||'33698802233').replace(/\D/g,'')};}
+  async function send(subject,recap,fields,stId,waId){const C=siteCfg(),st=$(stId),wa=$(waId);
+    if(wa)wa.href='https://wa.me/'+C.wa+'?text='+encodeURIComponent(recap);
+    if(st){st.textContent='Envoi de votre demande…';st.style.color='var(--muted)';}
+    try{const r=await fetch('https://formsubmit.co/ajax/'+encodeURIComponent(C.email),{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(Object.assign({_subject:subject,_template:'table',_captcha:'false',Demande:recap},fields))});
+      const j=await r.json().catch(()=>({}));if(!r.ok||String(j.success)==='false')throw 0;
+      if(st){st.textContent='✓ Votre demande nous a bien été envoyée.';st.style.color='var(--ok)';}return true;}
+    catch(_){if(st){st.textContent="L'envoi automatique n'a pas abouti. Envoyez-nous la demande par WhatsApp, ou appelez le 06 98 80 22 33.";st.style.color='#ff9a6b';}return false;}}
 })();
 </script>
 <script type="application/json" id="bot-cfg" data-own>{}</script>
@@ -814,6 +897,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     demo:{l:'Demander une démo',attr:['data-open','demo']},
     test:{l:'Tester 3cc.shop ↗',href:'https://3cc.shop/prestations/'},
     formations:{l:'Voir les formations',go:()=>{location.hash='formations'}},
+    call:{l:'Être rappelé',attr:['data-open','call']},
     tabcov:{l:'Formation covering',go:()=>{location.hash='formations';setTimeout(()=>$('t-cov')&&$('t-cov').click(),60)}},
     tabbat:{l:'Formation films bâtiment',go:()=>{location.hash='formations';setTimeout(()=>$('t-bat')&&$('t-bat').click(),60)}},
     cov3:{l:'Pré-commander covering 3 j',attr:['data-pre','cov3']},
@@ -847,9 +931,15 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     {k:/d[ée]lai|combien de temps|mise en ligne|semaines/,t:"Comptez environ 3 semaines entre l'appel découverte et la mise en ligne, prise en main comprise.",a:['demo']},
     {k:/o[uù] |adresse|moyenmoutier|colmar|venir|lieu|dormir|h[ée]berg/,t:"Notre atelier de formation : Pôle Automobile, 181 av. de la 100ᵉ Division US, 88420 Moyenmoutier. Nous envoyons une liste d'hébergements avec la convocation.",a:['formations']},
     {k:/contact|joindre|rappel|humain|quelqu.un|mail|num[ée]ro/,t:"Vous pouvez nous joindre au 06 98 80 22 33 ou à contact@3cc.shop. Le plus simple : laissez vos coordonnées dans une demande de démo ou une pré-commande, nous vous rappelons dans la journée.",a:['demo','formations']},
-    {k:/merci|super|parfait|top/,t:"Avec plaisir ! Autre chose ?",a:['site','formations']}
+    {k:/merci|super|parfait|top/,t:"Avec plaisir ! Autre chose ?",a:['site','formations']},
+    {pri:1,k:/qui (etes|êtes).vous|vous etes qui|vous êtes qui|a propos|votre (societe|société|entreprise)|c.est qui 3cc/,t:"3CC, ce sont deux ateliers, à Colmar et à Moyenmoutier, spécialisés dans la vitre teintée et le covering, avec plus de 5 000 véhicules traités. Avec 3CC Concept, nous proposons notre site de réservation aux autres professionnels, et des formations dans notre atelier.",a:['site','formations']},
+    {pri:1,k:/horaire|a quelle heure|à quelle heure|journ[ée]e type|d[ée]roul/,t:"Les journées de formation se déroulent de 8 h 30 à 12 h, puis de 13 h à 16 h 30, avec le déjeuner sur place.",a:['formations']},
+    {pri:1,k:/mat[ée]riel|outil|raclette|apporter|fourni/,t:"Tout le matériel est fourni : l'outillage, et les films et vinyles pour tous les exercices. Vous repartez avec votre kit poseur.",a:['formations']},
+    {pri:1,k:/annul|report|emp[êe]ch|d[ée]sist/,t:"En cas d'empêchement, prévenez-nous au plus tôt : nous cherchons ensemble une autre session, et nous vous expliquons les conditions lors de l'appel de confirmation.",a:['call']},
+    {pri:1,k:/engagement|r[ée]sili|contrat|sans engagement/,t:"La durée d'engagement et les conditions de résiliation vous sont présentées clairement pendant la démo, avant toute signature.",a:['demo']},
+    {pri:1,k:/google|r[ée]f[ée]rencement|seo|visibilit/,t:"Chaque service a sa propre page, et chaque ville peut avoir la sienne : c'est ce qui vous fait apparaître quand on cherche « vitres teintées » ou « covering » près de chez vous.",a:['demo']},
   ];
-  const RID=[['bonjour','Bonjour / salutation'],['accueil',"Retour à l'accueil"],['page-site','Ouvrir la page Site internet'],['page-formations','Ouvrir la page Formations'],['aurevoir','Au revoir'],['3ccshop','Explication de 3CC Shop'],['grandest','Règle « hors Grand Est »'],['financement','Financement des formations'],['prix-covering','Prix de la formation covering'],['prix-batiment','Prix de la formation films bâtiment'],['formations','Présentation des formations'],['dates','Dates des sessions'],['debutant','Débutants / prérequis'],['inclus','Ce qui est inclus dans les formations'],['tarifs-site','Tarifs du site 3CC Shop'],['demo','Démo / tester le site'],['fonctionnement','Fonctionnement du site'],['perso','Personnalisation du site'],['gains','Ce que le site fait gagner'],['metiers','Métiers concernés'],['delai','Délai de mise en ligne'],['adresse','Adresse / lieu de formation'],['contact','Contact'],['merci','Remerciements']];
+  const RID=[['bonjour','Bonjour / salutation'],['accueil',"Retour à l'accueil"],['page-site','Ouvrir la page Site internet'],['page-formations','Ouvrir la page Formations'],['aurevoir','Au revoir'],['3ccshop','Explication de 3CC Shop'],['grandest','Règle « hors Grand Est »'],['financement','Financement des formations'],['prix-covering','Prix de la formation covering'],['prix-batiment','Prix de la formation films bâtiment'],['formations','Présentation des formations'],['dates','Dates des sessions'],['debutant','Débutants / prérequis'],['inclus','Ce qui est inclus dans les formations'],['tarifs-site','Tarifs du site 3CC Shop'],['demo','Démo / tester le site'],['fonctionnement','Fonctionnement du site'],['perso','Personnalisation du site'],['gains','Ce que le site fait gagner'],['metiers','Métiers concernés'],['delai','Délai de mise en ligne'],['adresse','Adresse / lieu de formation'],['contact','Contact'],['merci','Remerciements'],['qui','Qui sommes-nous'],['horaires','Horaires des formations'],['materiel','Matériel fourni'],['annulation','Annulation / report de formation'],['engagement','Engagement / contrat du site'],['google','Visibilité sur Google']];
   const RDEF=R.map(r=>r.t);R.forEach((r,i)=>{r.id=(RID[i]||['r'+i])[0];r.label=(RID[i]||['','Réponse '+(i+1)])[1];});
   const GREET_DEF="Bienvenue sur 3CC Concept ! Nous proposons 3CC Shop, notre site de réservation en ligne pour les pros de l'automobile, et des formations covering et films bâtiment. Qu'est-ce qui vous intéresse ?";
   const FALLBACK_DEF="Je peux vous renseigner sur le site internet 3CC Shop pour les professionnels (prix, démo, fonctionnement) ou sur nos formations covering et films bâtiment (programme, dates, prix, financement). Que souhaitez-vous savoir ?";
@@ -862,11 +952,17 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   const norm=s=>s.toLowerCase().normalize('NFC');
   const END=["Puis-je vous aider pour autre chose ?","Avez-vous d'autres questions ? Je reste à votre disposition.","Je reste à votre écoute si besoin."];let ei=0;
   const polite=t=>/\?\s*$|bientôt|journée à vous|Autre chose/.test(t)?t:t+"\n\n"+END[(ei++)%END.length];
-  function rules(q){const n=norm(q);for(const r of R){if(r.k.test(n))return {t:polite(r.t),a:r.a};}
+  // Corrige les erreurs de dictée courantes et les mots mal reconnus
+  const FIX=[[/\b(covring|coveringue|coverine|cauvering|kovering|couvering|cover ring|coverring|kaverine|covering?s)\b/g,'covering'],[/\b(wrapping|wrap|pelliculage|habillage vinyle)\b/g,'covering'],[/\b(trois|3) ?c ?c\b|\btroiscc\b|\btrois c c\b|\b3 c c\b|\b3sc\b|\btrois s c\b/g,'3cc'],[/\b(chop|shope|shoppe|chope)\b/g,'shop'],[/\bdemos?\b|\bdemonstration\b/g,'demo'],[/\bteintees?\b/g,'teintee'],[/\bbatiments?\b/g,'batiment']];
+  const VOC=['covering','formation','formations','batiment','financement','financer','demo','tarif','tarifs','reservation','reserver','atelier','ateliers','inscription','inscrire','session','sessions','moyenmoutier','garage','carrosserie','detailing','personnalisation','fonctionnement','abonnement','combien','prix','internet','films','solaire','vitrage','debutant','attestation','hebergement','rappeler','telephone','adresse','essentiel','reseau','offre','formule','coute','conseiller','plateforme','presentation','explication','horaires','materiel','engagement'];
+  function lev(a,b){if(Math.abs(a.length-b.length)>2)return 9;const d=Array.from({length:a.length+1},(_,i)=>[i]);for(let j=1;j<=b.length;j++)d[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[a.length][b.length];}
+  function fixText(q){let n=strip(q);FIX.forEach(([re,w])=>{n=n.replace(re,w);});
+    return n.split(/(\s+)/).map(w=>{if(w.length<5||VOC.includes(w)||/\d/.test(w))return w;let best=w,bd=9;for(const v of VOC){const d=lev(w,v);if(d<bd){bd=d;best=v;}}return bd<=(w.length>=8?2:1)?best:w;}).join('');}
+  function rules(q){const n=norm(q),fx=fixText(q);for(const r of R.filter(r=>r.pri).concat(R.filter(r=>!r.pri))){if(r.k.test(n)||r.k.test(fx))return {t:polite(r.t),a:r.a,id:r.id};}
     return {t:BT.fallback||FALLBACK_DEF,a:['site','formations','demo']};}
 
   // Connaissances pour l'IA, quand elle est disponible
-  const KB="Tu es l'assistant vocal du site 3CC Concept (Moyenmoutier, Vosges). Réponds en français, avec courtoisie et en vouvoyant : salue au premier message, remercie quand on te remercie, termine par une proposition d'aide (« Puis-je vous aider pour autre chose ? »), dis au revoir poliment. Réponses de 1 à 5 phrases courtes, sans markdown, pour être lues à voix haute. Si on te demande ce qu'est le site 3CC Shop, explique dans l'ordre : ce que c'est, pourquoi il existe, comment il fonctionne, ce qu'il apporte au professionnel. Guide la personne vers l'action utile.\nFAITS : 1) Site internet 3CC Shop pour les pros de l'automobile : le client choisit atelier, véhicule, prestation, voit le prix, réserve un créneau libre, paie un acompte ; agenda avec durée d'immobilisation ; boutique ; galerie avant/après ; pages Google. Bénéfices : moins d'appels, aucun client perdu, ventes 24h/24, moins de rendez-vous manqués. Offres : Essentiel 1900 € HT + 79 €/mois (1 atelier, 4 prestations) ; Pro 2900 € HT + 129 €/mois (3 ateliers, configurateur véhicule, acompte, prise en main) ; Réseau sur devis. Mise en ligne en 3 semaines. Tester sur 3cc.shop ou demander une démo personnalisée de 20 min. Métiers : covering, vitres teintées, PPF, detailing, lavage, pare-brise, carrosserie, garages, pneus, motos, camping-cars, vans, bateaux, films bâtiment, enseignes. 2) Formations à Moyenmoutier, 4 stagiaires max, kit, repas et attestation inclus. Covering (ouvert à tous) : 3 j 1390 € HT (18-20 janv. 2027), 5 j 2290 € HT (12-16 avr. 2027). Films bâtiment (réservé aux personnes installées hors Grand Est) : 3 j 1290 € HT (15-17 mars 2027), 5 j 2190 € HT (8-12 fév. 2027). Financement via organisme certifié : OPCO, FAF, France Travail, ou 3 fois sans frais. Contact 06 98 80 22 33, contact@3cc.shop. N'invente aucun autre prix ni fait.\nÀ la fin, ajoute une dernière ligne : ACTIONS: suivie de 0 à 3 identifiants séparés par des virgules parmi site, offres, demo, test, formations, tabcov, tabbat, cov3, cov5, bat3, bat5.";
+  const KB="Tu es l'assistant vocal du site 3CC Concept (Moyenmoutier, Vosges). Réponds en français, avec courtoisie et en vouvoyant : salue au premier message, remercie quand on te remercie, termine par une proposition d'aide (« Puis-je vous aider pour autre chose ? »), dis au revoir poliment. Réponses de 1 à 5 phrases courtes, sans markdown, pour être lues à voix haute. Si on te demande ce qu'est le site 3CC Shop, explique dans l'ordre : ce que c'est, pourquoi il existe, comment il fonctionne, ce qu'il apporte au professionnel. Guide la personne vers l'action utile.\nFAITS : 1) Site internet 3CC Shop pour les pros de l'automobile : le client choisit atelier, véhicule, prestation, voit le prix, réserve un créneau libre, paie un acompte ; agenda avec durée d'immobilisation ; boutique ; galerie avant/après ; pages Google. Bénéfices : moins d'appels, aucun client perdu, ventes 24h/24, moins de rendez-vous manqués. Offres : Essentiel 1900 € HT + 79 €/mois (1 atelier, 4 prestations) ; Pro 2900 € HT + 129 €/mois (3 ateliers, configurateur véhicule, acompte, prise en main) ; Réseau sur devis. Mise en ligne en 3 semaines. Tester sur 3cc.shop ou demander une démo personnalisée de 20 min. Métiers : covering, vitres teintées, PPF, detailing, lavage, pare-brise, carrosserie, garages, pneus, motos, camping-cars, vans, bateaux, films bâtiment, enseignes. 2) Formations à Moyenmoutier, 4 stagiaires max, kit, repas et attestation inclus. Covering (ouvert à tous) : 3 j 1390 € HT (18-20 janv. 2027), 5 j 2290 € HT (12-16 avr. 2027). Films bâtiment (réservé aux personnes installées hors Grand Est) : 3 j 1290 € HT (15-17 mars 2027), 5 j 2190 € HT (8-12 fév. 2027). Financement via organisme certifié : OPCO, FAF, France Travail, ou 3 fois sans frais. Contact 06 98 80 22 33, contact@3cc.shop. Un conseiller peut rappeler gratuitement (action call). Journées de formation 8h30-12h et 13h-16h30, matériel fourni. Le site s'adapte aux mobiles, fonctionne sur le nom de domaine du client ; hébergement, sauvegardes et mises à jour compris. N'invente aucun autre prix ni fait.\nÀ la fin, ajoute une dernière ligne : ACTIONS: suivie de 0 à 3 identifiants séparés par des virgules parmi site, offres, demo, test, call, formations, tabcov, tabbat, cov3, cov5, bat3, bat5.";
   (async()=>{try{if(window.claude?.use)ai=await window.claude.use('sample');}catch(_){ai=null;}})();
 
   function addMsg(t,who,cls){const d=document.createElement('div');d.className='msg '+who+(cls?' '+cls:'');d.textContent=t;log.appendChild(d);log.scrollTop=log.scrollHeight;return d;}
@@ -884,7 +980,8 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   function fillVoices(){const sel=$('bot-vsel');if(!sel)return;const vs=frVoices();if(!vs.length){sel.hidden=true;return;}sel.hidden=false;const cur=sel.value;sel.innerHTML=vs.map((v,i)=>'<option value="'+i+'">'+v.name.replace(/Microsoft |Google |\(.*?\)| - .*$|Online/g,'').trim()+(score(v)>=40?' ★':'')+'</option>').join('');if(cur&&cur<vs.length)sel.value=cur;chosen=vs[+sel.value]||vs[0];}
   try{speechSynthesis.onvoiceschanged=fillVoices;}catch(_){}
   setTimeout(fillVoices,50);
-  function say(t,cb){if(!speak||!window.speechSynthesis){if(cb)setTimeout(cb,500);return;}try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/3cc\.shop/gi,'trois cé cé point shoppe').replace(/3\s?CC\s+Shop/gi,'trois cé cé, shoppe').replace(/3\s?CC/gi,'trois cé cé').replace(/\bShop\b/gi,'shoppe').replace(/[•→]/g,' ').replace(/€ HT/g,'euros hors taxe').replace(/€/g,'euros').replace(/@/g,' arobase ').replace(/\n+/g,' '));u.lang='fr-FR';lastSpoken=u.text;cur={txt:u.text,idx:0,t0:Date.now()};const me=cur;u.addEventListener('start',()=>{me.t0=Date.now();});u.addEventListener('boundary',e=>{if(typeof e.charIndex==='number')me.idx=e.charIndex;});u.addEventListener('end',()=>{if(!paused&&cur===me)cur=null;});const v=pickVoice();if(v)u.voice=v;u.rate=RATE;u.pitch=1;
+  function spoken(t){return String(t).replace(/\s*\([^)]*\)/g,'').replace(/:\s*\n+•\s*/g,' : ').replace(/\n+•\s*/g,' ; ').replace(/^•\s*/,'').replace(/\s*\n+\s*/g,'. ').replace(/\s*;\s*/g,', ').replace(/(\d+)\s*→\s*(\d+)/g,'du $1 au $2').replace(/→/g,' ').replace(/\bjanv\./g,'janvier').replace(/\bfév\./g,'février').replace(/\bavr\./g,'avril').replace(/\bdéc\./g,'décembre').replace(/(\d+)h[–-](\d+)h/g,'$1 heures à $2 heures').replace(/24 ?h\/24/g,'24 heures sur 24').replace(/24\/7/g,'7 jours sur 7').replace(/HT\/mois/g,'HT par mois').replace(/\.\s*\./g,'.').replace(/\s+:/g,' :');}
+  function say(t,cb){if(!speak||!window.speechSynthesis){if(cb)setTimeout(cb,500);return;}try{speechSynthesis.cancel();t=spoken(t);const u=new SpeechSynthesisUtterance(t.replace(/3cc\.shop/gi,'trois cé cé point shoppe').replace(/3\s?CC\s+Shop/gi,'trois cé cé, shoppe').replace(/3\s?CC/gi,'trois cé cé').replace(/\bShop\b/gi,'shoppe').replace(/[•→]/g,' ').replace(/€ HT/g,'euros hors taxe').replace(/€/g,'euros').replace(/@/g,' arobase ').replace(/\n+/g,' '));u.lang='fr-FR';lastSpoken=u.text;cur={txt:u.text,idx:0,t0:Date.now()};const me=cur;u.addEventListener('start',()=>{me.t0=Date.now();});u.addEventListener('boundary',e=>{if(typeof e.charIndex==='number')me.idx=e.charIndex;});u.addEventListener('end',()=>{if(!paused&&cur===me)cur=null;});const v=pickVoice();if(v)u.voice=v;u.rate=RATE;u.pitch=1;
     setOrb('speak');cap(t,'Assistant');const back=()=>{if(!(window.speechSynthesis&&speechSynthesis.speaking))setOrb(on?'listen':'idle');};u.addEventListener('end',back);u.addEventListener('error',back);setTimeout(back,Math.max(2600,t.length*66));
     if(cb){let done=false,tm=null,tries=0;const fin=()=>{if(done)return;done=true;clearTimeout(tm);cb();};u.onend=fin;u.onerror=fin;
       // Secours : certains navigateurs ne signalent pas la fin de la lecture (on attend tant que c'est en pause ou en cours)
@@ -892,9 +989,39 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
       tm=setTimeout(guard,Math.max(2500,t.length*65));}
     speechSynthesis.speak(u);}catch(_){cb&&cb();}}
 
+  // Ce que le visiteur nous a appris (pour personnaliser les réponses et préremplir les formulaires)
+  const prof={metier:'',ateliers:0,offre:'',prenom:'',nom:''};
+  function learn(q){const n=fixText(q);let got=false;
+    const at=w2d(n).match(/\b(\d+)\s+(ateliers?|garages?|agences?|sites?|magasins?|centres?|boutiques?|points? de vente)\b/)||(/\b(un seul|qu'un|seulement un|un) (atelier|garage|centre|magasin)\b/.test(n)?[0,'1']:null);
+    if(at){prof.ateliers=+at[1];got=true;}
+    if(/\b(je suis|on est|nous sommes|je fais|on fait|je travaille|mon metier|j'ai un|j'ai une|j'ai|nous avons|on a)\b/.test(n)){const MAP=[[/cover|wrap|vinyle/,'Covering / wrapping'],[/teint|vitre/,'Vitres teintées'],[/ppf|detail|ceram|protection/,'PPF / detailing'],[/lavage|nettoy/,'Lavage / nettoyage'],[/pare.?brise/,'Pare-brise'],[/garag|carross|mecan/,'Garage / carrosserie'],[/batiment|store|vitrage|film/,'Films bâtiment / stores']];
+      for(const [re,v] of MAP)if(re.test(n)){prof.metier=v;got=true;break;}}
+    return got;}
+  const MLAB={'Covering / wrapping':'de covering','Vitres teintées':'de vitres teintées','PPF / detailing':'de detailing','Lavage / nettoyage':'de lavage','Pare-brise':'de pare-brise','Garage / carrosserie':'de garage','Films bâtiment / stores':'de films pour bâtiment'};
+  function reco(){const a=prof.ateliers;const who=(prof.metier?'une activité '+(MLAB[prof.metier]||''):'votre activité')+(a?' avec '+a+(a>1?' ateliers':' atelier'):'');
+    if(a>=4){prof.offre='Réseau';return "Pour "+who+", je vous conseille l'offre Réseau, sur devis : ateliers illimités, tarifs par site et tableau de bord commun. Voulez-vous une démo personnalisée ?";}
+    if(a>=2){prof.offre='Pro';return "Pour "+who+", je vous conseille l'offre Pro : 2 900 € HT à la mise en place, puis 129 € HT par mois, jusqu'à 3 ateliers, avec configurateur par modèle et acompte en ligne. Voulez-vous une démo personnalisée ?";}
+    if(a===1){prof.offre='Essentiel';return "Pour "+who+", l'offre Essentiel suffit souvent : 1 900 € HT, puis 79 € HT par mois. Si vous voulez des prix par modèle de véhicule et un acompte en ligne, prenez plutôt l'offre Pro. Voulez-vous une démo personnalisée ?";}
+    return null;}
+  function smart(q){const n=fixText(q);
+    if(/^(stop|arrete|arrete toi|tais.toi|silence|chut|pause)$/.test(n.trim())){bot("D'accord, je me mets en pause. Touchez le bouton lecture pour reprendre.");setTimeout(()=>{try{setPaused(true)}catch(_){}},2600);return true;}
+    if(/\b(au revoir|bonne journee|bonne soiree|c'est tout|rien d'autre|ca ira|ce sera tout)\b/.test(n)){convo=false;const t="Merci de votre visite"+(prof.prenom?", "+prof.prenom:"")+", et à très bientôt ! Si besoin, je suis là : touchez la boule orange.";addMsg(t,'b');say(t,null);return true;}
+    if(/\b(rappel|rappeler|rappelez|appelez.moi|appeler|etre rappele|parler a (quelqu'un|un humain|une personne|un conseiller)|un humain|un conseiller|une vraie personne)\b/.test(n)){askMode('call');return true;}
+    if(/\b(aide|que (peux|pouvez).(tu|vous)|tu fais quoi|vous faites quoi|menu|options|je sais pas|je ne sais pas)\b/.test(n)&&n.split(' ').length<=7){pending=null;bot("Je peux vous présenter 3CC Shop, notre site de réservation pour les pros, vous donner les prix et organiser une démo. Je peux aussi vous parler des formations covering et films bâtiment, et vous inscrire à la voix. Ou bien un conseiller vous rappelle. Que préférez-vous ?");addActs(['site','formations','call']);return true;}
+    if(/recommenc|depuis le debut|menu principal/.test(n)){pending=null;bot(BT.greet||GREET_DEF);return true;}
+    if(/\b(mobile|smartphone|tablette|responsive|sur (mon|un|le) (telephone|portable))\b/.test(n)&&/site|reserv|client|marche|fonctionne/.test(n)){bot("Oui, le site s'adapte aux téléphones, aux tablettes et aux ordinateurs : la plupart de vos clients réserveront depuis leur mobile. Voulez-vous le tester sur 3cc.shop ?");lastActs=['test','demo'];return true;}
+    if(/\b(hebergement|heberge|nom de domaine|domaine|mise a jour|maintenance|sauvegarde)\b/.test(n)&&!/dormir|hotel|loger|nuit/.test(n)){bot("L'hébergement, les sauvegardes et les mises à jour sont compris dans l'abonnement mensuel, et le site fonctionne sur votre propre nom de domaine. Les conditions précises vous sont présentées pendant la démo.");lastActs=['demo'];pending={k:'offer',target:'demo'};return true;}
+    if(/\b(qualiopi|certifie|certification|organisme)\b/.test(n)){bot("Nos formations peuvent être financées grâce à notre organisme de formation partenaire certifié, qui établit la convention et monte le dossier avec vous. À la fin, vous recevez une attestation de formation avec vos résultats.");lastActs=['formations','call'];return true;}
+    const learned=learn(q);
+    const recoQ=/conseill|recommand|quelle offre|laquelle|quelle formule|pour moi|me faut|adapte|choisir/.test(n);
+    if(recoQ||(learned&&!/\?|combien|prix|tarif|formation/.test(n))){
+      const r=reco();if(r){bot(r);lastActs=['demo','offres'];pending={k:'offer',target:'demo'};if(location.hash!=='#site')location.hash='site';return true;}
+      if(recoQ||prof.metier){pending={k:'ateliers'};bot((prof.metier?"Très bien, une activité "+(MLAB[prof.metier]||'')+". ":"")+"Pour vous conseiller la bonne offre : combien d'ateliers avez-vous ?");return true;}}
+    return false;}
   async function answer(q){
     addMsg(q,'u');hist.push({role:'user',content:q});
     if(handleCtx(q))return;
+    if(smart(q))return;
     let out=null;
     if(ai){const tp=addMsg('…','b','typing');
       try{const msgs=[{role:'user',content:KB+(BT.extra?"\nINFORMATIONS À JOUR, PRIORITAIRES SUR LE RESTE : "+BT.extra:"")+"\n\nCompris ?"},{role:'assistant',content:"Compris.\nACTIONS:"}].concat(hist.slice(-8));
@@ -906,12 +1033,12 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     if(!out)out=rules(q);
     const ids=out.a||[];lastActs=ids;
     const nav=ids.find(i=>['site','offres','formations','tabcov','tabbat','accueil'].includes(i));
-    const wants=/je (veux|voudrais|souhaite|aimerais|prends)|inscri|pr[ée].?command|r[ée]server|une d[ée]mo|m'inscrire/i.test(q);
+    const wants=/je (veux|voudrais|souhaite|aimerais|prends)|inscri|pr[ée].?command|r[ée]server|une d[ée]mo|m'inscrire|rappel/i.test(q)||/je (veux|voudrais|souhaite)|inscri|reserv|une demo/.test(fixText(q));
     const tgt=chooseTarget(q,ids);
     if(nav&&A[nav].go)setTimeout(A[nav].go,400);
     if(wants&&tgt){if(tgt.endsWith('?'))askDur(tgt.slice(0,3));else askMode(tgt);return;}
     addMsg(out.t,'b');addActs(out.a);hist.push({role:'assistant',content:out.t});say(out.t,listen);
-    pending=(tgt&&/(d[ée]mo|r[ée]server|place|inscri)[^?]*\?/i.test(out.t))?{k:'offer',target:tgt}:null;
+    pending=(tgt&&/(d[ée]mo|r[ée]server|place|inscri|coordonn|rappel)[^?]*\?/i.test(out.t))?{k:'offer',target:tgt}:null;
   }
 
   // ===== Conversation guidée : questions, contexte et remplissage vocal des formulaires =====
@@ -930,9 +1057,11 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     return out.join(' ');}
   const capW=s=>s.replace(/(^|[\s-])(\p{L})/gu,(m,a,b)=>a+b.toUpperCase());
   const dur=n=>/\b(5|cinq)\b|complet/.test(n)?'5':/\b(3|trois)\b|decouverte/.test(n)?'3':'';
-  const NAMES={demo:'votre demande de démo',cov3:'la formation covering de 3 jours',cov5:'la formation covering de 5 jours',bat3:'la formation films bâtiment de 3 jours',bat5:'la formation films bâtiment de 5 jours'};
+  const NAMES={call:'votre demande de rappel',demo:'votre demande de démo',cov3:'la formation covering de 3 jours',cov5:'la formation covering de 5 jours',bat3:'la formation films bâtiment de 3 jours',bat5:'la formation films bâtiment de 5 jours'};
   const GE2=['08','10','51','52','54','55','57','67','68','88'];
   const SYN={
+    'c-sujet':[[/site|shop|reservation|internet|plateforme|logiciel/,0],[/cover|wrap|vinyle/,1],[/film|batiment|vitrage|solaire/,2],[/autre|rien|divers/,3]],
+    'c-rap':[[/apres.?midi|aprem|soir/,3],[/midi|dejeuner/,2],[/matin/,1],[/possible|vite|maintenant|n'importe|quand vous|des que/,0]],
     'd-met':[[/cover|wrap|vinyle/,0],[/teint|vitre/,1],[/ppf|detail|ceram|protection/,2],[/lav|nettoy/,3],[/pare.?brise/,4],[/garag|carross|mecan/,5],[/batiment|store|vitrage|film/,6]],
     'd-off':[[/sais pas|hesite|aucune idee|conseil/,0],[/essentiel|petit|simple|base/,1],[/\bpro\b|professionnel/,2],[/reseau|franchise|groupe/,3]],
     'd-how':[[/visio|video|distance|en ligne|zoom|teams|ordinateur/,0],[/chez moi|mon atelier|mes locaux|deplac|venez|venir chez/,2],[/atelier|moyenmoutier|sur place|chez vous|vos locaux/,1]],
@@ -947,6 +1076,12 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     if(id==='d-met')return opts[opts.length-1].value||opts[opts.length-1].text;
     return null;}
   const FIELDS={
+    call:[
+      {id:'c-nom',q:"Je m'en occupe. Quel est votre prénom et votre nom ?",k:/\bnom\b|prenom/,l:'Nom'},
+      {id:'c-tel',q:"À quel numéro pouvons-nous vous rappeler ?",t:'tel',k:/telephone|numero|portable/,l:'Téléphone'},
+      {id:'c-sujet',q:"C'est au sujet du site internet, de la formation covering, ou de la formation films bâtiment ?",t:'select',k:/sujet|objet/,l:'Sujet'},
+      {id:'c-rap',q:"Quand préférez-vous être rappelé : le matin, le midi, l'après-midi, ou dès que possible ?",t:'select',k:/rappel|moment|heure/,l:'Rappel'}
+    ],
     demo:[
       {id:'d-nom',q:"Très bien, c'est parti. Quel est votre prénom et votre nom ?",k:/\bnom\b|prenom/,l:'Nom'},
       {id:'d-soc',q:"Quel est le nom de votre entreprise ?",k:/entreprise|societe/,l:'Entreprise'},
@@ -974,21 +1109,25 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   const isQ=n=>/\?|^(comment|combien|pourquoi|quand|quel|quelle|quels|quelles|qui|ou)\b|c'est quoi|qu'est.ce|est.ce qu|\b(prix|tarif|date|financ)/.test(n);
   window.addEventListener('hashchange',()=>{nudges=0;});
   function bot(t){addMsg(t,'b');hist.push({role:'assistant',content:t});say(t,listen);}
-  function openDlg(target){const b=document.createElement('button');b.type='button';b.hidden=true;if(target==='demo')b.setAttribute('data-open','demo');else b.setAttribute('data-pre',target);document.body.appendChild(b);b.click();b.remove();}
+  function openDlg(target){const b=document.createElement('button');b.type='button';b.hidden=true;if(target==='demo'||target==='call')b.setAttribute('data-open',target);else b.setAttribute('data-pre',target);document.body.appendChild(b);b.click();b.remove();}
   function hl(id){document.querySelectorAll('.filling').forEach(e=>e.classList.remove('filling'));const el=id&&$(id);if(el){el.classList.add('filling');try{el.scrollIntoView({block:'center',behavior:'smooth'})}catch(_){}}}
   function askDur(fam){pending={k:'dur',fam};bot("Très bien. Plutôt la formule découverte de 3 jours, ou la formule complète de 5 jours ?");}
   function askMode(target){pending={k:'mode',target};bot("Avec plaisir. Voulez-vous que je remplisse "+NAMES[target]+" avec vous maintenant, à la voix ? Ou préférez-vous remplir le formulaire vous-même ?");}
   function chooseTarget(q,ids){const n=strip(q),d=dur(n);
     for(const fam of ['cov','bat']){if(ids.includes(fam+'3')&&ids.includes(fam+'5')){if(d)return fam+d;return fam+'?';}}
-    return ids.find(i=>['demo','cov3','cov5','bat3','bat5'].includes(i));}
-  function startFlow(target){openDlg(target);flow={key:target==='demo'?'demo':'pre',target,i:0,stage:'ask',skip:new Set()};setTimeout(askField,450);}
+    return ids.find(i=>['call','demo','cov3','cov5','bat3','bat5'].includes(i));}
+  function startFlow(target){openDlg(target);flow={key:target==='demo'?'demo':target==='call'?'call':'pre',target,i:0,stage:'ask',skip:new Set()};
+    // On réutilise ce que le visiteur a déjà dit (métier, nombre d'ateliers, nom)
+    setTimeout(()=>{if(flow&&flow.key==='demo'){if(prof.metier){$('d-met').value=prof.metier;flow.skip.add('d-met');}if(prof.ateliers){$('d-nb').value=String(Math.min(prof.ateliers,4)).replace('4','4 et plus');flow.skip.add('d-nb');}if(prof.offre){$('d-off').value=prof.offre;flow.skip.add('d-off');}}
+      if(flow&&prof.nom){const f=flow.key==='demo'?'d-nom':flow.key==='call'?'c-nom':'';if(f){$(f).value=prof.nom;flow.skip.add(f);}}
+      askField(flow&&flow.skip.size?"J'ai déjà noté ce que vous m'avez dit.":'');},450);}
   function curField(){return FIELDS[flow.key][flow.i];}
   function askField(pre){while(flow&&curField()&&flow.skip.has(curField().id))flow.i++;
     const f=flow&&curField();if(!f){review();return;}hl(f.id);bot((pre?pre+' ':'')+f.q);}
   function shown(f){const el=$(f.id);if(f.t==='check')return el.checked?'oui':'non';if(el.tagName==='SELECT')return el.options[el.selectedIndex].text;return el.value;}
   function review(){flow.stage='review';hl(null);
     const parts=FIELDS[flow.key].filter(f=>f.t!=='check'&&$(f.id).value).map(f=>f.l+' : '+shown(f));
-    const REQ={demo:['d-nom','d-soc','d-tel','d-mail'],pre:['p-prenom','p-nom','p-tel','p-mail','p-dep']};
+    const REQ={call:['c-nom','c-tel'],demo:['d-nom','d-soc','d-tel','d-mail'],pre:['p-prenom','p-nom','p-tel','p-mail','p-dep']};
     const miss=FIELDS[flow.key].filter(f=>REQ[flow.key].includes(f.id)&&!$(f.id).value.trim()).map(f=>f.l.toLowerCase());
     if(miss.length){bot("Presque fini. Je récapitule. "+parts.join('. ')+". Il manque encore : "+miss.join(', ')+". Dites par exemple « modifier le "+miss[0]+" », ou tapez-le directement dans le formulaire, puis touchez « Envoyer ».");return;}
     bot("Parfait, tout est rempli. Je récapitule. "+parts.join('. ')+". Si tout est juste, touchez le bouton orange « Envoyer » pour valider. Pour changer une information, dites par exemple « modifier le téléphone ».");}
@@ -1020,6 +1159,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
     const el=$(f.id);
     if(f.t==='check'){if(!v){endFlow("Sans votre accord, nous ne pourrons pas vous rappeler. Vous pouvez cocher la case vous-même dans le formulaire si vous changez d'avis.");return;}el.checked=true;}
     else{el.value=v;el.dispatchEvent(new Event('change',{bubbles:true}));}
+    if(/^(p-prenom|d-nom|c-nom)$/.test(f.id)&&typeof v==='string'){prof.prenom=v.split(/\s+/)[0];if(f.id!=='p-prenom')prof.nom=v;}
     if(f.id==='p-prenom'){const w=v.split(/\s+/);if(w.length>=2){el.value=w[0];$('p-nom').value=w.slice(1).join(' ');flow.skip.add('p-nom');}}
     if(f.id==='p-dep'&&/b[aâ]timent/i.test($('pre-title').textContent)&&GE2.includes(v)){
       endFlow();const c=document.querySelector('#dlg-pre [data-close]');if(c)c.click();pending={k:'offer',target:'cov?'};
@@ -1035,6 +1175,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
         if(NO.test(n)){bot("D'accord. Qu'est-ce que vous recherchez exactement ?");return true;}}
       return false;}
     const p=pending;pending=null;
+    if(p.k==='ateliers'){const m=w2d(n).match(/\d+/);const k=m?+m[0]:(/seul|juste|qu'un|un\b/.test(n)?1:0);if(k){prof.ateliers=k;const r=reco();bot(r);lastActs=['demo','offres'];pending={k:'offer',target:'demo'};if(location.hash!=='#site')location.hash='site';return true;}if(p.tries||isQ(n))return false;p.tries=1;pending=p;bot("Dites simplement un nombre, par exemple : deux ateliers.");return true;}
     if(p.k==='dur'){const d=dur(n);if(d){askMode(p.fam+d);return true;}if(NO.test(n)){bot("Très bien. Qu'est-ce que vous recherchez exactement ?");return true;}if(p.tries||isQ(n))return false;p.tries=1;pending=p;bot("Dites « trois jours » pour la formule découverte, ou « cinq jours » pour la formule complète.");return true;}
     if(p.k==='mode'){
       if(/moi.?meme|manuel|seul|ecri|formulaire|clavier|\bnon\b|je prefere le faire/.test(n)){openDlg(p.target);bot("Très bien, je vous ouvre le formulaire. Remplissez-le, puis touchez « Envoyer » pour valider.");return true;}
@@ -1046,11 +1187,13 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
       return false;}
     return false;}
   function nudge(){const h=location.hash.slice(1);
-    const N=Object.assign({},NUDGE_DEF,BT.n||{});const t=h==='site'?N.site:h==='formations'?N.formations:N.accueil;
+    const N=Object.assign({},NUDGE_DEF,BT.n||{});
+    if(nudges>=2){pending={k:'offer',target:'call'};bot("Si vous préférez, un conseiller peut vous rappeler. Voulez-vous que je prenne vos coordonnées ?");return;}
+    const t=h==='site'?N.site:h==='formations'?N.formations:N.accueil;
     bot(t);}
-  ['dlg-pre','dlg-demo'].forEach(id=>$(id).addEventListener('close',()=>{if(flow){flow=null;hl(null);}}));
-  [['fd','demo-ok','d-err','dlg-demo'],['fp','pre-ok','p-err','dlg-pre']].forEach(([f,ok,er,dl])=>$(f).addEventListener('submit',()=>setTimeout(()=>{
-    if(!$(ok).hidden){const had=!!flow;flow=null;hl(null);bot((had?"C'est envoyé, merci ! ":"Merci, votre demande est bien enregistrée. ")+"Nous vous rappelons très vite. Puis-je vous aider pour autre chose ?");setTimeout(()=>{try{$(dl).close()}catch(_){}},4000);}
+  ['dlg-pre','dlg-demo','dlg-call'].forEach(id=>$(id).addEventListener('close',()=>{if(flow){flow=null;hl(null);}}));
+  [['fd','demo-ok','d-err','dlg-demo'],['fp','pre-ok','p-err','dlg-pre'],['fc','call-ok','c-err','dlg-call']].forEach(([f,ok,er,dl])=>$(f).addEventListener('submit',()=>setTimeout(()=>{
+    if(!$(ok).hidden){const had=!!flow;flow=null;hl(null);bot((had?"C'est envoyé, merci"+(prof.prenom?" "+prof.prenom:"")+" ! ":"Merci, votre demande est bien enregistrée. ")+"Nous vous rappelons très vite. Puis-je vous aider pour autre chose ?");setTimeout(()=>{try{$(dl).close()}catch(_){}},4000);}
     else if(flow&&!$(er).hidden){bot("Il manque quelque chose : "+$(er).textContent);}
   },80)));
 
@@ -1144,7 +1287,7 @@ footer{background:var(--ink);padding-block:44px;color:#bbb;font-size:.92rem}
   try{const c=JSON.parse(cfgEl.textContent);cfg=Object.assign(cfg,c);cfg.theme=Object.assign({vars:{},head:'',body:'',size:0},c.theme||{});}catch(_){}
   const saveCfg=()=>{cfgEl.textContent=JSON.stringify(cfg).replace(/</g,'\\u003c');};
 
-  const BLOCKS='.tile,.tile li,.tnum,.strip>div,.gain,.perso>div,.trades>div,.trades li,.plan,.plan li,.how>div,.ba>div,.ba li,.cta>div,.course,.course .meta span,.days li,.incl>div,.fund li,.feat,details,.facts>div,.sessions>div,.who span,.tabintro .who,.goal,.demo,.btn,.badge,.kicker,.lead,.navlinks a,.tagline,h1,h2,h3,h4,p,img,section.band,.adm-card';
+  const BLOCKS='.callband,.faq2 details,.tile,.tile li,.tnum,.strip>div,.gain,.perso>div,.trades>div,.trades li,.plan,.plan li,.how>div,.ba>div,.ba li,.cta>div,.course,.course .meta span,.days li,.incl>div,.fund li,.feat,details,.facts>div,.sessions>div,.who span,.tabintro .who,.goal,.demo,.btn,.badge,.kicker,.lead,.navlinks a,.tagline,h1,h2,h3,h4,p,img,section.band,.adm-card';
   const PROTECT='main,header,footer,.nav,.gate-in,[id^="v-"],[role="tabpanel"]';
   const REGIONS=()=>[document.querySelector('header .nav'),document.querySelector('main'),document.querySelector('footer'),document.querySelector('#gate .gate-in')].filter(Boolean);
   const inRegion=el=>!!el&&REGIONS().some(r=>r!==el&&r.contains(el));
@@ -1444,10 +1587,16 @@ ${TV.map(([v,l])=>`<div class="af"><label>${l}</label><div class="arow"><input t
   function openSettings(forSave){afterGh=forSave;const g=ghGet();
     if(window.claude&&window.claude.use){showPanel('set',`<h4>Réglages <button type="button" data-p="close" aria-label="Fermer">✕</button></h4>
 <div class="af"><label>Code d'accès à l'administration</label><input type="text" id="ag-code" value="${esc(cfg.code)}"></div>
+<p class="asub">Réception des demandes</p>
+<div class="af"><label>E-mail qui reçoit les demandes (démo, pré-commande, rappel)</label><input type="text" id="ag-email" value="${esc(cfg.email||'contact@3cc.shop')}" autocapitalize="off"></div>
+<div class="af"><label>Numéro WhatsApp (avec 33, sans le 0)</label><input type="text" id="ag-wa" value="${esc(cfg.wa||'33698802233')}" inputmode="numeric"></div>
 <div class="arow"><button type="button" class="ab or" data-p="csave">Enregistrer</button></div>
 <p class="ahelp" style="margin-top:10px">Le nouveau code s'applique après « Valider ».</p>`);return;}
     showPanel('set',`<h4>Réglages <button type="button" data-p="close" aria-label="Fermer">✕</button></h4>
 <div class="af"><label>Code d'accès à l'administration</label><input type="text" id="ag-code" value="${esc(cfg.code)}"></div>
+<p class="asub">Réception des demandes</p>
+<div class="af"><label>E-mail qui reçoit les demandes (démo, pré-commande, rappel)</label><input type="text" id="ag-email" value="${esc(cfg.email||'contact@3cc.shop')}" autocapitalize="off"></div>
+<div class="af"><label>Numéro WhatsApp (avec 33, sans le 0)</label><input type="text" id="ag-wa" value="${esc(cfg.wa||'33698802233')}" inputmode="numeric"></div>
 <p class="asub">Publication sur GitHub</p>
 <p class="ahelp">${forSave?'<b style="color:#fff">Une seule fois :</b> connectez GitHub pour que « Valider » mette le site en ligne. ':''}Créez un jeton : github.com › photo de profil › Settings › Developer settings › Personal access tokens › Fine-grained tokens › Generate new token. Dans « Repository access », choisissez uniquement votre dépôt, puis dans « Permissions », mettez « Contents » sur « Read and write ».</p>
 <div class="af"><label>Nom d'utilisateur GitHub</label><input type="text" id="ag-owner" value="${esc(g.owner||'')}" autocapitalize="off"></div>
@@ -1484,6 +1633,7 @@ ${TV.map(([v,l])=>`<div class="af"><label>${l}</label><div class="arow"><input t
       try{localStorage.setItem('adm-gh',JSON.stringify(n));}catch(_){toast("Cet appareil n'a pas pu garder les réglages.",true);}
       const code=$('ag-code').value.trim();if(code&&code!==cfg.code){snap();cfg.code=code;saveCfg();}
       closePanel();if(afterGh&&n.token)save();else toast('Réglages enregistrés.'+(code!==cfg.code?'':''));}
+    if(p==='csave'||p==='gsave'){const em=$('ag-email').value.trim(),wa=$('ag-wa').value.replace(/\D/g,'');if((em&&em!==cfg.email)||(wa&&wa!==cfg.wa)){snap();if(em)cfg.email=em;if(wa)cfg.wa=wa;saveCfg();document.querySelectorAll('a[href^="https://wa.me/"]').forEach(a=>{a.href=a.href.replace(/wa\.me\/\d+/,'wa.me/'+cfg.wa);});}}
     if(p==='csave'){const code=$('ag-code').value.trim();if(code&&code!==cfg.code){snap();cfg.code=code;saveCfg();}closePanel();toast('Code enregistré. Touchez « Valider » pour l’appliquer.');}
     if(p==='gforget'){try{const g=ghGet();delete g.token;localStorage.setItem('adm-gh',JSON.stringify(g));}catch(_){}openSettings(false);toast('Jeton oublié sur cet appareil.');}
     if(p==='dl'){closePanel();dlDoc(buildDoc(false));}
@@ -1522,7 +1672,7 @@ ${TV.map(([v,l])=>`<div class="af"><label>${l}</label><div class="arow"><input t
     q('[aria-current]').forEach(e=>e.removeAttribute('aria-current'));
     set('#t-cov',e=>e.setAttribute('aria-selected','true'));set('#t-bat',e=>e.setAttribute('aria-selected','false'));set('#p-cov',e=>e.removeAttribute('hidden'));set('#p-bat',e=>e.setAttribute('hidden',''));
     q('dialog').forEach(e=>e.removeAttribute('open'));
-    ['#demo-body','#pre-body'].forEach(s=>set(s,e=>e.removeAttribute('hidden')));['#demo-ok','#pre-ok','#d-err','#p-err'].forEach(s=>set(s,e=>e.setAttribute('hidden','')));['#demo-recap','#pre-recap'].forEach(s=>set(s,e=>{e.textContent='';}));
+    ['#demo-body','#pre-body','#call-body'].forEach(s=>set(s,e=>e.removeAttribute('hidden')));['#demo-ok','#pre-ok','#call-ok','#d-err','#p-err','#c-err'].forEach(s=>set(s,e=>e.setAttribute('hidden','')));['#demo-recap','#pre-recap','#call-recap','#demo-st','#pre-st','#call-st'].forEach(s=>set(s,e=>{e.textContent='';e.removeAttribute('style');}));
     q('body script:not([data-own]),body iframe').forEach(e=>e.remove());
     if(isArt){const reset=(document.head.querySelector('style')||{}).textContent||'';
       return '<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>'+reset+'</style></head><body>'+body.innerHTML+'</body></html>';}
